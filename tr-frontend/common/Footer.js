@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 export default class Footer extends React.Component {
   render() {
     return (
-      <View>
+      <View style={this.props.style}>
         <Text>Footer</Text>
       </View>
     );
