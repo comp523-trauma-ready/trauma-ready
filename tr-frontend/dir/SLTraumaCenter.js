@@ -1,7 +1,7 @@
 // SectionList Trauma Center entry
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 
 export default class SLTraumaCenter extends React.Component {
   constructor(props) {
@@ -16,9 +16,11 @@ export default class SLTraumaCenter extends React.Component {
 
     return (
       <View style={style}>
-        <Text>
-          {this.props.centerName} | {this.props.activationCode}
-        </Text>
+        <Button 
+          title={this.props.centerName  + ' | ' + this.props.activationCode}
+          // onPress={(item) => this.props.navigation.navigate('Item')}
+          onPress={(item) => alert(item)}
+        />
       </View>
     );
   }

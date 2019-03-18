@@ -36,7 +36,10 @@ const AppContainer = createAppContainer(BottomNav);
 export default class App extends React.Component {
   render() {
     return (
-      <AppContainer />    
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Center /> 
+      </View>
+      // <AppContainer />    
     );
   }
 }
