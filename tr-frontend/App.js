@@ -7,23 +7,20 @@ import Center from './core/Center';
 import Directory from './core/Directory';
 import Home from './core/Home';
 
-const HomeStack = createStackNavigator(
-  { 
-    Home: Home,
-  }, 
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#4B9CD3',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }
+const HomeStack = createStackNavigator({ 
+  Home: Home,
+}, {
+  initialRouteName: "Home",
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: '#4B9CD3',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
   }
-);
+});
 
 const DirStack = createStackNavigator({
   Directory: Directory
@@ -43,3 +40,4 @@ export default class App extends React.Component {
     );
   }
 }
+

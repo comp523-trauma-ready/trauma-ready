@@ -114,21 +114,6 @@ export default class App extends React.Component {
   }
 }
 
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <Home />
-//     );
-//   }
-// }
-
-// <View style={styles.wrapper}>
-//   <Header style={styles.header} title={"Trauma Ready"}/>
-//   <Search style={styles.search} />
-//   <Recommendations style={styles.recommendations} />
-//   <Footer style={styles.footer} />
-// </View>
-
 const styles = StyleSheet.create({
   wrapper: {
   }, 
