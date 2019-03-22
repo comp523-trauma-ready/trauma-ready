@@ -1,46 +1,46 @@
 import React from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 
-import Card from './core/Card';
-import Center from './core/Center';
-import Directory from './core/Directory';
-import Home from './core/Home';
+import Home from './components/Home';
+import Directory from './components/Directory';
+import Search from './components/Search';
 
-const HomeStack = createStackNavigator({ 
-  Home: Home,
-}, {
-  initialRouteName: "Home",
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: '#4B9CD3',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  }
-});
+const StandardComponent = (props) => (
+  <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+    <Text>standard component</Text>
+  </View>
+);
 
-const DirStack = createStackNavigator({
-  Directory: Directory
-});
+const TabNavigator = createBottomTabNavigator(
+  {
+    Home: Home,
+    Search: Search,    
+    Directory: Directory,
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state; 
+        let IconComponent = Ionicons; 
+        let iconName; 
+        if (routeName === "Home") {
+          iconName = `ios-home`;
+        } else if (routeName === "Search") {
+          iconName = `ios-search`;
+        } else if (routeName === "Directory") {
+          iconName = `ios-list`;
+        }
+        return (<IconComponent name={iconName} size={25} color={tintColor} />);
+      }
+    }),
+    tabbarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    }
+  },
+);
 
-const BottomNav = createBottomTabNavigator({
-  Home: HomeStack, 
-  Directory: DirStack,
-});
-
-const AppContainer = createAppContainer(BottomNav);
-
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Center /> 
-      </View>
-      // <AppContainer />    
-    );
-  }
-}
-
+export default createAppContainer(TabNavigator)
