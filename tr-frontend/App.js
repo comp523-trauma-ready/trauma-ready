@@ -6,19 +6,16 @@ import { createStackNavigator, createAppContainer, createBottomTabNavigator } fr
 
 import Home from './components/Home';
 import Directory from './components/Directory';
-import Search from './components/Search';
+import SearchTab from './components/SearchTab';
 
-const StandardComponent = (props) => (
-  <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-    <Text>standard component</Text>
-  </View>
-);
+const HomeStack = createStackNavigator({Home: Home});
+const DirectoryStack = createStackNavigator({Directory: Directory});
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: Home,
-    Search: Search,    
-    Directory: Directory,
+    Home: HomeStack,
+    Search: SearchTab,    
+    Directory: DirectoryStack,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
