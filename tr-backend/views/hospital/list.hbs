@@ -1,0 +1,31 @@
+<h3><a class="btn btn-secondary" href="/hospital"><i class="fa fa-plus"></i> Create New</a> Hospital List</h3>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Hospital Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Trauma Region</th>
+        <th>Trauma Level</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each list}}
+        <tr>
+            <td>{{this.hospitalName}}</td>
+            <td>{{this.address}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.traumaRegion}}</td>
+            <td>{{this.traumaLevel}}</td>
+
+            <td>
+                <a href="/hospital/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
+                <a href="/hospital/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
