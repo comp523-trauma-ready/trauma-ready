@@ -8,21 +8,15 @@ export default class SLTraumaCenter extends React.Component {
     super(props);
   }
 
-  render() {
-    const style = {
-      padding: 10,
-      backgroundColor: this.props.backgroundColor, // alternate b/w white or lightgray for better display
-    }
-
+  render () {
+    let {name, code, distance} = this.props.center; 
+    let buttonTitle = name + " | " + code + " | " + distance;
     return (
-      <View style={style}>
-        <Button 
-          title={this.props.centerName  + ' | ' + this.props.activationCode}
-          // onPress={(item) => this.props.navigation.navigate('Item')}
-          onPress={(item) => alert(item)}
-        />
-      </View>
+      <Button 
+        style={this.props.style} 
+        title={buttonTitle} 
+        onPress={() => this.props.navigation.navigate('TraumaCenter', {name: name, code: code, distance: distance})}
+      />
     );
   }
 }
-

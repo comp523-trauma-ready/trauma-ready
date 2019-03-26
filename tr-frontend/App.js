@@ -7,9 +7,10 @@ import { createStackNavigator, createAppContainer, createBottomTabNavigator } fr
 import Home from './components/Home';
 import Directory from './components/Directory';
 import SearchTab from './components/SearchTab';
+import TraumaCenter from './components/TraumaCenter';
 
 const HomeStack = createStackNavigator({Home: Home});
-const DirectoryStack = createStackNavigator({Directory: Directory});
+const DirectoryStack = createStackNavigator({Directory: Directory, TraumaCenter: TraumaCenter});
 
 const TabNavigator = createBottomTabNavigator(
   {

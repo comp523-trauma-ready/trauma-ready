@@ -1,6 +1,8 @@
 import React from 'react';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 
+import SLTraumaCenter from './SLTraumaCenter';
+
 export default class Directory extends React.Component {
   static navigationOptions = {
     title: "Directory",
@@ -114,7 +116,9 @@ export default class Directory extends React.Component {
         <SectionList 
           sections={this.state.sectionData}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-          renderItem={({item}) => <Text style={styles.item}>{item.name} | {item.code} | {item.distance} </Text>}
+          renderItem={({item}) => (
+            <SLTraumaCenter style={styles.item} navigation={this.props.navigation} center={item}/>
+          )}
           keyExtractor={(item, index) => index}
         />
       </View>
