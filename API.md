@@ -4,7 +4,7 @@
 * For automated endpoint unit testing: [Mochajs](https://mochajs.org)
 * For notes on API design: [AppLab slides](https://gitlab.com/unc-app-lab/backend-tutorial/blob/master/talk-slides.pdf)
 
-Operations on data that we need to support: 
+## Operations on data that we need to support: 
 
   * getting recommended hospitals based on distance
   * getting recommended hospitals based on search query
@@ -17,15 +17,41 @@ Operations on data that we need to support:
   * adding new hospitals 
   * adding new activation cards 
 
-Data models (JSON):  
+## Data models (JSON):  
 
-```hospitalPreview = {} ```
+```
+hospitalPreview = {
+  "id"    : Int,
+  "name"  : String, 
+} 
+```
 
-```hospitalProfile = {}```
+```
+hospitalProfile = {
+  "id"            : Int, 
+  "name"          : String,
+  "address"       : String,
+  "latitude"      : Double,
+  "longitude"     : Double,
+  "phone"         : String,
+  "activationIDs" : [Int],
+}
+```
 
-```activationPreview = {}```
+```
+activationPreview = {
 
-```activationProfile = {}```
+}
+```
+
+```
+activationProfile = {
+  
+}
+```
+  
+
+## Endpoints
 
 | Path                           | Method | Params                                  | Status   | Response            |
 |--------------------------------|--------|-----------------------------------------|----------|---------------------|
@@ -35,7 +61,7 @@ Data models (JSON):
 | /hospitals/:id                 | GET    | -                                       | 200, 404 | hospitalProfile     |
 | /hospitals/:id                 | POST   | hospitalProfile                         | 200, 404 | success/failure     |
 | /hospitals/:id                 | PUT    | hospitalProfile | {hospitalProfile}     | 200, 404 | obj: changed params |
-| /hospitals/:id/activations     | GET    | -                                       | 200, 404 | [activationPreview] |
-| /hospitals/:id/activations/:id | GET    | -                                       | 200, 404 | activationProfile   |
-| /hospitals/:id/activations/:id | POST   | activationProfile                       | 200, 404 | success/failure     |
-| /hospitals/:id/activations/:id | PUT    | activationProfile | {activationProfile} | 200, 404 | obj: changed params |
+| /activations                   | GET    | -                                       | 200, 404 | [activationPreview] |
+| /activations/:id               | GET    | -                                       | 200, 404 | activationProfile   |
+| /activations/:id               | POST   | activationProfile                       | 200, 404 | success/failure     |
+| /activations/:id               | PUT    | activationProfile | {activationProfile} | 200, 404 | obj: changed params |
