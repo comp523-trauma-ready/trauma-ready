@@ -1,6 +1,6 @@
+const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
 
 // Read credentials from localfile
 const credsFile = path.resolve(__dirname, 'credentials.txt');
@@ -16,13 +16,15 @@ let database = dp.substring(1, dp.length-1);
 let user = up.substring(1, up.length-1);
 let password = pp.substring(1, pp.length-1);
 
-mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, { useNewUrlParser: true }, (err) => {
-  if (!err) {
-    console.log('MongoDB Connection Successful');
-  } else {
-    console.log(`Error in DB connection : ${err}`);
+mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, { useNewUrlParser: true }, 
+  (err) => {
+    if (!err) {
+      console.log('MongoDB Connection Successful');
+    } else {
+      console.log(`Error in DB connection : ${err}`);
+    }
   }
-});
+);
 
 require('./employee.model');
 require('./hospital.model');

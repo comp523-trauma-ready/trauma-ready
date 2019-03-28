@@ -1,19 +1,21 @@
-require('./models/db');
-
+const bodyparser = require('body-parser');
 const express = require('express');
+const exphbs = require('express-handlebars');
+const path = require('path');
+
 const app = express();
 
-const bodyparser = require('body-parser');
-
-app.use(bodyparser.urlencoded({extended: true}));
-app.use(bodyparser.json());
+// Bootup database connection
+require('./models/db');
 
 const employeeRouter = require('./routes/employee');
 const hospitalRouter = require('./routes/hospital');
 
-const path = require('path');
-const exphbs = require('express-handlebars');
+// Allow express to recieve json from request bodies 
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: true}));
 
+// Page generation config
 app.set('views', path.join(__dirname, '../views/'));
 app.engine('hbs', exphbs({extname: 'hbs', 
   defaultLayout: 'mainLayout', 
@@ -26,4 +28,4 @@ app.use('/hospital', hospitalRouter);
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.info(`Server has started on ${PORT}`));
+app.listen(PORT, () => console.info(`Application running on ${PORT}`));
