@@ -1,22 +1,19 @@
 const mongoose = require('mongoose');
 
 let traumaSchema = new mongoose.Schema({
-    traumanId: {
-        type: Number,
-        required: 'This field is required'
-    },
-    traumaName: {
-        type: String
-    },
-    criteria: {
-        type: [String]
-    },
-    notes: {
-        type: String
-    }
+  id: {
+    type: Number,
+    required: "Must provide a unique id for each trauma"
+  },
+  name: {
+    type: String
+  },
+  criteria: {
+    type: [String]
+  },
+  notes: {
+    type: String
+  }
 });
 
-
-
-//module.exports = mongoose.model('Employee', employeeSchema);
 mongoose.model('Trauma', traumaSchema);

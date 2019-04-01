@@ -1,22 +1,19 @@
 const mongoose = require('mongoose');
 
 let racSchema = new mongoose.Schema({
-    racId: {
-        type: Number,
-        required: 'This field is required'
-    },
-    racName: {
-        type: String
-    },
-    activationCodes: {
-        type: [String]
-    },
-    notes: {
-        type: String
-    }
+  id: {
+    type: Number,
+    required: "Must provide a unique id for each RAC"
+  },
+  name: {
+    type: String
+  },
+  activationCodes: {
+    type: [String]
+  },
+  notes: {
+    type: String
+  }
 });
 
-
-
-// module.exports = mongoose.model('Employee', employeeSchema);
 mongoose.model('RAC', racSchema);
