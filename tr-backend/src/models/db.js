@@ -28,3 +28,6 @@ mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, { useNew
 
 require('./employee.model');
 require('./hospital.model');
+require('./activations.model');
+require('./rac.model');
+require('./trauma.model');

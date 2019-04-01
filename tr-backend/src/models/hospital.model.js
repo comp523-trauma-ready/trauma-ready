@@ -1,23 +1,39 @@
 const mongoose = require('mongoose');
 
 let hospitalSchema = new mongoose.Schema({
+  hospitalId: {
+    type: Number,
+    required: 'This field is required'
+  },
   hospitalName: {
     type: String,
     required: 'This field is required'
   },
-  email: {
-    type: String
-  },
-  phone: {
-    type: String
-  },
-  traumaRegion: {
-    type: String
-  },
-  address: {
+  rac: {
     type: String
   },
   traumaLevel: {
+    type: String
+  },
+  services: {
+    type: [String]
+  },
+  ddress: {
+    type: String
+  },
+  latitude: {
+    type: Number
+  },
+  longitude: {
+    type: Number
+  },
+  phoneDirectory: {
+    type: [String]
+  },
+  email: {
+    type: String
+  },
+  notes: {
     type: String
   }
 });

@@ -10,6 +10,10 @@ require('./models/db');
 
 const employeeRouter = require('./routes/employee');
 const hospitalRouter = require('./routes/hospital');
+const racRouter = require('./routes/rac');
+const traumaRouter = require('./routes/trauma');
+const activationsRouter = require('./routes/activations');
+
 
 // Allow express to recieve json from request bodies 
 app.use(bodyparser.json());
@@ -25,6 +29,10 @@ app.set('view engine', 'hbs');
 
 app.use('/employee', employeeRouter);
 app.use('/hospital', hospitalRouter);
+app.use('/rac', racRouter);
+app.use('/trauma', traumaRouter);
+app.use('/activations', activationsRouter);
+
 app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;

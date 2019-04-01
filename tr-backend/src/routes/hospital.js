@@ -21,8 +21,8 @@ function insertRecord(req, res) {
   var hospital = new Hospital();
   hospital.hospitalName = req.body.hospitalName;
   hospital.email = req.body.email;
-  hospital.phone = req.body.phone;
-  hospital.traumaRegion = req.body.traumaRegion;
+  hospital.phoneDirectory = req.body.phone;
+  hospital.rac = req.body.traumaRegion;
   hospital.address = req.body.address;
   hospital.traumaLevel = req.body.traumaLevel;
   hospital.save((err, doc) => {
