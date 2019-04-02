@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 let hospitalSchema = new mongoose.Schema({
-  hospitalId: {
+  id: {
     type: Number,
-    required: 'This field is required'
+    required: "Must provide a unique id for each hospital"
   },
-  hospitalName: {
+  name: {
     type: String,
-    required: 'This field is required'
+    required: "Must provide a valid name for hospital"
   },
   rac: {
     type: String
@@ -18,7 +18,7 @@ let hospitalSchema = new mongoose.Schema({
   services: {
     type: [String]
   },
-  ddress: {
+  address: {
     type: String
   },
   latitude: {
@@ -44,5 +44,4 @@ hospitalSchema.path('email').validate((val) => {
   return emailRegex.test(val);
 }, 'Invalid e-mail.');
 
-//module.exports = mongoose.model('Employee', employeeSchema);
 mongoose.model('Hospital', hospitalSchema);

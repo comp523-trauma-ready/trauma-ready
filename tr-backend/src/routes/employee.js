@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const mongoose = require('mongoose');
+const router = express.Router();
+
 const Employee = mongoose.model('Employee');
 
 router.get('/', (req, res) => {
@@ -18,7 +19,7 @@ router.post('/', (req, res) => {
 });
 
 function insertRecord(req, res) {
-  var employee = new Employee();
+  let employee = new Employee();
   employee.fullName = req.body.fullName;
   employee.email = req.body.email;
   employee.mobile = req.body.mobile;

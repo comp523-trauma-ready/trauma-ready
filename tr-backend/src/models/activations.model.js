@@ -22,7 +22,4 @@ let activationsSchema = new mongoose.Schema({
     }
 });
 
-
-
-//module.exports = mongoose.model('Employee', employeeSchema);
 mongoose.model('Activations', activationsSchema);

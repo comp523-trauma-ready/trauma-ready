@@ -20,36 +20,49 @@
 ## Data models (JSON):  
 
 ```
-hospitalPreview = {
-  "id"    : Int,
+hospitalModel = {
+  "id"             : Number,
+  "name"           : String,
+  "rac"            : String,
+  "traumaLevel"    : String,
+  "services"       : [String],
+  "address"        : String,
+  "latitude"       : Number,
+  "longitude"      : Number,
+  "phoneDirectory" : [String],
+  "email"          : String,
+  "notes"          : String,
+}
+```
+
+```
+traumaModel = {
+  "id"       : Number,
+  "name"     : String,
+  "criteria" : [String],
+  "notes"    : String, 
+}
+```
+
+```
+racModel = {
+  "id"    : Number, 
   "name"  : String, 
-} 
-```
-
-```
-hospitalProfile = {
-  "id"            : Int, 
-  "name"          : String,
-  "address"       : String,
-  "latitude"      : Double,
-  "longitude"     : Double,
-  "phone"         : String,
-  "activationIDs" : [Int],
+  "codes" : [String],
+  "notes" : String,
 }
 ```
 
 ```
-activationPreview = {
-
+// Web portal only 
+employeeModel = {
+  "first"  : String,
+  "last"   : String,
+  "email"  : String, 
+  "mobile" : String, 
+  "city"   : String,
 }
 ```
-
-```
-activationProfile = {
-  
-}
-```
-  
 
 ## Endpoints
 
