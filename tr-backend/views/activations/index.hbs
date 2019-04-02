@@ -1,0 +1,39 @@
+<h1>{{viewTitle}}</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Activation Id</th>
+        <th>Activation Name</th>
+        <th>Age</th>
+        <th>Regional Advisory Committees</th>
+        <th>Trauma</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each list}}
+        <tr>
+            <td>{{this.activationId}}</td>
+            <td>{{this.activationName}}</td>
+            <td>{{this.age}}</td>
+            <td>
+                {{#each this.racs}}
+                    <ul>
+                        <li>{{this}}</li>
+                    </ul>
+                {{/each}}</td>
+            <td>
+            {{#each this.trauma}}
+                <ul>
+                    <li>{{this}}</li>
+                </ul>
+            {{/each}}
+             </td>
+
+            <td>{{this.notes}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
