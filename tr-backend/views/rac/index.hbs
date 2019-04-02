@@ -1,0 +1,30 @@
+<h1>{{viewTitle}}</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>RAC Id</th>
+        <th>RAC Name</th>
+        <th>Activation Codes</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each list}}
+        <tr>
+            <td>{{this.racId}}</td>
+            <td>{{this.racName}}</td>
+            <td>
+                {{#each this.activationCodes}}
+                    <ul>
+                        <li>{{this}}</li>
+                    </ul>
+                {{/each}}
+            </td>
+            <td>{{this.notes}}</td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+

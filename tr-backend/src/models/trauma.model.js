@@ -5,11 +5,11 @@ let traumaSchema = new mongoose.Schema({
         type: Number,
         required: 'This field is required'
     },
-    traumaName: {
+    traumaType: {
         type: String
     },
     criteria: {
-        type: [String]
+        type: [Object]
     },
     notes: {
         type: String
