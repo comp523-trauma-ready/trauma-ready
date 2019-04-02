@@ -5,8 +5,15 @@ const router = express.Router();
 const Trauma = mongoose.model('Trauma');
 
 router.get('/', (req, res) => {
-  res.render('hospital/addOrEdit', {
-    viewTitle : "Add Hospital"
-  });
+    Trauma.find((err, docs) => {
+        if (!err) {
+            res.render('trauma/index', {
+                viewTitle: 'Trauma',
+                list: docs
+            });
+        } else {
+            console.log(`Error in retrieving trauma list : ${err}`);
+        }
+    });
 });
 module.exports = router;

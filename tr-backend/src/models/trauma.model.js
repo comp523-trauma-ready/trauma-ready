@@ -9,7 +9,7 @@ let traumaSchema = new mongoose.Schema({
     type: String
   },
   criteria: {
-    type: [String]
+    type: [Object]
   },
   notes: {
     type: String

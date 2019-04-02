@@ -1,3 +1,5 @@
+<h1>{{viewTitle}}</h1>
+
 <table class="table table-striped">
     <thead>
     <tr>
@@ -5,20 +7,20 @@
         <th>Trauma Type</th>
         <th>Criteria</th>
         <th>Notes</th>
-        <th>Trauma Region</th>
-        <th>Trauma Level</th>
         <th></th>
     </tr>
     </thead>
     <tbody>
     {{#each list}}
         <tr>
-            <td>{{this.traumaId}}</td>
-            <td>{{this.traumaType}}</td>
-            {{#each this.criteria}}
-                <td>{{this.rac}}</td>
-            {{/each}}
-            <td>{{this.email}}</td>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{#each this.criteria}}
+                <ul>
+                    <li>{{this.rac}}</li>
+                </ul>
+                {{/each}}
+             </td>
             <td>{{this.notes}}</td>
 
         </tr>
