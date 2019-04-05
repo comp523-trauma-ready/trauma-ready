@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 export default class Search extends React.Component {
   constructor(props) {
@@ -8,24 +8,9 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <View style={this.props.style}>
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Search by hospital or symptoms"
-          onChangeText={(text) => console.log(text)}
-        />
+      <View style={{flex: 1, justifyContent: "center", alignItems: "center", padding: 10}}>
+        <Text>Search</Text>
       </View>
     );
   }
 }
-
-//==================================================================================================
-
-const styles = StyleSheet.create({
-  searchBar: {
-    height: 40,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: "gray"
-  },
-});

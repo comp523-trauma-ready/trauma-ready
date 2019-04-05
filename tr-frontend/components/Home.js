@@ -1,69 +1,101 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Masthead from './Masthead';
-import Recommendations from './Recommendations';
-import Search from './Search';
-
 export default class Home extends React.Component {
   static navigationOptions = {
-    title: "Home",
-
-    headerStyle: {
-      backgroundColor: "#4B9CD3",
-    },
-    headerTintColor: "#fff",
-    headerTitleStyle: {
-      fontWeight: "bold"
-    },  
+    title: "Trauma Ready",
   }
 
   constructor(props) {
     super(props);
-  }  
+
+    this.state = {
+      alerts: [],
+      latitude: -1,
+      longitude: -1,
+      weather: [],
+      nearby: [],
+      search: "",
+    }
+  }
+
+  componentDidMount() {
+    // If first time opening, prompt for location permissions 
+    let watchId = navigator.geolocation.watchPosition(
+      /* success */ (pos) => {
+        let {latitude, longitude} = pos.coords;
+        console.log(pos);
+        this.setState({latitude: latitude, longitude: longitude});
+      }, 
+      /* failure */ (err) => { 
+        console.error(err);
+      }, 
+      /* options */ {timeout: 1000, enableHighAccuracy: true}
+    );
+  }
 
   render() {
     return (
-      <View style={styles.wrapper}>
-        <Masthead style={styles.masthead} />
-        <Search style={styles.search} />
-        <Recommendations style={styles.recommendations} />
+      <View style={styles.container}>
+        <View style={styles.subcontainer}>
+          <Text style={styles.h2}>Alerts</Text>
+          <Text style={styles.p}>None</Text>
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Text style={styles.h2}>Location</Text>
+          <Text style={styles.p}>Chapel Hill, NC | Orange County</Text>
+        </View>
+
+        <View style={styles.subcontainer}>
+          <Text style={styles.h2}>Weather</Text>
+          <Text style={styles.p}></Text>
+        </View>
+
+        <View style={[styles.subcontainer, {flex: 2}]}>
+          <Text style={styles.h2}>Nearby</Text>
+          <Text style={styles.p}></Text>
+        </View>
+
+        <View style={[styles.subcontainer, {flex: 2}]}>
+          <Text style={styles.h2}>Recent</Text>
+          <Text style={styles.p}></Text>
+        </View>
       </View>
     );
   }
 }
 
-//==================================================================================================
-
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1, 
-    justifyContent: "center",
-    alignItems: "stretch",
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    margin: 10,
     padding: 10,
-  }, 
-  masthead: {
-    flex: 1, 
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "lightgray",
-    borderWidth: 1,
-    marginBottom: 10,
+    borderWidth: 0.3,
+    borderColor: "black",
   },
-  search: {
-    flex: 1, 
-    justifyContent: "center",
-    alignItems: "stretch",
-    borderColor: "lightgray",
-    borderWidth: 1,
-    marginBottom: 10,
+  subcontainer: {
+    borderWidth: 0.3,
+    borderColor: "black",
+    padding: 4,
+    margin: 4,
   },
-  recommendations: {
-    flex: 4, 
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "lightgray",
-    borderWidth: 1,
-    marginTop: 10,
+  h1: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  h2: {
+    fontSize: 18,    
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  p: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 16,
   },
 });
