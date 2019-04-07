@@ -13,14 +13,19 @@
     <tbody>
     {{#each list}}
         <tr>
-            <td>{{this.id}}</td>
+            <td>{{this.tid}}</td>
             <td>{{this.name}}</td>
             <td>{{#each this.criteria}}
                 <ul>
                     <li>{{this.rac}}</li>
+                    {{#each this.activationCodes}}
+                        <ul>
+                            <li>{{this}}</li>
+                        </ul>
+                    {{/each}}
                 </ul>
-                {{/each}}
-             </td>
+            {{/each}}
+            </td>
             <td>{{this.notes}}</td>
 
         </tr>

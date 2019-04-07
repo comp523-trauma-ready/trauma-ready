@@ -88,6 +88,18 @@ router.get('/list', (req, res) => {
   });
 });
 
+router.get('/index', (req, res) => {
+  Hospital.find((err, docs) => {
+    if (!err) {
+      res.render('hospital/index', {
+        list: docs
+      });
+    } else {
+      console.log(`Error in retrieving hospital index : ${err}`);
+    }
+  });
+});
+
 router.get('/:id', (req, res) => {
   Hospital.findById(req.params.id, (err, doc) => {
     if (!err) {

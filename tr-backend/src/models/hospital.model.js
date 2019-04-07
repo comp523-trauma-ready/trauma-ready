@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let hospitalSchema = new mongoose.Schema({
-  id: {
+  hid: {
     type: Number,
     required: "Must provide a unique id for each hospital"
   },
@@ -27,9 +27,12 @@ let hospitalSchema = new mongoose.Schema({
   longitude: {
     type: Number
   },
-  phoneDirectory: {
-    type: [String]
-  },
+  phoneDirectory: [
+    {
+      connection: String,
+      number: String
+    }
+  ],
   email: {
     type: String
   },
