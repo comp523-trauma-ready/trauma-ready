@@ -101,24 +101,24 @@ router.get('/index', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
-    Hospital.findById(req.params.id, (err, doc) => {
-	if (!err) {
-	    res.render('hospital/addOrEdit', {
-		viewTitle: 'Update Hospital',
-		hospital: doc
-	    });
-	}
-    });
-});
+// router.get('/:id', (req, res) => {
+//     Hospital.findById(req.params.id, (err, doc) => {
+// 	if (!err) {
+// 	    res.render('hospital/addOrEdit', {
+// 		viewTitle: 'Update Hospital',
+// 		hospital: doc
+// 	    });
+// 	}
+//     });
+// });
 
 router.get('/delete/:id', (req, res) => {
     Hospital.findByIdAndRemove(req.params.id, (err, doc) => {
-	if (!err) {
-	    res.redirect('/hospital/list');
-	} else {
-	    console.log(`Error in hospital delete ${err}`);
-	}
+        if (!err) {
+            res.redirect('/hospital/list');
+        } else {
+            console.log(`Error in hospital delete ${err}`);
+        }
     });
 });
 
