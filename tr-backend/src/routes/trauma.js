@@ -17,4 +17,20 @@ router.get('/', (req, res) => {
         }
     });
 });
+
+router.get('/:tid', (req, res) => {
+    if(!req.params.tid) {
+        return res.status(400).send('Missing URL parameter: trauma id (tid)')
+    }
+    Trauma.findOne({
+        tid: req.params.tid
+    })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(404).json(err);
+        });
+});
+
 module.exports = router;

@@ -17,4 +17,19 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:rid', (req, res) => {
+    if(!req.params.rid) {
+        return res.status(400).send('Missing URL parameter: RAC ID (rid)')
+    }
+    RAC.findOne({
+        rid: req.params.rid
+    })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(404).json(err);
+        });
+});
+
 module.exports = router;

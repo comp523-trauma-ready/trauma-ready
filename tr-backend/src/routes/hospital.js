@@ -101,6 +101,21 @@ router.get('/index', (req, res) => {
   });
 });
 
+router.get('/:hid', (req, res) => {
+	if(!req.params.hid) {
+		return res.status(400).send('Missing URL parameter: hospital id (hid)')
+	}
+	Hospital.findOne({
+		hid: req.params.hid
+	})
+		.then(doc => {
+			res.json(doc);
+		})
+		.catch(err => {
+			res.status(404).json(err);
+		});
+});
+
 // router.get('/:id', (req, res) => {
 //     Hospital.findById(req.params.id, (err, doc) => {
 // 	if (!err) {
