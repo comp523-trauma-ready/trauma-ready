@@ -29,7 +29,7 @@ hospitalModel = {
   "address"        : String,
   "latitude"       : Number,
   "longitude"      : Number,
-  "phoneDirectory" : [String],
+  "phoneDirectory" : [Object],
   "email"          : String,
   "notes"          : String,
 }
@@ -39,7 +39,7 @@ hospitalModel = {
 traumaModel = {
   "id"       : Number,
   "name"     : String,
-  "criteria" : [String],
+  "criteria" : [Object],
   "notes"    : String, 
 }
 ```
