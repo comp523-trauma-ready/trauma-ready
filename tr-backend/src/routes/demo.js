@@ -17,10 +17,10 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 mongoose.connect(DATABASE_URL, { useNewUrlParser: false }/* Make true for Heroku deployment*/, (err) => {
     if (err) {
-	console.error(`${FgRed}ERROR:${Reset} ${err}`);
-	console.error(typeof DATABASE_URL);
+        console.error(`${FgRed}ERROR:${Reset} ${err}`);
+        console.error(typeof DATABASE_URL);
     } else {
-	console.log(`${FgGreen}SUCCESS:${Reset} Connected to MongoDB at ${DATABASE_URL}`);
+        console.log(`${FgGreen}SUCCESS:${Reset} Connected to MongoDB at ${DATABASE_URL}`);
     }
 });
 
@@ -47,17 +47,17 @@ Sample.collection.drop(); // reset data during development
 
 sampleDocument.save((err) => {
     if (err) {
-	console.error(err); 
+        console.error(err); 
     } else {
-	console.log("sampleDocument saved to database");
+        console.log("sampleDocument saved to database");
     }
 });
 
 Sample.insertMany(sampleDocuments, (err) => {
     if (err) {
-	console.error(err); 
+        console.error(err); 
     } else {
-	console.log("collection of documents saved to database");
+        console.log("collection of documents saved to database");
     }
 });
 
@@ -93,24 +93,24 @@ app.get("/", (req, res) => {
     res.send('requests are working\n');
 });
 
-app.listen(PORT, (err) => {
-    if (err) {
-	console.error(`${FgRed}ERROR:${Reset} ${err}`);
-    } else {
-	console.log(`${FgGreen}SUCCESS:${Reset} Application running on Port ${PORT}`);
-    }
-});
-
 /////////////////////////////////////////////
 // Sample route with db querying
 
-// app.get("/sample", (req, res) => {
-//     Sample.find({}, (err, docs) => {
-// 	if (err) {
-// 	    console.error(err);
-// 	    res.send("Error retrieving samples");
-// 	} else {
-// 	    res.send(JSON.stringify(docs));
-// 	}
-//     });
-// });
+app.get("/sample", (req, res) => {
+    Sample.find({}, (err, docs) => {
+     if (err) {
+         console.error(err);
+         res.send("Error retrieving samples");
+     } else {
+         res.send(JSON.stringify(docs));
+     }
+    });
+});
+
+app.listen(PORT, (err) => {
+    if (err) {
+        console.error(`${FgRed}ERROR:${Reset} ${err}`);
+    } else {
+        console.log(`${FgGreen}SUCCESS:${Reset} Application running on Port ${PORT}`);
+    }
+});
