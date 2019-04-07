@@ -1,0 +1,40 @@
+.bg-filter {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  position: fixed;
+}
+
+.edit-panel {
+  position: fixed;
+  margin-left: 25vw;
+  margin-top: 10vh;
+  width: 50vw;
+  height: 80vh;
+  background: #dddddd;
+  border: 2px solid #ffffff;
+  border-radius: 25px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.edit-panel div{
+  display: inline-block;
+  width: 100%;
+  padding: 0px 5px 0px 5px;
+}
+
+#header-wrapper{
+  overflow: hidden;
+  height: 20%;
+}
+#table-wrapper{
+  height: 70%;
+  border-top: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  overflow-y: scroll;
+}
+#footer-wrapper{
+  height: 10%;
+}
