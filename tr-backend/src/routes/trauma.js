@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
                 viewTitle: 'Trauma',
                 list: docs
             });
+            console.log(docs);
         } else {
             console.log(`Error in retrieving trauma list : ${err}`);
         }

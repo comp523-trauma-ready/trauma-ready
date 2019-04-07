@@ -94,6 +94,7 @@ router.get('/index', (req, res) => {
       res.render('hospital/index', {
         list: docs
       });
+      console.log(docs);
     } else {
       console.log(`Error in retrieving hospital index : ${err}`);
     }

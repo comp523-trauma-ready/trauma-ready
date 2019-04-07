@@ -7,7 +7,7 @@ const router = express.Router();
 const Hospital = mongoose.model('Hospital');
 const HospitalData = [
     {
-	id: 0,
+	hid: 0,
 	name: "UNC Health Care",
 	rac: "Mid-Carolina",
 	traumaLevel: "Adult, Pediatric",
@@ -15,7 +15,17 @@ const HospitalData = [
 	address: "101 Manning Drive, N.C. Neurosciences Hospital, Basement, Chapel Hill, NC 27514",
 	latitude: 0,  // Computed once by API at time of entry via Maps Geocoding service
 	longitude: 0,
-	phoneDirectory: ["984-974-4721", "984-974-5602", "984-974-2024"],
+	phoneDirectory: [
+		{
+			connection: "Patient Logistics Center-1",
+			number: "1-855-PLC-4-UNC"},
+		{
+			connection: "Emergency Department-Charge Nurse",
+			number: "984-974-5602"},
+		{
+			connection: "BAT PhONE",
+			number: "984-974-2024"}
+	 ],
 	email: "tarheeltrauma@unchealth.unc.edu",
 	notes: "GOAL: Door to Decision Time 15 Minutes..."
     }
@@ -23,7 +33,7 @@ const HospitalData = [
 
 const ActivationData = [
     {
-	id: 0,
+	aid: 0,
 	name: "Adult Red",
 	criteria: [
 	    "<b>Traumatic cardiac arrest</b> during transport to UNC",
@@ -44,7 +54,7 @@ const ActivationData = [
 	notes: "Age 0 - 15" 
     },
     {
-	id: 1,
+	aid: 1,
 	name: "Adult Yellow",
 	criteria: [
 	    "Respiratory rate <10 or >30",
