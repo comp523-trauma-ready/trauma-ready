@@ -93,6 +93,8 @@ app.get("/", (req, res) => {
     res.send('requests are working\n');
 });
 
+app.get("/home
+
 app.listen(PORT, (err) => {
     if (err) {
 	console.error(`${FgRed}ERROR:${Reset} ${err}`);
@@ -114,3 +116,4 @@ app.listen(PORT, (err) => {
 // 	}
 //     });
 // });
+
