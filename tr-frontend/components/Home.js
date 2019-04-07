@@ -2,100 +2,100 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default class Home extends React.Component {
-  static navigationOptions = {
-    title: "Trauma Ready",
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      alerts: [],
-      latitude: -1,
-      longitude: -1,
-      weather: [],
-      nearby: [],
-      search: "",
+    static navigationOptions = {
+	title: "Trauma Ready",
     }
-  }
 
-  componentDidMount() {
-    // If first time opening, prompt for location permissions 
-    let watchId = navigator.geolocation.watchPosition(
-      /* success */ (pos) => {
-        let {latitude, longitude} = pos.coords;
-        console.log(pos);
-        this.setState({latitude: latitude, longitude: longitude});
-      }, 
-      /* failure */ (err) => { 
-        console.error(err);
-      }, 
-      /* options */ {timeout: 1000, enableHighAccuracy: true}
-    );
-  }
+    constructor(props) {
+	super(props);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.subcontainer}>
-          <Text style={styles.h2}>Alerts</Text>
-          <Text style={styles.p}>None</Text>
-        </View>
+	this.state = {
+	    alerts: [],
+	    latitude: -1,
+	    longitude: -1,
+	    weather: [],
+	    nearby: [],
+	    search: "",
+	};
+    }
 
-        <View style={styles.subcontainer}>
-          <Text style={styles.h2}>Location</Text>
-          <Text style={styles.p}>Chapel Hill, NC | Orange County</Text>
-        </View>
+    componentDidMount() {
+	// If first time opening, prompt for location permissions 
+	let watchId = navigator.geolocation.watchPosition(
+	    /* success */ (pos) => {
+		let {latitude, longitude} = pos.coords;
+		console.log(pos);
+		this.setState({latitude: latitude, longitude: longitude});
+	    }, 
+	    /* failure */ (err) => { 
+		console.error(err);
+	    }, 
+	    /* options */ {timeout: 1000, enableHighAccuracy: true}
+	);
+    }
 
-        <View style={styles.subcontainer}>
-          <Text style={styles.h2}>Weather</Text>
-          <Text style={styles.p}></Text>
-        </View>
+    render() {
+	return (
+	    <View style={styles.container}>
+              <View style={styles.subcontainer}>
+		<Text style={styles.h2}>Alerts</Text>
+		<Text style={styles.p}>None</Text>
+              </View>
 
-        <View style={[styles.subcontainer, {flex: 2}]}>
-          <Text style={styles.h2}>Nearby</Text>
-          <Text style={styles.p}></Text>
-        </View>
+              <View style={styles.subcontainer}>
+		<Text style={styles.h2}>Location</Text>
+		<Text style={styles.p}>Chapel Hill, NC | Orange County</Text>
+              </View>
 
-        <View style={[styles.subcontainer, {flex: 2}]}>
-          <Text style={styles.h2}>Recent</Text>
-          <Text style={styles.p}></Text>
-        </View>
-      </View>
-    );
-  }
+              <View style={styles.subcontainer}>
+		<Text style={styles.h2}>Weather</Text>
+		<Text style={styles.p}></Text>
+              </View>
+
+              <View style={[styles.subcontainer, {flex: 2}]}>
+		<Text style={styles.h2}>Nearby</Text>
+		<Text style={styles.p}></Text>
+              </View>
+
+              <View style={[styles.subcontainer, {flex: 2}]}>
+		<Text style={styles.h2}>Recent</Text>
+		<Text style={styles.p}></Text>
+              </View>
+	    </View>
+	);
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    margin: 10,
-    padding: 10,
-    borderWidth: 0.3,
-    borderColor: "black",
-  },
-  subcontainer: {
-    borderWidth: 0.3,
-    borderColor: "black",
-    padding: 4,
-    margin: 4,
-  },
-  h1: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginTop: 4,
-    marginBottom: 4,
-  },
-  h2: {
-    fontSize: 18,    
-    marginTop: 4,
-    marginBottom: 4,
-  },
-  p: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    paddingLeft: 16,
-  },
+    container: {
+	flex: 1,
+	flexDirection: "column",
+	justifyContent: "flex-start",
+	margin: 10,
+	padding: 10,
+	borderWidth: 0.3,
+	borderColor: "black",
+    },
+    subcontainer: {
+	borderWidth: 0.3,
+	borderColor: "black",
+	padding: 4,
+	margin: 4,
+    },
+    h1: {
+	fontSize: 24,
+	fontWeight: "bold",
+	marginTop: 4,
+	marginBottom: 4,
+    },
+    h2: {
+	fontSize: 18,    
+	marginTop: 4,
+	marginBottom: 4,
+    },
+    p: {
+	paddingTop: 8,
+	paddingBottom: 8,
+	paddingLeft: 16,
+    },
 });

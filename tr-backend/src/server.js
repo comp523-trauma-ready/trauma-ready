@@ -14,7 +14,7 @@ const racRouter = require('./routes/rac');
 const traumaRouter = require('./routes/trauma');
 const activationsRouter = require('./routes/activations');
 
-const demoRouter = require('./routes/demoRoutes');
+const demoRouter = require('./routes/demo');
 
 // Allow express to recieve json from request bodies 
 app.use(bodyparser.json());
@@ -22,9 +22,10 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 // Page generation config
 app.set('views', path.join(__dirname, '../views/'));
-app.engine('hbs', exphbs({extname: 'hbs', 
-  defaultLayout: 'mainLayout', 
-  layoutsDir: path.join(__dirname, '../views/layouts/')
+app.engine('hbs', exphbs({
+    extname: 'hbs', 
+    defaultLayout: 'mainLayout', 
+    layoutsDir: path.join(__dirname, '../views/layouts/')
 }));
 app.set('view engine', 'hbs');
 

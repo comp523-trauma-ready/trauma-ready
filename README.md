@@ -1,11 +1,12 @@
 # Trauma Ready 
----
 Master repository for all code related to the *Trauma Ready* mobile app, administrator portal, and backend server. 
+
 For more information, visit our project [website](https://comp523-trauma-ready.github.io).
+
 Built in collaboration with UNC Health Care for COMP 523, Spring 2019. 
 
 ## Overview
----
+
 ### What it does
 The job of an EMT is not an easy one. For each incident, it roughly consists of a three step process: getting to the people who need help, stabilizing them, and figuring out how to get them the right level of care at the right trauma center. *Trauma Ready* is a cross-platform mobile app that assists paramedics in the last step of this process by providing a unified source of the information they need to make these routing decisions. Upon opening, the app provides a status feed of nearby hospitals, traffic, and weather information that is customized to the user's location: 
 
@@ -23,8 +24,9 @@ Lastly, accuracy and accessibility are priorities for this app as it's designed 
     * Local storage 
 
 ## Getting Started (Developers)
----
+
 *Instructions currently only apply to Mac/Linux systems. Windows support in progress.*
+
 ### Backend
 First, open up Terminal and make sure you have command line tools installed 
 
@@ -45,6 +47,7 @@ Finally, to run the backend you'll need credentials to access it's associated da
 which should display a success message for both the server running locally and your connection to the database. 
 
 ### Frontend
+
 We use [Expo](https://expo.io/learn) to develop the React Native frontend. Their website provides detailed installation instructions, but assuming you have Node installed already you may simply run
 
   `npm install expo-cli --global`
@@ -55,14 +58,14 @@ Then
   
   `npm start`
   
-should open dev-tools and provide a barcode in your terminal that you may scan. You'll need to either develop the Expo mobile app to your physical device or acquire iOS and Android emulators from XCode and Android Studio respectively. Alternatively, Expo provides a browser based interface called [Snack](https://snack.expo.io). I haven't figure out how to make that play nicely with our dependencies yet (i.e. React Navigation), but possibly more to come on that eventually.
+should open dev-tools and provide a barcode in your terminal that you may scan. You'll need to either develop the Expo mobile app to your physical device or acquire iOS and Android emulators from XCode and Android Studio respectively. Alternatively, Expo provides a browser based interface called [Snack](https://snack.expo.io). 
 
 ## Testing 
----
+
 *In progress*
 
 ## References 
----
+
 * [Express.js](https://expressjs.com)
 * [Jest](https://jestjs.io)
 * [Mongoose](https://mongoosejs.com)
