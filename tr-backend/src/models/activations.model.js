@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 let activationsSchema = new mongoose.Schema({
-    activationId: {
+    aid: {
         type: Number,
         required: 'This field is required'
     },
-    activationName: {
+    name: {
         type: String
     },
     age: {

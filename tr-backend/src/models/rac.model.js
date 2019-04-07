@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let racSchema = new mongoose.Schema({
-  id: {
+  rid: {
     type: Number,
     required: "Must provide a unique id for each RAC"
   },

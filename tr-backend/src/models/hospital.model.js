@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let hospitalSchema = new mongoose.Schema({
-  id: {
+  hid: {
     type: Number,
     required: "Must provide a unique id for each hospital"
   },
@@ -27,9 +27,12 @@ let hospitalSchema = new mongoose.Schema({
   longitude: {
     type: Number
   },
-  phoneDirectory: {
-    type: [String]
-  },
+  phoneDirectory: [
+    {
+      connection: String,
+      number: String
+    }
+  ],
   email: {
     type: String
   },
@@ -40,8 +43,8 @@ let hospitalSchema = new mongoose.Schema({
 
 // Custom validation for email
 hospitalSchema.path('email').validate((val) => {
-  emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return emailRegex.test(val);
+    emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return emailRegex.test(val);
 }, 'Invalid e-mail.');
 
 mongoose.model('Hospital', hospitalSchema);
