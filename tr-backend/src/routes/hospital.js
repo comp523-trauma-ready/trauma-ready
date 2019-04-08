@@ -11,12 +11,30 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if (req.body._id == '') {
-	insertRecord(req, res);
-    } else {
-	updateRecord(req, res);
-    }
+	if(!req.body) {
+		return res.status(400).send('Request body is missing');
+	}
+	let newHospital = new Hospital(req.body);
+	newHospital.save()
+		.then(doc => {
+			if(!doc || doc.length === 0) {
+				return res.status(500).send(doc);
+			}
+
+			res.status(201).send(doc);
+		})
+		.catch(err => {
+			res.status(500).json(err);
+		});
 });
+
+// router.post('/', (req, res) => {
+//     if (req.body._id == '') {
+// 	insertRecord(req, res);
+//     } else {
+// 	updateRecord(req, res);
+//     }
+// });
 
 function insertRecord(req, res) {
     let hospital = new Hospital();
