@@ -1,0 +1,15 @@
+.git
+.DS_Store
+node_modules
+
+tr-backend/src/models/credentials.txt
+tr-backend/node_modules
+
+tr-frontend/node_modules/**/*
+tr-frontend/.expo/*
+tr-frontend/npm-debug.*
+tr-frontend/*.jks
+tr-frontend/*.p12
+tr-frontend/*.key
+tr-frontend/*.mobileprovision
+tr-frontend/.DS_Store
