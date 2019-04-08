@@ -19,18 +19,19 @@
             <td>{{this.name}}</td>
             <td>{{this.age}}</td>
             <td>
-                {{#each this.racs}}
-                    <ul>
-                        <li>{{this}}</li>
-                    </ul>
-                {{/each}}</td>
+              {{#each this.racs}}
+                {{this}}
+              {{/each}}
+            </td>
             <td>
-            {{#each this.trauma}}
+              <div class="ul-container">
                 <ul>
+                  {{#each this.trauma}}
                     <li>{{this}}</li>
+                  {{/each}}
                 </ul>
-            {{/each}}
-             </td>
+              </div>
+            </td>
 
             <td>{{this.notes}}</td>
             <td></td>
