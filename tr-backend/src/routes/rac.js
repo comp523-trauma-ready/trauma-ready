@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
     });
 });
 
+// GET request based on parameter rid
 router.get('/:rid', (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC ID (rid)')
@@ -31,5 +32,6 @@ router.get('/:rid', (req, res) => {
             res.status(404).json(err);
         });
 });
+
 
 module.exports = router;
