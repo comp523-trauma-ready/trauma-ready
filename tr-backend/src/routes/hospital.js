@@ -36,6 +36,7 @@ router.post('/', (req, res) => {
 //     }
 // });
 
+
 function insertRecord(req, res) {
     let hospital = new Hospital();
     hospital.hospitalName = req.body.hospitalName;
@@ -112,7 +113,6 @@ router.get('/index', (req, res) => {
             res.render('hospital/index', {
                 list: docs
             });
-            console.log(docs);
         } else {
             console.log(`Error in retrieving hospital index : ${err}`);
         }

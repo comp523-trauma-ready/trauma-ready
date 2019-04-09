@@ -16,15 +16,28 @@ let database = dp.substring(1, dp.length-1);
 let user = up.substring(1, up.length-1);
 let password = pp.substring(1, pp.length-1);
 
-mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, { useNewUrlParser: true },
-    (err) => {
-	if (!err) {
-	    console.log('MongoDB Connection Successful');
-	} else {
-	    console.log(`Error in DB connection : ${err}`);
-	}
-    }
-);
+let uri = process.env.MONGODB_URI;
+if (uri) {
+	mongoose.connect(uri, {useNewUrlParser: true},
+        (err) => {
+            if (!err) {
+                console.log('MongoDB Connection Successful');
+            } else {
+                console.log(`Error in DB connection : ${err}`);
+            }
+        }
+		);
+} else {
+    mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, {useNewUrlParser: true},
+        (err) => {
+            if (!err) {
+                console.log('MongoDB Connection Successful');
+            } else {
+                console.log(`Error in DB connection : ${err}`);
+            }
+        }
+    );
+}
 
 require('./employee.model');
 require('./hospital.model');
