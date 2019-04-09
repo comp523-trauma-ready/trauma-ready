@@ -1,9 +1,9 @@
 .git
 .DS_Store
-node_modules
+node_modules/
 
 tr-backend/src/models/credentials.txt
-tr-backend/node_modules
+tr-backend/node_modules/
 
 tr-frontend/node_modules/**/*
 tr-frontend/.expo/*
