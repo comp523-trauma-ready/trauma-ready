@@ -48,7 +48,7 @@ traumaModel = {
 racModel = {
   "id"    : Number, 
   "name"  : String, 
-  "codes" : [String],
+  "activationCodes" : [Object],
   "notes" : String,
 }
 ```

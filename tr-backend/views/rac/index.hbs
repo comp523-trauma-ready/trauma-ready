@@ -5,7 +5,7 @@
     <tr>
         <th>RAC Id</th>
         <th>RAC Name</th>
-        <th>Activation Codes</th>
+        <th>Activation IDs and Codes</th>
         <th>Notes</th>
     </tr>
     </thead>
@@ -17,7 +17,7 @@
             <td>
                 {{#each this.activationCodes}}
                     <ul>
-                        <li>{{this}}</li>
+                        <li>{{this.aid}} : {{this.code}}</li>
                     </ul>
                 {{/each}}
             </td>

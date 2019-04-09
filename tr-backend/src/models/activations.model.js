@@ -11,7 +11,7 @@ let activationsSchema = new mongoose.Schema({
     age: {
         type: String
     },
-    racs: {
+    rac: {
         type: String
     },
     trauma: {

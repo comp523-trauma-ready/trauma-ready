@@ -8,9 +8,14 @@ let racSchema = new mongoose.Schema({
   name: {
     type: String
   },
-  activationCodes: {
-    type: [String]
-  },
+  // activationCodes: {
+  //   type: [String]
+  // },
+  activationCodes: [
+    {
+      aid: Number,
+      code: String
+    }],
   notes: {
     type: String
   }
