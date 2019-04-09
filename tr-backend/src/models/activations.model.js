@@ -12,7 +12,7 @@ let activationsSchema = new mongoose.Schema({
         type: String
     },
     racs: {
-        type: [String]
+        type: String
     },
     trauma: {
         type: [String]
