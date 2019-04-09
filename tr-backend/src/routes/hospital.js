@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Hospital = mongoose.model('Hospital');
 
-router.get('/', (req, res) => {
+router.get('/edit', (req, res) => {
     res.render('hospital/addOrEdit', {
         viewTitle : "Add Hospital"
     });
@@ -107,7 +107,7 @@ router.get('/list', (req, res) => {
     });
 });
 
-router.get('/index', (req, res) => {
+router.get('/', (req, res) => {
     Hospital.find((err, docs) => {
         if (!err) {
             res.render('hospital/index', {

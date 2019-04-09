@@ -29,12 +29,9 @@
             <td>{{this.address}}</td>
             <td>{{#each this.phoneDirectory}}
                 <ul>
-                    <li>{{this.connection}}</li>
-                    <ul>
-                        <li>{{this.number}}</li>
-                    </ul>
+                    <li>{{this.connection}}:
+                        {{this.number}}</li>
                 </ul>
-
             {{/each}}</td>
             <td>{{this.email}}</td>
             <td>{{this.notes}}</td>

@@ -6,7 +6,7 @@
         <th>Activation Id</th>
         <th>Activation Name</th>
         <th>Age</th>
-        <th>Regional Advisory Committees</th>
+        <th>Regional Advisory Committee</th>
         <th>Trauma</th>
         <th>Notes</th>
         <th></th>
@@ -18,19 +18,16 @@
             <td>{{this.aid}}</td>
             <td>{{this.name}}</td>
             <td>{{this.age}}</td>
+            <td>{{this.rac}}</td>
             <td>
-                {{#each this.racs}}
-                    <ul>
-                        <li>{{this}}</li>
-                    </ul>
-                {{/each}}</td>
-            <td>
-            {{#each this.trauma}}
+              <div class="ul-container">
                 <ul>
+                  {{#each this.trauma}}
                     <li>{{this}}</li>
+                  {{/each}}
                 </ul>
-            {{/each}}
-             </td>
+              </div>
+            </td>
 
             <td>{{this.notes}}</td>
             <td></td>
