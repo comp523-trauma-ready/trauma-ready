@@ -44,7 +44,12 @@ Finally, to run the backend locally you'll need credentials to access it's assoc
 
   `npm start`
 
-which should display a success message for both the server running locally and your connection to the database. 
+which should display a success message for both the server running locally and your connection to the database. Alternatively, one can run 
+   `npm run start-watch`
+   
+for development programming.
+
+Libraries that were imported for the functionality of this backend were: [Express](https://expressjs.com), [Express Handlebars](https://www.npmjs.com/package/express-handlebars), [Mongoose](https://mongoosejs.com/), and [Body-Parser]https://www.npmjs.com/package/body-parser. [Nodemon](https://nodemon.io/) was also imported for development purposes. Upon cloning the repository, all of these resources should already be present. 
 
 ### Heroku
 Heroku is the cloud platform as a service (PaaS) on which the backend of the application runs. It is through Heroku that the server connects with the MongoDB database using mLab MongoDB. To view the mLab interface for the given application, one need only login to Heroku, click on the link to the given application (named comp523-statt-web-portal), click on the resources header, and finally click on the link "mLab MongoDB."
