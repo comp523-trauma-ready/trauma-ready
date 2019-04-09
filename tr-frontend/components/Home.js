@@ -11,10 +11,11 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        const url = "http://localhost:3000/sample";
-        fetch(url)
-            .then(res => res.json())
-            .then(json => console.log(JSON.stringify(json, null, 2)));
+	
+        // const url = "http://localhost:3000/sample";
+        // fetch(url)
+        //     .then(res => res.json())
+        //     .then(json => console.log(JSON.stringify(json, null, 2)));
         
         // If first time opening, prompt for location permissions 
         // let watchId = navigator.geolocation.watchPosition(

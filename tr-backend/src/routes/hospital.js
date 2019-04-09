@@ -4,10 +4,32 @@ const router = express.Router();
 
 const Hospital = mongoose.model('Hospital');
 
-router.get('/edit', (req, res) => {
-    res.render('hospital/addOrEdit', {
-        viewTitle : "Add Hospital"
+// TODO: add docstrings above each endpoint
+
+/********** JSON rendering endpoints **********/
+
+// Will find better naming solution later
+router.get('/json', (req, res) => {
+    Hospital.find((err, docs) => {
+	if (err) {
+	    res.status(404).json(err);
+	} else {
+	    res.status(200).json(docs);
+	}
     });
+});
+
+router.get('/:hid', (req, res) => {
+    if (!req.params.hid) {
+        return res.status(400).send('Missing URL parameter: hospital id (hid)')
+    }
+    Hospital.findOne({ hid: req.params.hid })
+	.then(doc => {
+            res.json(doc);
+	})
+	.catch(err => {
+            res.status(404).json(err);
+        });
 });
 
 router.post('/', (req, res) => {
@@ -17,7 +39,7 @@ router.post('/', (req, res) => {
     let newHospital = new Hospital(req.body);
     newHospital.save()
         .then(doc => {
-            if(!doc || doc.length === 0) {
+            if (!doc || doc.length === 0) {
                 return res.status(500).send(doc);
             }
 
@@ -28,6 +50,62 @@ router.post('/', (req, res) => {
         });
 });
 
+/********** HTML rendering endpoints **********/
+
+router.get('/edit', (req, res) => {
+    res.render('hospital/addOrEdit', {
+        viewTitle : "Add Hospital"
+    });
+});
+
+router.get('/list', (req, res) => {
+    Hospital.find((err, docs) => {
+        if (!err) {
+            res.render('hospital/list', {
+                list: docs
+            });
+        } else {
+            console.log(`Error in retrieving hospital list : ${err}`);
+        }
+    });
+});
+
+router.get('/', (req, res) => {
+    Hospital.find((err, docs) => {
+        if (!err) {
+            res.render('hospital/index', {
+                list: docs
+            });
+            console.log(docs);
+        } else {
+            console.log(`Error in retrieving hospital index : ${err}`);
+        }
+    });
+});
+
+router.get('/delete/:id', (req, res) => {
+    Hospital.findByIdAndRemove(req.params.id, (err, doc) => {
+        if (!err) {
+            res.redirect('/hospital/list');
+        } else {
+            console.log(`Error in hospital delete ${err}`);
+        }
+    });
+});
+
+/*********************************************/
+
+// router.get('/:id', (req, res) => {
+//     Hospital.findById(req.params.id, (err, doc) => {
+//  if (!err) {
+//      res.render('hospital/addOrEdit', {
+//    viewTitle: 'Update Hospital',
+//    hospital: doc
+//      });
+//  }
+//     });
+// });
+
 // router.post('/', (req, res) => {
 //     if (req.body._id == '') {
 //         insertRecord(req, res);
@@ -35,6 +113,8 @@ router.post('/', (req, res) => {
 //         updateRecord(req, res);
 //     }
 // });
+
+/********** Logic/integrity methods **********/
 
 function insertRecord(req, res) {
     let hospital = new Hospital();
@@ -94,63 +174,6 @@ function handleValidationError(err, body) {
     }
 };
 
-router.get('/list', (req, res) => {
-    Hospital.find((err, docs) => {
-        if (!err) {
-            res.render('hospital/list', {
-                list: docs
-            });
-        } else {
-            console.log(`Error in retrieving hospital list : ${err}`);
-        }
-    });
-});
-
-router.get('/', (req, res) => {
-    Hospital.find((err, docs) => {
-        if (!err) {
-            res.render('hospital/index', {
-                list: docs
-            });
-            console.log(docs);
-        } else {
-            console.log(`Error in retrieving hospital index : ${err}`);
-        }
-    });
-});
-
-router.get('/:hid', (req, res) => {
-    if (!req.params.hid) {
-        return res.status(400).send('Missing URL parameter: hospital id (hid)')
-    }
-    Hospital.findOne({ hid: req.params.hid })
-	.then(doc => {
-            res.json(doc);
-	})
-	.catch(err => {
-            res.status(404).json(err);
-        });
-});
-
-// router.get('/:id', (req, res) => {
-//     Hospital.findById(req.params.id, (err, doc) => {
-//  if (!err) {
-//      res.render('hospital/addOrEdit', {
-//    viewTitle: 'Update Hospital',
-//    hospital: doc
-//      });
-//  }
-//     });
-// });
-
-router.get('/delete/:id', (req, res) => {
-    Hospital.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('/hospital/list');
-        } else {
-            console.log(`Error in hospital delete ${err}`);
-        }
-    });
-});
+/*********************************************/
 
 module.exports = router;
