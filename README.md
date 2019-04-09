@@ -40,11 +40,23 @@ Change into the backend directory and install its dependencies
 
   `cd tr-backend && npm install` 
 
-Finally, to run the backend you'll need credentials to access it's associated database on Heroku. Go to the team's Google Drive and download 'credentials.txt'. Place it under `trauma-ready/tr-backend/src/models` so that `db.js` may parse it in. Finally, `cd` back into the `tr-backend` directory and run 
+Finally, to run the backend locally you'll need credentials to access it's associated database on Heroku. Go to the team's Google Drive and download 'credentials.txt'. Place it under `trauma-ready/tr-backend/src/models` so that `db.js` may parse it in. Finally, `cd` back into the `tr-backend` directory and run 
 
   `npm start`
 
 which should display a success message for both the server running locally and your connection to the database. 
+
+### Heroku
+Heroku is the cloud platform as a service (PaaS) on which the backend of the application runs. It is through Heroku that the server connects with the MongoDB database using mLab MongoDB. To view the mLab interface for the given application, one need only login to Heroku, click on the link to the given application (named comp523-statt-web-portal), click on the resources header, and finally click on the link "mLab MongoDB."
+
+The login information to Heroku and ownership of the account are, at the completion of the semester, handed over to the client for their possession and management.
+
+### GitHub
+The login information to the Github account (named comp523-trauma-ready) which contains the application repository (named trauma-ready) and ownership of the account are, at the completion of the semester, handed over to the client for their possession and management.
+
+Note: Above is described a method of running the backend locally using the file credentials.txt. Due to the possibility of certain parties gaining undesirable access to the database, neither this file, nor any information stating the username or password of the database, should ever be stored in the GitHub repository. 
+
+In order to connect the server with the database in a more secure fashion, under trauma-ready/tr-backend/src/models/db.js, mongoose should connect with the config var MONGODB_URI using process.env . Information on this config var can be accessed and managed using the information found at the following link: https://devcenter.heroku.com/articles/config-vars .
 
 ### Frontend
 
