@@ -1,1 +1,1 @@
-web: node ./tr-backend/src/server.js
+web: cd tr-backend && npm start 
