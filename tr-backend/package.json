@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "demo": "node src/routes/demo.js"
   },
-  "install" : "node build",
+  "install": "node build",
   "keywords": [],
   "author": "",
   "license": "ISC",
