@@ -4,17 +4,6 @@ const router = express.Router();
 
 const Hospital = mongoose.model('Hospital');
 
-// Will find better naming solution later
-router.get('/json', (req, res) => {
-    Hospital.find((err, docs) => {
-  if (err) {
-      res.status(404).json(err);
-  } else {
-      res.status(200).json(docs);
-  }
-    });
-});
-
 router.get('/edit', (req, res) => {
     res.render('hospital/addOrEdit', {
         viewTitle : "Add Hospital"

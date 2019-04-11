@@ -14,7 +14,7 @@ const racRouter = require('./routes/rac');
 const traumaRouter = require('./routes/trauma');
 const activationsRouter = require('./routes/activations');
 
-//const demoRouter = require('./routes/demo');
+const mobileRouter = require('./routes/mobile');
 
 // Allow express to recieve json from request bodies 
 app.use(bodyparser.json());
@@ -34,6 +34,8 @@ app.use('/hospital', hospitalRouter);
 app.use('/rac', racRouter);
 app.use('/trauma', traumaRouter);
 app.use('/activations', activationsRouter);
+
+app.use('/mobile', mobileRouter);
 
 //app.use('/demo', demoRouter);
 
