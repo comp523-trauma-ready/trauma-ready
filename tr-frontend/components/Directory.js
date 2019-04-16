@@ -101,7 +101,7 @@ class DirectoryItem extends React.Component {
         this.props.data.navigation.navigate({
             routeName: "Hospital",
             params: {
-                name: this.props.data.hname,
+                data: this.props,
             }
         })
     }

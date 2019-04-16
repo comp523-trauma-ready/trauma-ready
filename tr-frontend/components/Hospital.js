@@ -15,10 +15,15 @@ export default class Hospital extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+        // These object schemas must be cleaned up 
+        let hname = this.props.navigation.state.params.data.data.hname;
+        let address = this.props.navigation.state.params.data.data.address;
+        let email = this.props.navigation.state.params.data.data.email;
         return (
             <View>
-                <Text>{this.props.navigation.state.params.name}</Text>
+                <Text>{hname}</Text>
+                <Text>{address}</Text>
+                <Text>{email}</Text>
             </View>
         );
     }
