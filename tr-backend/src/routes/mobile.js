@@ -62,7 +62,7 @@ router.get("/dir/alpha", (req, res) => {
 // URL: 
 //      localhost:3000/mobile/home/nearby?latitude=x&longitude=y
 //
-// On bootup, phone gets users latitude and longitude and hits this endpoint 
+// On bootup, phone gets user latitude and longitude and hits this endpoint
 // with those values encoded as a query string to find nearby hospitals.
 //
 // Returns:
