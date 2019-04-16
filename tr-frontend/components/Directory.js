@@ -6,83 +6,42 @@ export default class Directory extends React.Component {
         title: "Directory",
         headerStyle: {
             backgroundColor: "#4B9CD3",
-        }
+        },
+        headerTintColor: "white",
     }
 
     constructor(props) {
         super(props);
         this.state = {
             organizeByRAC: false, // default: alphabetical
-            hospitals: [
-                {
-                    hid: 0,
-                    hname: "UNC Hospitals",
-                    rac: "Mid Carolina Trauma",
-                    traumaLevel: 1,
-                    services: [
-                        "Trauma/Emergency Department",
-                        "Surgery",
-                        "Neuroscience",
-                        "Pediatrics",
-                    ],
-                    address: "101 Manning Drive, Chapel Hill, NC 27514",
-                    email: "tarheeltrauma@unc.health.unc.edu",
-                },
-                {
-                    hid: 1, 
-                    hname: "Cape Fear Valley Medical Center",
-                    rac: "Mid Carolina Trauma",
-                    traumaLevel: 3, 
-                    services: [
-                        "Trauma/Emergency Department",
-                        "Surgery",
-                        "Neuroscience",
-                        "Pediatrics",
-                        "Rehab",
-                        "Neonatology Services",
-                        "Carelink",
-                        "Radiology",
-                        "Heart & Vascular Services",
-                        "Hermatology",
-                        "Oncology"
-                    ],
-                    address: "1638 Owen Drive, Fayetteville, NC 28304",
-                    email: "info@capefearvalley.com",
-                }
-            ],
+            hospitals: [],
         };
     }
 
-    // TODO: Retrieve state data from backend 
     componentDidMount() {
-        // This code setup is correct, but some technical networking detail is causing an 
-        // unspecified error with the request. Will have to debug later. 
-        // const hospitalEndpoint = "https://127.0.0.1:3000/mobile/hospitals";
-        // fetch(hospitalEndpoint)
-        //     .then(res => res.json())
-        //     .then(json => {
-        //         console.log("json recieved");
-        //         console.log(this.state);
-        //         this.setState({ hospitals : json });
-        //     })
-        //     .catch(err => console.error(err));
+        const hospitalEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/hospitals";
+        fetch(hospitalEndpoint)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ hospitals : json });
+            })
+            .catch(err => console.error(err));
     }
 
     render() {
+        let sections = this.state.hospitals.map((hospital, index) => {
+            return { key : index, title : hospital.name.charAt(0).toUpperCase(), data : [hospital] }
+        });
         return (
             <View style={styles.container}>
                 <SectionList
                     renderSectionHeader={({section}) => 
                         <Text style={styles.sectionHeader}>{section.title}</Text>
                     }
-                    renderItem={(i) => {
-                        let {item, index, section} = i;
-                        return (<DirectoryItem data={{...this.props, ...item}} />);
-                    }}
-                    sections={[
-                        { key: 0, title: "C", data: [this.state.hospitals[1]] },
-                        { key: 1, title: "U", data: [this.state.hospitals[0]] },
-                    ]}
+                    renderItem={(i) => 
+                        <DirectoryItem navigation={this.props.navigation} item={i.item} />
+                    }
+                    sections={sections}
                     keyExtractor={(item, index) => index}
                 />
             </View>
@@ -97,20 +56,19 @@ class DirectoryItem extends React.Component {
     }
 
     handleTouch(touchEvent) {
-        console.log("touch recieved");
-        this.props.data.navigation.navigate({
+        this.props.navigation.navigate({
             routeName: "Hospital",
             params: {
-                data: this.props,
+                item: this.props.item,
             }
-        })
+        });
     }
 
     render() {
         return (
             <TouchableHighlight onPress={this.handleTouch}>
                 <View style={styles.diContainer}>
-                    <Text style={styles.diTitle}>{this.props.data.hname}</Text>
+                    <Text style={styles.diTitle}>{this.props.item.name}</Text>
                 </View>
             </TouchableHighlight>
         );

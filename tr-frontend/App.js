@@ -25,9 +25,6 @@ const TabNavigator = createBottomTabNavigator(
     {
         initialRouteName: "Directory", // Actually "Home", but is sometimes set differently for development convenience
         defaultNavigationOptions: ({ navigation }) => ({
-            headerStyle: {
-                backgroundColor: "#4B9CD3",
-            },
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state; 
                 let IconComponent = Ionicons; 
