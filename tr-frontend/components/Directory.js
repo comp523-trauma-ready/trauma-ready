@@ -77,7 +77,7 @@ export default class Directory extends React.Component {
                     }
                     renderItem={(i) => {
                         let {item, index, section} = i;
-                        return (<DirectoryItem data={item} />);
+                        return (<DirectoryItem data={{...this.props, ...item}} />);
                     }}
                     sections={[
                         { key: 0, title: "C", data: [this.state.hospitals[1]] },
@@ -98,6 +98,12 @@ class DirectoryItem extends React.Component {
 
     handleTouch(touchEvent) {
         console.log("touch recieved");
+        this.props.data.navigation.navigate({
+            routeName: "Hospital",
+            params: {
+                name: this.props.data.hname,
+            }
+        })
     }
 
     render() {

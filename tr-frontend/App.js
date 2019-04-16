@@ -6,11 +6,12 @@ import { createStackNavigator, createAppContainer, createBottomTabNavigator } fr
 
 import Home from './components/Home';
 import Directory from './components/Directory';
+import Hospital from './components/Hospital';
 import Search from './components/Search';
 import Settings from './components/Settings';
 
 const HomeStack = createStackNavigator({Home: Home});
-const DirectoryStack = createStackNavigator({Directory: Directory});
+const DirectoryStack = createStackNavigator({Directory: Directory, Hospital: Hospital});
 const SearchStack = createStackNavigator({Search: Search});
 const SettingsStack = createStackNavigator({Settings: Settings})
 
