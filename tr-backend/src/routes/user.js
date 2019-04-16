@@ -5,16 +5,17 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
 const User = mongoose.model('User');
+const { ensureAuthenticated } = require('../config/auth');
 
 
 // Login Page
 router.get('/login', (req, res) => res.render('user/login'));
 
 // Register Page
-router.get('/register', (req, res) => res.render('user/register'));
+router.get('/register', ensureAuthenticated, (req, res) => res.render('user/register'));
 
 // Register Handle
-router.post('/register', (req, res) => {
+router.post('/register', ensureAuthenticated, (req, res) => {
     const {name, email, password, password2 } = req.body;
     let errors = [];
 
@@ -71,7 +72,7 @@ router.post('/register', (req, res) => {
                         // Save user
                             newUser.save()
                                 .then(user => {
-                                    req.flash('success_msg', 'You are now registered and can log in');
+                                    req.flash('success_msg', 'Registration Created, Can Now Log in with that Account');
                                     res.redirect('/user/login');
                                 })
                                 .catch(err => console.log(err));
