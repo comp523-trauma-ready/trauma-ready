@@ -40,7 +40,6 @@ if (uri) {
 }
 
 require('./user.model');
-require('./employee.model');
 require('./hospital.model');
 require('./activations.model');
 require('./rac.model');

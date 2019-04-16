@@ -17,7 +17,6 @@ require('./config/passport')(passport);
 
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
-const employeeRouter = require('./routes/employee');
 const hospitalRouter = require('./routes/hospital');
 const racRouter = require('./routes/rac');
 const traumaRouter = require('./routes/trauma');
@@ -64,7 +63,6 @@ app.set('view engine', 'hbs');
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-app.use('/employee', employeeRouter);
 app.use('/hospital', hospitalRouter);
 app.use('/rac', racRouter);
 app.use('/trauma', traumaRouter);
