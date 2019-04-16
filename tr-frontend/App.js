@@ -22,7 +22,11 @@ const TabNavigator = createBottomTabNavigator(
         Settings: SettingsStack,
     },
     {
+        initialRouteName: "Directory", // Actually "Home", but is sometimes set differently for development convenience
         defaultNavigationOptions: ({ navigation }) => ({
+            headerStyle: {
+                backgroundColor: "#4B9CD3",
+            },
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state; 
                 let IconComponent = Ionicons; 
@@ -39,9 +43,8 @@ const TabNavigator = createBottomTabNavigator(
                 return (<IconComponent name={iconName} size={25} color={tintColor} />);
             }
         }),
-        swipeEnabled: true, 
         tabBarOptions: {
-            // Keep the default now, but can be updated for different contrast settings later
+            // Keep the default white/gray now, but these can be changed for contrast settings later
             // activeTintColor: 'blue',
             // inactiveTintColor: 'gray',
         }

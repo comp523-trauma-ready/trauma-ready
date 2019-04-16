@@ -7,6 +7,15 @@ const Activations = mongoose.model("Activations");
 const Hospital = mongoose.model("Hospital");
 const RAC = mongoose.model("RAC");
 
+// Returns all hospitals as JSON for loading into the directory screen 
+router.get("/hospitals", (req, res) => {
+    Hospital
+        .find({})
+        .sort("name")
+        .exec((err, docs) => {
+            return err ? res.json(err) : res.send(JSON.stringify(docs,null,2));
+        });
+});
 
 // URL: 
 //      localhost:3000/mobile/dir/alpha

@@ -1,71 +1,138 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 export default class Directory extends React.Component {
     static navigationOptions = {
         title: "Directory",
+        headerStyle: {
+            backgroundColor: "#4B9CD3",
+        }
     }
 
     constructor(props) {
-	super(props);
-	this.state = {
-	    hospitalData: [],
-	    hospitalsByID: [],
-	}
+        super(props);
+        this.state = {
+            organizeByRAC: false, // default: alphabetical
+            hospitals: [
+                {
+                    hid: 0,
+                    hname: "UNC Hospitals",
+                    rac: "Mid Carolina Trauma",
+                    traumaLevel: 1,
+                    services: [
+                        "Trauma/Emergency Department",
+                        "Surgery",
+                        "Neuroscience",
+                        "Pediatrics",
+                    ],
+                    address: "101 Manning Drive, Chapel Hill, NC 27514",
+                    email: "tarheeltrauma@unc.health.unc.edu",
+                },
+                {
+                    hid: 1, 
+                    hname: "Cape Fear Valley Medical Center",
+                    rac: "Mid Carolina Trauma",
+                    traumaLevel: 3, 
+                    services: [
+                        "Trauma/Emergency Department",
+                        "Surgery",
+                        "Neuroscience",
+                        "Pediatrics",
+                        "Rehab",
+                        "Neonatology Services",
+                        "Carelink",
+                        "Radiology",
+                        "Heart & Vascular Services",
+                        "Hermatology",
+                        "Oncology"
+                    ],
+                    address: "1638 Owen Drive, Fayetteville, NC 28304",
+                    email: "info@capefearvalley.com",
+                }
+            ],
+        };
     }
 
+    // TODO: Retrieve state data from backend 
     componentDidMount() {
-	const url = "http://localhost:3000/hospital/json";
-	fetch (url)
-	    .then(res => res.json())
-	    .then(json => {
-		console.log(JSON.stringify(json, null, 2));
-		// Extract hospital ids
-		let hids = [];
-		json.forEach((traumaCenter) => {
-		    let id = traumaCenter["hid"];
-		    hids.push(id);
-		});
-		this.setState({ hospitalsByID : hids });
-		this.setState({ hospitalData : json });
-	    })
-	    .then(() => {
-		console.log("finished network request");
-		console.log(this.state); // works!!
-	    })
-	    .catch(err => console.error(err));
+        // This code setup is correct, but some technical networking detail is causing an 
+        // unspecified error with the request. Will have to debug later. 
+        // const hospitalEndpoint = "https://127.0.0.1:3000/mobile/hospitals";
+        // fetch(hospitalEndpoint)
+        //     .then(res => res.json())
+        //     .then(json => {
+        //         console.log("json recieved");
+        //         console.log(this.state);
+        //         this.setState({ hospitals : json });
+        //     })
+        //     .catch(err => console.error(err));
     }
 
     render() {
         return (
             <View style={styles.container}>
-              <SectionList
-                renderItem={({item, index, section}) => <Text style={styles.item} key={index}>{item}</Text>}
-                renderSectionHeader={({section: {title}}) => <Text style={styles.header}>{title}</Text>}
-                sections={[
-                    {title: 'Title1', data: ['item1', 'item2']},
-                    {title: 'Title2', data: ['item3', 'item4']},
-                    {title: 'Title3', data: ['item5', 'item6']},
-                ]}
-                keyExtractor={(item, index) => item + index} 
+                <SectionList
+                    renderSectionHeader={({section}) => 
+                        <Text style={styles.sectionHeader}>{section.title}</Text>
+                    }
+                    renderItem={(i) => {
+                        let {item, index, section} = i;
+                        return (<DirectoryItem data={item} />);
+                    }}
+                    sections={[
+                        { key: 0, title: "C", data: [this.state.hospitals[1]] },
+                        { key: 1, title: "U", data: [this.state.hospitals[0]] },
+                    ]}
+                    keyExtractor={(item, index) => index}
                 />
             </View>
         );
     }
 }
 
+class DirectoryItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleTouch = this.handleTouch.bind(this);
+    }
+
+    handleTouch(touchEvent) {
+        console.log("touch recieved");
+    }
+
+    render() {
+        return (
+            <TouchableHighlight onPress={this.handleTouch}>
+                <View style={styles.diContainer}>
+                    <Text style={styles.diTitle}>{this.props.data.hname}</Text>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
+        flex: 1,
         padding: 10
     },
-    header: {
+
+    diContainer: {
+        flex: 1, 
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 10,
+        borderWidth: 2,
+    },
+
+    diTitle: {
+        fontSize: 18,
+    },
+
+    sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        marginTop: 4,
-        marginBottom: 4,
-    },
-    item: {
-        margin: 8,
+        backgroundColor: "lightgray",
+        padding: 10,
     }
 });
