@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import ActivationItem from "./ActivationItem";
 
 export default class Home extends React.Component {
     static navigationOptions = {
-        title: "Trauma Ready",
+        title: "Home",
         headerStyle: {
             backgroundColor: "#4B9CD3",
         },
@@ -12,34 +13,49 @@ export default class Home extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            latitude: 0,
+            longitude: 0, 
+            locString: "",
+            nearby: [], // [{id:id, code:code}]
+        };
+    }
+
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(
+            (successObj) => { 
+                let { latitude, longitude } = successObj;
+                // const nearbyEndpoint = "" + latitude + "/" + longitude;
+                // fetch(nearbyEndpoint)
+                //     .then(res => res.json())
+                //     .then(json => this.setState({ nearby : json })
+                //     .catch(err => console.error(err));
+                // this.setState({ latitude : latitude, longitude : longitude });
+            },
+            (failObj) => { 
+                console.error(failObj) 
+            },
+            { // Request options: https://facebook.github.io/react-native/docs/geolocation
+                timeout : 100, 
+                maximumAge: 100, 
+                enableHighAccuracy : false 
+            },
+        );
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.subcontainer}>
-                    <Text style={styles.h2}>Alerts</Text>
-                    <Text style={styles.p}>None</Text>
+            <View style={styles.wrapper}>
+                <View style={styles.masthead}>
+                    <Text style={styles.h1}>Trauma Ready</Text>
                 </View>
-
-                <View style={styles.subcontainer}>
-                    <Text style={styles.h2}>Location</Text>
-                    <Text style={styles.p}>Chapel Hill, NC | Orange County</Text>
+                <View style={styles.topBar}>
+                    <Text style={styles.headline}>
+                        <Text style={{fontWeight: "bold"}}>Location:</Text> Chapel Hill, NC
+                    </Text>
                 </View>
-
-                <View style={styles.subcontainer}>
-                    <Text style={styles.h2}>Weather</Text>
-                    <Text style={styles.p}></Text>
-                </View>
-
-                <View style={[styles.subcontainer, {flex: 2}]}>
+                <View style={styles.nearby}>
                     <Text style={styles.h2}>Nearby</Text>
-                    <Text style={styles.p}></Text>
-                </View>
-
-                <View style={[styles.subcontainer, {flex: 2}]}>
-                    <Text style={styles.h2}>Recent</Text>
-                    <Text style={styles.p}></Text>
                 </View>
             </View>
         );
@@ -47,39 +63,49 @@ export default class Home extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    wrapper: {
         flex: 1,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        margin: 10,
-        padding: 10,
-        borderWidth: 0.3,
-        borderColor: "black",
     },
 
-    subcontainer: {
-        borderWidth: 0.3,
-        borderColor: "black",
+    masthead: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        margin: 8,
+    },
+
+    topBar: {
+        flex: 0.5,
+        flexDirection: "row",
+        alignItems: "center",
+        borderWidth: 1,
         padding: 4,
-        margin: 4,
+        backgroundColor: "khaki",
+    },
+
+    headline: {
+        width: "100%",        
+        textAlign: "center",
+    },
+
+    nearby: {
+        flex: 11,
+        margin: 12,
+        padding: 12,
+        borderWidth: 1,
     },
 
     h1: {
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: "bold",
-        marginTop: 4,
-        marginBottom: 4,
+        width: "100%",        
+        textAlign: "center",
     },
 
     h2: {
-        fontSize: 18,    
+        fontSize: 22,    
+        fontWeight: "bold",
         marginTop: 4,
         marginBottom: 4,
-    },
-
-    p: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingLeft: 16,
     },
 });
