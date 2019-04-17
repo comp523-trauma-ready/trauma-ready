@@ -166,7 +166,7 @@ function queryHospitalByName(req, res) {
 }
 
 function queryHospitalByRAC(req, res) {
-    Hospital.findOne({
+    Hospital.find({
         rac: req.query.rac
     })
         .then(doc => {
