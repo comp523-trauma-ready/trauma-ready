@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, View } from 'react-native';
+import MapView from 'react-native-maps';
 
 // The profile page for an entire hospital. Displays information for contacts, services, and 
 // activations in a hierarchical list. Majority of data is static and passed in via props; the only 
@@ -21,33 +22,47 @@ export default class Hospital extends React.Component {
         this.state = this.props.navigation.getParam("item");
     }
 
-    componentDidMount() {
-        console.log(this.state);
-        // Fetch activation data
-        // const activationEndpoints = this.state.
-
-        // "https://comp523-statt-web-portal.herokuapp.com/activations/0";
-
-    }
+    // TODO: Implement backend endpoint that fetches activation data by RAC name. 
+    componentDidMount() {}
 
     render() {  
         return (
-            <ScrollView>
-                <View style={styles.sectionWrapper}>
-                    <Text style={styles.hospitalName}>{this.state.name}</Text>
-                    <View style={styles.sectionWrapper}>
-                        <Text>{this.state.address}</Text>
-                        <Text>{this.state.email}</Text>
-                    </View>
-                    <View style={styles.sectionWrapper}>
-                        <Text style={styles.sectionHeader}>Map</Text>
-                    </View>
-                    <View style={styles.sectionWrapper}>
-                        <Text style={styles.sectionHeader}>Activations</Text>
-                    </View>
-                    <View style={styles.sectionWrapper}>
-                        <Text style={styles.sectionHeader}>Services</Text>
-                    </View>
+            <ScrollView contentContainerStyle={styles.areaWrapper}>
+                <Text style={styles.hospitalName}>{this.state.name}</Text>
+                <View style={styles.infoWrapper}>
+                    <Text style={styles.info}>{this.state.address}</Text>
+                    <Text style={styles.info}>{this.state.email}</Text>
+                </View>
+                <View style={styles.mapWrapper}>
+                    <MapView
+                        loadingEnabled = {true}
+                        loadingIndicatorColor="#666666"
+                        loadingBackgroundColor="#eeeeee"
+                        style={styles.map}
+                        initialRegion={{
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            latitudeDelta: 0.922, 
+                            longitudeDelta: 0.0421,
+                        }}>
+                        <MapView.Marker
+                            title={this.state.name}
+                            coordinate={{ 
+                                latitude : this.state.latitude, 
+                                longitude : this.state.longitude 
+                            }}
+                            onPress={(nativeEvent) => {
+                                console.log(nativeEvent);
+                            }}
+                            description={"Will prompt for opening actual maps app eventually"}
+                        />
+                    </MapView>
+                </View>
+                <View style={styles.activationWrapper}>
+                    <Text style={styles.activations}>Activations</Text>
+                </View>
+                <View style={styles.servicesWrapper}>
+                    <Text style={styles.services}>Services</Text>
                 </View>
             </ScrollView>
         );
@@ -55,16 +70,50 @@ export default class Hospital extends React.Component {
 }
 
 const styles = StyleSheet.create({
+    areaWrapper: {
+        flex: 1,
+        padding: 10,
+        flexDirection: "column",
+        justifyContent: "space-around",
+    },
+
     hospitalName: {
         fontSize: 24,
         fontWeight: "bold",
     },
 
-    sectionWrapper: {
-        padding: 10,
+    infoWrapper: {
+        flex: 0.5,
+        marginTop: 8,
+        marginBottom: 8,
+    }, 
+
+    info: {
     },
 
-    sectionHeader: {
+    mapWrapper: {
+        flex: 2,
+    },
+
+    map: {
+        ...StyleSheet.absoluteFillObject
+    },
+
+    activationWrapper: {
+        flex: 4,
+    },
+
+    activations: {
         fontSize: 18,
+        marginTop: 8,
+    },
+
+    servicesWrapper: {
+        flex: 1,
+    },
+
+    services: {
+        fontSize: 18,
+        marginTop: 8,
     },
 });
