@@ -5,8 +5,9 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Activation Id</th>
-        <th>Activation Name</th>
+        <th></th>
+        <th>Id</th>
+        <th>Name</th>
         <th>Age</th>
         <th>Regional Advisory Committee</th>
         <th>Trauma</th>
@@ -16,6 +17,10 @@
     <tbody>
     {{#each list}}
         <tr class="dataRow">
+            <td>
+              <button class="fa fa-pencil button-table" onclick="editRow($(this).parent());"></button>
+              <button class="fa fa-trash button-table" onclick="deleteRow($(this).parent());"></button>
+            </td>
             <td>{{this.aid}}</td>
             <td class="mutable">{{this.name}}</td>
             <td class="mutable">{{this.age}}</td>

@@ -87,3 +87,12 @@
   height: 100px;
   min-width: 200px;
 }
+
+.button-table{
+  background-color: rgba(126, 213, 255, 0);
+  border: none;
+}
+
+.button-table:hover{
+  color: #99badd;
+}
