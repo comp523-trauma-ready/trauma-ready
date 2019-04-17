@@ -4,17 +4,6 @@ const router = express.Router();
 
 const Hospital = mongoose.model('Hospital');
 
-// Will find better naming solution later
-router.get('/json', (req, res) => {
-    Hospital.find((err, docs) => {
-  if (err) {
-      res.status(404).json(err);
-  } else {
-      res.status(200).json(docs);
-  }
-    });
-});
-
 router.get('/edit', (req, res) => {
     res.render('hospital/addOrEdit', {
         viewTitle : "Add Hospital"
@@ -33,6 +22,34 @@ router.post('/', (req, res) => {
             }
 
             res.status(201).send(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+router.put('/:hid', (req, res) => {
+    if(!req.params.hid) {
+        return res.status(400).send('Missing URL parameter: hospital id (hid)');
+    }
+    Hospital.findOneAndUpdate({
+        hid: req.params.hid}, req.body, {new: true})
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+router.delete('/:hid', (req, res) => {
+    if(!req.params.hid) {
+        return res.status(400).send('Missing URL parameter: hospital id (hid)');
+    }
+    Hospital.findOneAndRemove({
+        hid: req.params.hid})
+        .then(doc => {
+            res.json(doc);
         })
         .catch(err => {
             res.status(500).json(err);
@@ -154,14 +171,14 @@ router.get('/:hid', (req, res) => {
 //     });
 // });
 
-router.get('/delete/:id', (req, res) => {
-    Hospital.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            res.redirect('/hospital/list');
-        } else {
-            console.log(`Error in hospital delete ${err}`);
-        }
-    });
-});
+// router.get('/delete/:hid', (req, res) => {
+//     Hospital.findByIdAndRemove(req.params.hid, (err, doc) => {
+//         if (!err) {
+//             res.redirect('/hospital/list');
+//         } else {
+//             console.log(`Error in hospital delete ${err}`);
+//         }
+//     });
+// });
 
 module.exports = router;

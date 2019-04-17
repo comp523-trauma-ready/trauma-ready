@@ -39,7 +39,7 @@ if (uri) {
     );
 }
 
-require('./employee.model');
+require('./user.model');
 require('./hospital.model');
 require('./activations.model');
 require('./rac.model');
