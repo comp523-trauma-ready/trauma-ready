@@ -3,18 +3,26 @@ const mongoose = require('mongoose');
 let racSchema = new mongoose.Schema({
   rid: {
     type: Number,
-    required: "Must provide a unique id for each RAC"
+    required: "Must provide a unique id for each RAC",
+    unique: true
   },
   name: {
-    type: String
+    type: String,
+    required: true
   },
   // activationCodes: {
   //   type: [String]
   // },
   activationCodes: [
     {
-      aid: Number,
-      code: String
+      aid: {
+        type: Number,
+        required: 'Must match the Activation ID with which it corresponds'
+      },
+      code: {
+        type: String,
+        required: true
+      }
     }],
   notes: {
     type: String

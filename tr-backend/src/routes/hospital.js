@@ -143,8 +143,8 @@ router.get('/:hid', (req, res) => {
 //     });
 // });
 
-router.get('/delete/:id', (req, res) => {
-    Hospital.findByIdAndRemove(req.params.id, (err, doc) => {
+router.get('/delete/:hid', (req, res) => {
+    Hospital.findByIdAndRemove(req.params.hid, (err, doc) => {
         if (!err) {
             res.redirect('/hospital/list');
         } else {

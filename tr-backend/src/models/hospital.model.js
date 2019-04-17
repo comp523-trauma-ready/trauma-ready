@@ -3,23 +3,28 @@ const mongoose = require('mongoose');
 let hospitalSchema = new mongoose.Schema({
   hid: {
     type: Number,
-    required: "Must provide a unique id for each hospital"
+    required: "Must provide a unique id for each hospital",
+    unique: true
   },
   name: {
     type: String,
     required: "Must provide a valid name for hospital"
   },
   rac: {
-    type: String
+    type: String,
+    required: true
   },
   traumaLevel: {
-    type: String
+    type: String,
+    required: true
   },
   services: {
-    type: [String]
+    type: [String],
+    required: true
   },
   address: {
-    type: String
+    type: String,
+    required: true
   },
   latitude: {
     type: Number

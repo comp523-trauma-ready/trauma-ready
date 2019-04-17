@@ -3,17 +3,23 @@ const mongoose = require('mongoose');
 let traumaSchema = new mongoose.Schema({
   tid: {
     type: Number,
-    required: "Must provide a unique id for each trauma"
+    required: "Must provide a unique id for each trauma",
+    unique: true
   },
   name: {
-    type: String
+    type: String,
+    required: true
   },
   criteria: [
     {
-      rac: String,
-      activationCodes: [String]
-    }
-  ],
+      rac: {
+        type: String,
+        required: true
+      },
+      activationCodes: {
+        type: [String],
+        required: true}
+    }],
   notes: {
     type: String
   }
