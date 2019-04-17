@@ -1,10 +1,10 @@
 import React from 'react';
-import { ScrollView, SectionList, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import MapView from 'react-native-maps';
 
 // The profile page for an entire hospital. Displays information for contacts, services, and 
-// activations in a hierarchical list. Majority of data is static and passed in via props; the only 
-// state involved is for tracking the user's location for integration with maps. 
+// activations in a hierarchical list. Majority of data is static and passed in via props; the 
+// only true state that is involved is for tracking the user's location for integration with maps. 
 
 export default class Hospital extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -20,12 +20,12 @@ export default class Hospital extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.navigation.getParam("item");
+        this.state.activationCodes = [];
     }
 
-    // TODO: Implement backend endpoint that fetches activation data by RAC name. 
     componentDidMount() {
-        const activationEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/rac/" + this.state.rac;
-        fetch(activationEndpoint)
+        const baseActivationEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/rac/";
+        fetch(baseActivationEndpoint + this.state.rac)
             .then(res => res.json())
             .then(json => {
                 this.setState({ activationCodes : json });
@@ -37,10 +37,12 @@ export default class Hospital extends React.Component {
         return (
             <ScrollView contentContainerStyle={styles.areaWrapper}>
                 <Text style={styles.hospitalName}>{this.state.name}</Text>
+
                 <View style={styles.infoWrapper}>
                     <Text style={styles.info}>{this.state.address}</Text>
                     <Text style={styles.info}>{this.state.email}</Text>
                 </View>
+                
                 <View style={styles.mapWrapper}>
                     <MapView
                         loadingEnabled = {true}
@@ -66,13 +68,50 @@ export default class Hospital extends React.Component {
                         />
                     </MapView>
                 </View>
+               
                 <View style={styles.activationWrapper}>
-                    <Text style={styles.activations}>Activations</Text>
+                    <Text style={styles.h2}>Activations</Text>
+                    {this.state.activationCodes.map((code, index) => 
+                        <ActivationItem 
+                            navigation={this.props.navigation} 
+                            key={index}
+                            id={code.aid} 
+                            code={code.code} 
+                        />)}
                 </View>
+               
                 <View style={styles.servicesWrapper}>
-                    <Text style={styles.services}>Services</Text>
+                    <Text style={styles.h2}>Services</Text>
                 </View>
             </ScrollView>
+        );
+    }
+}
+
+
+class ActivationItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleTouch = this.handleTouch.bind(this);
+    }
+
+    handleTouch(touchEvent) {
+        this.props.navigation.navigate({
+            routeName: "Activation",
+            params: {
+                id: this.props.id,
+            }
+        });
+    }
+
+    render() {
+        const isRed = this.props.code.toLowerCase().includes("red");
+        return (
+            <TouchableHighlight onPress={this.handleTouch}>
+                <Text style={[styles.activationItem, isRed && styles.red]} key={this.props.aid}>
+                    {this.props.code}
+                </Text>
+            </TouchableHighlight>
         );
     }
 }
@@ -111,13 +150,29 @@ const styles = StyleSheet.create({
         flex: 4,
     },
 
-    activations: {
-        fontSize: 18,
+    h2: {
+        fontSize: 22,
         marginTop: 8,
+        marginBottom: 8,
+        fontWeight: "bold",
+    },
+
+    activationItem: {
+        fontSize: 18,
+        borderWidth: 2,
+        marginTop: 4,
+        marginBottom: 4,
+        padding: 8,
+        backgroundColor: "yellow",
+        fontWeight: "bold",
     },
 
     servicesWrapper: {
         flex: 1,
+    },
+
+    red: {
+        backgroundColor: "red"
     },
 
     services: {

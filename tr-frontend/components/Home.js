@@ -6,7 +6,8 @@ export default class Home extends React.Component {
         title: "Trauma Ready",
         headerStyle: {
             backgroundColor: "#4B9CD3",
-        }
+        },
+        headerTintColor: "white",
     }
 
     constructor(props) {

@@ -4,14 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 
-import Home from './components/Home';
+import Activation from './components/Activation';
 import Directory from './components/Directory';
+import Home from './components/Home';
 import Hospital from './components/Hospital';
 import Search from './components/Search';
 import Settings from './components/Settings';
 
 const HomeStack = createStackNavigator({Home: Home});
-const DirectoryStack = createStackNavigator({Directory: Directory, Hospital: Hospital});
+const DirectoryStack = createStackNavigator({Directory: Directory, Hospital: Hospital, Activation: Activation});
 const SearchStack = createStackNavigator({Search: Search});
 const SettingsStack = createStackNavigator({Settings: Settings})
 

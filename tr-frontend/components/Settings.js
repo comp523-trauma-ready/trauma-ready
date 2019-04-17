@@ -6,7 +6,8 @@ export default class Settings extends React.Component {
         title: "Settings",
         headerStyle: {
             backgroundColor: "#4B9CD3",
-        }
+        },
+        headerTintColor: "white",
     }
 
     constructor(props) {

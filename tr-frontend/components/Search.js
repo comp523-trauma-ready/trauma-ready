@@ -6,7 +6,8 @@ export default class Search extends React.Component {
         title: "Search",
         headerStyle: {
             backgroundColor: "#4B9CD3",
-        }
+        },
+        headerTintColor: "white",
     };
 
     constructor(props) {

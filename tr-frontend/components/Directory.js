@@ -21,7 +21,14 @@ export default class Directory extends React.Component {
     componentDidMount() {
         const hospitalEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/hospitals";
         fetch(hospitalEndpoint)
-            .then(res => res.json())
+            .then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return res.json();                    
+                } else {
+                    throw "HTML unexpectedly recieved... Heroku must be down!";
+                }
+            })
             .then(json => {
                 this.setState({ hospitals : json });
             })
@@ -98,5 +105,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         backgroundColor: "lightgray",
         padding: 10,
-    }
+    },
 });
