@@ -12,15 +12,15 @@ router.get("/hospitals", (req, res) => {
     Hospital
         .find({})
         .sort("name")
-        .exec((err, docs) => {
-            return err ? res.json(err) : res.json(docs);
-        });
+        .exec((err, docs) => err ? res.json(err) : res.json(docs));
 });
 
-// Return 
-router.get("/activations/:rac", (req, res) => {
-    let racName = req.params.rac;
-
+// Returns all activation codes for a given RAC name
+router.get("/rac/:name", (req, res) => {
+    let racName = req.params.name;
+    RAC
+        .findOne({ name : racName })
+        .exec((err, docs) => err ? res.json(err) : res.json(docs.activationCodes));
 });
 
 module.exports = router;

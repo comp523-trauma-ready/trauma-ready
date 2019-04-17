@@ -23,7 +23,15 @@ export default class Hospital extends React.Component {
     }
 
     // TODO: Implement backend endpoint that fetches activation data by RAC name. 
-    componentDidMount() {}
+    componentDidMount() {
+        const activationEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/rac/" + this.state.rac;
+        fetch(activationEndpoint)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({ activationCodes : json });
+            })
+            .catch(err => console.error(err));
+    }
 
     render() {  
         return (
