@@ -11,16 +11,15 @@
         <th>Regional Advisory Committee</th>
         <th>Trauma</th>
         <th>Notes</th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
     {{#each list}}
         <tr>
             <td>{{this.aid}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.age}}</td>
-            <td>{{this.rac}}</td>
+            <td class="mutable">{{this.name}}</td>
+            <td class="mutable">{{this.age}}</td>
+            <td class="mutable">{{this.rac}}</td>
             <td>
               <div class="ul-container">
                 <ul>
@@ -31,8 +30,7 @@
               </div>
             </td>
 
-            <td>{{this.notes}}</td>
-            <td></td>
+            <td class="mutable large">{{this.notes}}</td>
         </tr>
     {{/each}}
     </tbody>

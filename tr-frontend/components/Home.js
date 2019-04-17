@@ -22,13 +22,25 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        // const nearbyEndpoint = "";
-        // fetch(nearbyEndpoint)
-        //     .then(res => res.json())
-        //     .then(json => {
-
-        //     })
-        //     .catch(error => console.error(error));
+        navigator.geolocation.getCurrentPosition(
+            (successObj) => { 
+                let { latitude, longitude } = successObj;
+                // const nearbyEndpoint = "" + latitude + "/" + longitude;
+                // fetch(nearbyEndpoint)
+                //     .then(res => res.json())
+                //     .then(json => this.setState({ nearby : json })
+                //     .catch(err => console.error(err));
+                // this.setState({ latitude : latitude, longitude : longitude });
+            },
+            (failObj) => { 
+                console.error(failObj) 
+            },
+            { // Request options: https://facebook.github.io/react-native/docs/geolocation
+                timeout : 100, 
+                maximumAge: 100, 
+                enableHighAccuracy : false 
+            },
+        );
     }
 
     render() {
