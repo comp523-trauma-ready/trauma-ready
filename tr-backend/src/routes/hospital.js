@@ -138,6 +138,8 @@ router.get('/list', (req, res) => {
 router.get('/', (req, res) => {
     if(req.query.name) {
         queryHospitalByName(req, res);
+    } else  if(req.query.rac) {
+        queryHospitalByRAC(req, res);
     } else {
         Hospital.find((err, docs) => {
             if (!err) {
@@ -154,6 +156,18 @@ router.get('/', (req, res) => {
 function queryHospitalByName(req, res) {
     Hospital.findOne({
         name: req.query.name
+    })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+}
+
+function queryHospitalByRAC(req, res) {
+    Hospital.findOne({
+        rac: req.query.rac
     })
         .then(doc => {
             res.json(doc);
