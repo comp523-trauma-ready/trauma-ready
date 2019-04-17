@@ -96,3 +96,7 @@
 .button-table:hover{
   color: #99badd;
 }
+
+.button-table:focus{
+  outline: none;
+}
