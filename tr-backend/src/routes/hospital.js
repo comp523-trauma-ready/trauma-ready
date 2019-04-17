@@ -136,16 +136,33 @@ router.get('/list', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    Hospital.find((err, docs) => {
-        if (!err) {
-            res.render('hospital/index', {
-                list: docs
-            });
-        } else {
-            console.log(`Error in retrieving hospital index : ${err}`);
-        }
-    });
+    if(req.query.name) {
+        queryHospitalByName(req, res);
+    } else {
+        Hospital.find((err, docs) => {
+            if (!err) {
+                res.render('hospital/index', {
+                    list: docs
+                });
+            } else {
+                console.log(`Error in retrieving hospital index : ${err}`);
+            }
+        });
+    }
 });
+
+function queryHospitalByName(req, res) {
+    Hospital.findOne({
+        name: req.query.name
+    })
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+}
+
 
 router.get('/:hid', (req, res) => {
     if (!req.params.hid) {
@@ -159,6 +176,13 @@ router.get('/:hid', (req, res) => {
             res.status(404).json(err);
         });
 });
+//
+// router.get('/', (req, res) => {
+//     if(!req.query.name) {
+//         return res.status(400).send('Missing URL parameter: hospital name');
+//     }
+//     res.send(`You have requested a hospital ${req.query.name}`);
+// });
 
 // router.get('/:id', (req, res) => {
 //     Hospital.findById(req.params.id, (err, doc) => {
