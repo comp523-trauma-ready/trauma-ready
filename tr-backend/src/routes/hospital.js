@@ -28,6 +28,34 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:hid', (req, res) => {
+    if(!req.params.hid) {
+        return res.status(400).send('Missing URL parameter: hospital id (hid)');
+    }
+    Hospital.findOneAndUpdate({
+        hid: req.params.hid}, req.body, {new: true})
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+    });
+
+router.delete('/:hid', (req, res) => {
+    if(!req.params.hid) {
+        return res.status(400).send('Missing URL parameter: hospital id (hid)');
+    }
+    Hospital.findOneAndRemove({
+        hid: req.params.hid})
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 // router.post('/', (req, res) => {
 //     if (req.body._id == '') {
 //         insertRecord(req, res);
