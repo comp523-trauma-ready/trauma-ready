@@ -52,4 +52,33 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:aid', (req, res) => {
+    if(!req.params.aid) {
+        return res.status(400).send('Missing URL parameter: activation id (aid)');
+    }
+    Activations.findOneAndUpdate({
+        aid: req.params.aid}, req.body, {new: true})
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+router.delete('/:aid', (req, res) => {
+    if(!req.params.aid) {
+        return res.status(400).send('Missing URL parameter: activation id (aid)');
+    }
+    Hospital.findOneAndRemove({
+        aid: req.params.aid})
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+
 module.exports = router;

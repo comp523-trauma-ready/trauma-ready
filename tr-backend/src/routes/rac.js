@@ -51,5 +51,33 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:rid', (req, res) => {
+    if(!req.params.rid) {
+        return res.status(400).send('Missing URL parameter: RAC id (rid)');
+    }
+    RAC.findOneAndUpdate({
+        rid: req.params.rid}, req.body, {new: true})
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+router.delete('/:rid', (req, res) => {
+    if(!req.params.rid) {
+        return res.status(400).send('Missing URL parameter: RAC id (rid)');
+    }
+    RAC.findOneAndRemove({
+        rid: req.params.rid})
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 
 module.exports = router;

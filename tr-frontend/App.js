@@ -4,13 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 
-import Home from './components/Home';
+import Activation from './components/Activation';
 import Directory from './components/Directory';
+import Home from './components/Home';
+import Hospital from './components/Hospital';
 import Search from './components/Search';
 import Settings from './components/Settings';
 
 const HomeStack = createStackNavigator({Home: Home});
-const DirectoryStack = createStackNavigator({Directory: Directory});
+const DirectoryStack = createStackNavigator({Directory: Directory, Hospital: Hospital, Activation: Activation});
 const SearchStack = createStackNavigator({Search: Search});
 const SettingsStack = createStackNavigator({Settings: Settings})
 
@@ -22,6 +24,7 @@ const TabNavigator = createBottomTabNavigator(
         Settings: SettingsStack,
     },
     {
+        initialRouteName: "Directory", // Actually "Home", but is sometimes set differently for development convenience
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state; 
@@ -39,9 +42,8 @@ const TabNavigator = createBottomTabNavigator(
                 return (<IconComponent name={iconName} size={25} color={tintColor} />);
             }
         }),
-        swipeEnabled: true, 
         tabBarOptions: {
-            // Keep the default now, but can be updated for different contrast settings later
+            // Keep the default white/gray now, but these can be changed for contrast settings later
             // activeTintColor: 'blue',
             // inactiveTintColor: 'gray',
         }

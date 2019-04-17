@@ -1,71 +1,109 @@
 import React from 'react';
-import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
 export default class Directory extends React.Component {
     static navigationOptions = {
         title: "Directory",
+        headerStyle: {
+            backgroundColor: "#4B9CD3",
+        },
+        headerTintColor: "white",
     }
 
     constructor(props) {
-	super(props);
-	this.state = {
-	    hospitalData: [],
-	    hospitalsByID: [],
-	}
+        super(props);
+        this.state = {
+            organizeByRAC: false, // default: alphabetical
+            hospitals: [],
+        };
     }
 
     componentDidMount() {
-	const url = "http://localhost:3000/hospital/json";
-	fetch (url)
-	    .then(res => res.json())
-	    .then(json => {
-		console.log(JSON.stringify(json, null, 2));
-		// Extract hospital ids
-		let hids = [];
-		json.forEach((traumaCenter) => {
-		    let id = traumaCenter["hid"];
-		    hids.push(id);
-		});
-		this.setState({ hospitalsByID : hids });
-		this.setState({ hospitalData : json });
-	    })
-	    .then(() => {
-		console.log("finished network request");
-		console.log(this.state); // works!!
-	    })
-	    .catch(err => console.error(err));
+        const hospitalEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/hospitals";
+        fetch(hospitalEndpoint)
+            .then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    return res.json();                    
+                } else {
+                    throw "HTML unexpectedly recieved... Heroku must be down!";
+                }
+            })
+            .then(json => {
+                this.setState({ hospitals : json });
+            })
+            .catch(err => console.error(err));
     }
 
     render() {
+        let sections = this.state.hospitals.map((hospital, index) => {
+            return { key : index, title : hospital.name.charAt(0).toUpperCase(), data : [hospital] }
+        });
         return (
             <View style={styles.container}>
-              <SectionList
-                renderItem={({item, index, section}) => <Text style={styles.item} key={index}>{item}</Text>}
-                renderSectionHeader={({section: {title}}) => <Text style={styles.header}>{title}</Text>}
-                sections={[
-                    {title: 'Title1', data: ['item1', 'item2']},
-                    {title: 'Title2', data: ['item3', 'item4']},
-                    {title: 'Title3', data: ['item5', 'item6']},
-                ]}
-                keyExtractor={(item, index) => item + index} 
+                <SectionList
+                    renderSectionHeader={({section}) => 
+                        <Text style={styles.sectionHeader}>{section.title}</Text>
+                    }
+                    renderItem={(i) => 
+                        <DirectoryItem navigation={this.props.navigation} item={i.item} />
+                    }
+                    sections={sections}
+                    keyExtractor={(item, index) => index}
                 />
             </View>
         );
     }
 }
 
+class DirectoryItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleTouch = this.handleTouch.bind(this);
+    }
+
+    handleTouch(touchEvent) {
+        this.props.navigation.navigate({
+            routeName: "Hospital",
+            params: {
+                item: this.props.item,
+            }
+        });
+    }
+
+    render() {
+        return (
+            <TouchableHighlight onPress={this.handleTouch}>
+                <View style={styles.diContainer}>
+                    <Text style={styles.diTitle}>{this.props.item.name}</Text>
+                </View>
+            </TouchableHighlight>
+        );
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
+        flex: 1,
         padding: 10
     },
-    header: {
+
+    diContainer: {
+        flex: 1, 
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 10,
+        borderWidth: 2,
+    },
+
+    diTitle: {
+        fontSize: 18,
+    },
+
+    sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        marginTop: 4,
-        marginBottom: 4,
+        backgroundColor: "lightgray",
+        padding: 10,
     },
-    item: {
-        margin: 8,
-    }
 });
