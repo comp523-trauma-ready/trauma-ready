@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import MapView from 'react-native-maps';
+import ActivationItem from './ActivationItem';
 
 // The profile page for an entire hospital. Displays information for contacts, services, and 
 // activations in a hierarchical list. Majority of data is static and passed in via props; the 
@@ -84,34 +85,6 @@ export default class Hospital extends React.Component {
                     <Text style={styles.h2}>Services</Text>
                 </View>
             </ScrollView>
-        );
-    }
-}
-
-
-class ActivationItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleTouch = this.handleTouch.bind(this);
-    }
-
-    handleTouch(touchEvent) {
-        this.props.navigation.navigate({
-            routeName: "Activation",
-            params: {
-                id: this.props.id,
-            }
-        });
-    }
-
-    render() {
-        const isRed = this.props.code.toLowerCase().includes("red");
-        return (
-            <TouchableHighlight onPress={this.handleTouch}>
-                <Text style={[styles.activationItem, isRed && styles.red]} key={this.props.aid}>
-                    {this.props.code}
-                </Text>
-            </TouchableHighlight>
         );
     }
 }
