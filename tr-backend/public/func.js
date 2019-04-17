@@ -1,6 +1,17 @@
+//------------------------------
+//Event Listeners
+
 $(".bg-filter").on("click", function(){ toggleEditPanel(); });
 $(".ul-container").on("click", function(){ toggleEditPanel(); generateArrayTable($(this))});
-$(".mutable").on("click", function(){ editRow($(this).parent())});
+//$(".mutable").on("click", function(){ editRow($(this).parent())});
+$(".dataRow").on("click", function(){ editRow($(this)); });
+
+//------------------------------
+//Temporary Data
+let mutableRow = null;
+
+//------------------------------
+//Methods//
 
 function toggleEditPanel(){
   $(".bg-filter").toggle();
@@ -17,7 +28,7 @@ function toggleField(tag){
 
     }else{
       let content = $(tag).html();
-      console.log($(tag) + " :: " + content);
+      //console.log($(tag) + " :: " + content);
       $(tag).html("<textarea class='field'>"+content+"</textarea>");
     }
   }
@@ -25,7 +36,12 @@ function toggleField(tag){
 
 
 function editRow(tr){
-  $.each(tr.children(),function(index,val){
-    toggleField(val);
-  });
+  if(mutableRow == null){
+    mutableRow = tr;
+    $.each(tr.children(),function(index,val){
+      toggleField(val);
+    });
+  }else{
+
+  }
 }
