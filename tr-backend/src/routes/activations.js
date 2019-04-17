@@ -70,7 +70,7 @@ router.delete('/:aid', (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)');
     }
-    Hospital.findOneAndRemove({
+    Activations.findOneAndRemove({
         aid: req.params.aid})
         .then(doc => {
             res.json(doc);
