@@ -51,4 +51,32 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:tid', (req, res) => {
+    if(!req.params.tid) {
+        return res.status(400).send('Missing URL parameter: trauma id (tid)');
+    }
+    Trauma.findOneAndUpdate({
+        tid: req.params.tid}, req.body, {new: true})
+        .then(doc => {
+            res.json(doc)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
+});
+
+router.delete('/:tid', (req, res) => {
+    if(!req.params.tid) {
+        return res.status(400).send('Missing URL parameter: trauma id (tid)');
+    }
+    Trauma.findOneAndRemove({
+        tid: req.params.tid})
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 module.exports = router;
