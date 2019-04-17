@@ -40,7 +40,7 @@ router.put('/:hid', (req, res) => {
         .catch(err => {
             res.status(500).json(err);
         })
-    });
+});
 
 router.delete('/:hid', (req, res) => {
     if(!req.params.hid) {
@@ -171,14 +171,14 @@ router.get('/:hid', (req, res) => {
 //     });
 // });
 
-router.get('/delete/:hid', (req, res) => {
-    Hospital.findByIdAndRemove(req.params.hid, (err, doc) => {
-        if (!err) {
-            res.redirect('/hospital/list');
-        } else {
-            console.log(`Error in hospital delete ${err}`);
-        }
-    });
-});
+// router.get('/delete/:hid', (req, res) => {
+//     Hospital.findByIdAndRemove(req.params.hid, (err, doc) => {
+//         if (!err) {
+//             res.redirect('/hospital/list');
+//         } else {
+//             console.log(`Error in hospital delete ${err}`);
+//         }
+//     });
+// });
 
 module.exports = router;
