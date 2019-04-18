@@ -1,6 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const path = require('path');
+const fs = require('fs');
+
+let google_key = process.env.GOOGLEMAPS_API_KEY;
+if (google_key) {
+} else {
+    const keyFile = path.resolve(__dirname, 'api_key.txt');
+    const contents = fs.readFileSync(keyFile).toString();
+    google_key = contents;
+}
+const googleMapsClient = require('@google/maps').createClient({
+        key: google_key
+});
 
 const Hospital = mongoose.model('Hospital');
 
@@ -14,18 +27,31 @@ router.post('/', (req, res) => {
     if (!req.body) {
         return res.status(400).send('Request body is missing');
     }
-    let newHospital = new Hospital(req.body);
-    newHospital.save()
-        .then(doc => {
-            if(!doc || doc.length === 0) {
-                return res.status(500).send(doc);
-            }
 
-            res.status(201).send(doc);
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        });
+    // Geocode an address, get lat and lng
+    googleMapsClient.geocode({
+        address: req.body.address
+    }, function(err, response) {
+        if (!err) {
+            var myjson = response.json.results;
+            req.body.latitude = myjson[0].geometry.location.lat;
+            req.body.longitude = myjson[0].geometry.location.lng;
+
+            // Save new Hospital to database
+            let newHospital = new Hospital(req.body);
+            newHospital.save()
+                .then(doc => {
+                    if(!doc || doc.length === 0) {
+                        return res.status(500).send(doc);
+                    }
+
+                    res.status(201).send(doc);
+                })
+                .catch(err => {
+                    res.status(500).json(err);
+                });
+        }
+    });
 });
 
 router.put('/:hid', (req, res) => {

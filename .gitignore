@@ -3,6 +3,7 @@
 node_modules/
 
 tr-backend/src/models/credentials.txt
+tr-backend/src/routes/api_key.txt
 tr-backend/node_modules/
 
 tr-frontend/node_modules/**/*
