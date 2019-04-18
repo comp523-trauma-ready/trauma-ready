@@ -22,25 +22,26 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (successObj) => { 
-                let { latitude, longitude } = successObj;
-                // const nearbyEndpoint = "" + latitude + "/" + longitude;
-                // fetch(nearbyEndpoint)
-                //     .then(res => res.json())
-                //     .then(json => this.setState({ nearby : json })
-                //     .catch(err => console.error(err));
-                // this.setState({ latitude : latitude, longitude : longitude });
-            },
-            (failObj) => { 
-                console.error(failObj) 
-            },
-            { // Request options: https://facebook.github.io/react-native/docs/geolocation
-                timeout : 100, 
-                maximumAge: 100, 
-                enableHighAccuracy : false 
-            },
-        );
+        // navigator.geolocation.getCurrentPosition(
+        //     (successObj) => { 
+        //         let { latitude, longitude } = successObj;
+        //         const nearbyEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/hospitals/" + latitude + "/" + longitude;
+        //         fetch(nearbyEndpoint)
+        //             .then(res => res.json())
+        //             .then(json => this.setState({ nearby : json }))
+        //             .catch(err => console.error(err));
+        //         this.setState({ latitude : latitude, longitude : longitude });
+        //         console.log(this.state);
+        //     },
+        //     (failObj) => { 
+        //         console.error(failObj) 
+        //     },
+        //     { // Request options: https://facebook.github.io/react-native/docs/geolocation
+        //         timeout : 10, 
+        //         maximumAge: 10, 
+        //         enableHighAccuracy : false 
+        //     },
+        // );
     }
 
     render() {

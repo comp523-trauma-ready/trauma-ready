@@ -36,6 +36,17 @@ export default class Directory extends React.Component {
     }
 
     render() {
+        // let sections = {
+        //     A: [], B: [], C: [], D: [], E: [], F: [], G: [],
+        //     H: [], I: [], J: [], K: [], L: [], M: [], N: [],
+        //     O: [], P: [], Q: [], R: [], S: [], T: [], U: [],
+        //     V: [], W: [], X: [], Y: [], Z: [],
+        // };
+        // for (let i = 0; i < this.state.hospitals.length; i++) {
+        //     let hospital = this.state.hospitals[i];
+        //     let key = hospital.name.charAt(0).toUpperCase();
+        //     sections[key].push(hospital);
+        // }
         let sections = this.state.hospitals.map((hospital, index) => {
             return { key : index, title : hospital.name.charAt(0).toUpperCase(), data : [hospital] }
         });
@@ -43,7 +54,7 @@ export default class Directory extends React.Component {
             <View style={styles.container}>
                 <SectionList
                     renderSectionHeader={({section}) => 
-                        <Text style={styles.sectionHeader}>{section.title}</Text>
+                        <Text style={styles.sectionHeader}>{section.data !== [] && section.title}</Text>
                     }
                     renderItem={(i) => 
                         <DirectoryItem navigation={this.props.navigation} item={i.item} />
