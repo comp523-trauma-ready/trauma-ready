@@ -19,7 +19,7 @@ export default class Directory extends React.Component {
     }
 
     componentDidMount() {
-        const hospitalEndpoint = "https://comp523-statt-web-portal.herokuapp.com/mobile/hospitals";
+        const hospitalEndpoint = "https://statt-portal.herokuapp.com/mobile/hospitals";
         fetch(hospitalEndpoint)
             .then(res => {
                 const contentType = res.headers.get("content-type");
