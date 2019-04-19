@@ -1,14 +1,13 @@
-//------------------------------
+//------------------------------  NOTES --->--->--->--->--->--->--->--->--->--->--->--->--->--->---v---v---v---v---v---v---v---v---v
 //Event Listeners
 
-$(".bg-filter").on("click", function(){ toggleEditPanel(); });
-$(".ul-container").on("click", function(){ toggleEditPanel(); generateArrayTable($(this))});
+$(".bg-filter").on("click", function(){ closeEditPanel(); });
+$(".ul-container").on("click", function(){ generateArrayTable($(this))});
 //$(".mutable").on("click", function(){ editRow($(this).parent())});
 //$(".dataRow").on("click", function(){ editRow($(this)); });
 
 //------------------------------
 //Temporary Data
-let index = null;
 let dicts = {
   activations:  ["aid","name","age","rac","trauma","notes"],
   racs:         ["rid","name","aids","notes"],
@@ -21,16 +20,47 @@ let dicts = {
 //Methods//
 
 function findIndex(tr){
-  return $("tbody").children().index(tr);
+  return $(".mainTable tbody").children().index(tr);
 }
 
-function toggleEditPanel(){
-  $(".bg-filter").toggle();
-  $(".edit-panel").toggle();
+function closeEditPanel(){
+  $(".bg-filter").hide();
+  $(".edit-panel").hide();
+  let temp = "<ul>";
+  $.each( $(".arrayTableBody").find("textarea"), function(){
+    temp += "<li>"+ $(this).val() +"</li>";
+  });
+  temp += "</ul>";
+  $(".openInArray").html(temp);
+  $(".openInArray").removeClass("openInArray");
+}
+
+function toggleButtons(tr){
+  tr.find(".fa-save").toggle();                                                      //Justa' buncha' button togglin... I should really make a helper class at some point... XP
+  tr.find(".fa-edit").toggle();
+  tr.find(".fa-ban").toggle();
+  tr.find(".fa-trash-alt").toggle();
 }
 
 function generateArrayTable(td){
-  console.log(td);
+  if(td.parent().parent().hasClass("editing")){
+    $(".bg-filter").show();
+    $(".edit-panel").show();
+    td.addClass("openInArray");
+    $(".arrayTableBody").html("");
+    $.each( td.find("li"), function(){
+      $(".arrayTableBody").append("<tr><td><textarea class='arrayTableField'>"+$(this).text()+"</textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>");
+    });
+    $(".arrayTableBody").append("<tr class='addRow'><td></td><td><button class='fas fa-plus-circle button-table' onclick='createArrayRow( $(this).parent().parent() );'></button></td></tr>");
+  }
+}
+
+function removeArrayRow(tr){
+  tr.remove();
+}
+
+function createArrayRow(tr){
+  $("<tr><td><textarea class='arrayTableField'></textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
 }
 
 function toggleField(td){
@@ -38,28 +68,25 @@ function toggleField(td){
     if($(td).find(".field").length != 0){
       $(td).html( $(td).find("textarea:lt(1)").val() );
     }else{
-      $(td).html("<textarea class='field'>"+ $(td).html() +"</textarea>");
+      $(td).html( "<textarea class='field'>"+ $(td).html() +"</textarea>" );
     }
   }
 }
 
 function cancelEdit(tr){
   if( tr.hasClass("editing") ){
-    tr.find(".fa-save").css({"display":"none"});
-    tr.find(".fa-pencil").css({display:"inherit"});
-    tr.find(".fa-ban").css({"display":"none"});
-    tr.find(".fa-trash").css({display:"inherit"});
-    //you need to finish putting the text reverted to the old through $($(".mutable")[0]).find("textarea").text() which stores the old text before being modified.
+    toggleButtons(tr);
+    $.each( tr.children(".mutable"), function(){
+      $(this).html( $(this).find("textarea").text() );                                                //The "textContent" property of a textarea stores the "default" un-modified. This can be reached via the ".text()" DOM traversal.
+    } );                                                                                              //Note: This action also conveiently removes the textbox object, making garbage disposal easy!
+    tr.removeClass("editing");
   }
 }
 
 function saveRow(tr, type){
   if( ( tr.hasClass("editing") ) ){
-    tr.find(".fa-save").css({"display":"none"});
-    tr.find(".fa-pencil").css({display:"inherit"});
-    tr.find(".fa-ban").css({"display":"none"});
-    tr.find(".fa-trash").css({display:"inherit"});
-    updateRequest("/activations/"+tr.children("td:nth-child(2)").text(), createJsonBody(type,tr));
+    toggleButtons(tr);
+    updateRequest( "/activations/"+tr.children("td:nth-child(2)").text(), createJsonBody(type,tr) );
     $.each(tr.children(),function(){
       toggleField( $(this) );
     });
@@ -74,10 +101,7 @@ function editRow(tr){
     $.each(tr.children(),function(){
       toggleField( $(this) );
     });
-    tr.find(".fa-save").css({display:"inherit"});
-    tr.find(".fa-pencil").css({"display":"none"});
-    tr.find(".fa-ban").css({display:"inherit"});
-    tr.find(".fa-trash").css({"display":"none"});
+    toggleButtons(tr);
     tr.addClass("editing");
   }else{
     console.log("You are already editing this row!");
@@ -86,20 +110,22 @@ function editRow(tr){
 
 function deleteRow(tr){
 
-  console.log("Are you sure you want to delete the row at index" + temp + "?");
+  console.log("Are you sure you want to delete the row at index " + findIndex(tr) + "?");
 }
 
 function createJsonBody(dict,tr){
   if(tr != null){
     let temp = {};
     let i = 0;
-    $.each( $( "tbody tr:nth-child("+ (findIndex(tr)+1) +")" ).children(),function(){               // I know the ")" makes it confusing to look at.... srry
+    console.log(findIndex(tr));
+    $.each( $( ".mainTable tbody tr:nth-child("+ (findIndex(tr)+1) +")" ).find("td"),function(){               // I know the ")" makes it confusing to look at.... srry
       if( $(this).children("button").length == 0 ){                                                 // to make sure we account for the first row of buttons
-        if( $(this).children("div").length > 0 ){                                                   // then we parse the array
+        if( $(this).find("ul").length > 0 ){                                                       // then we parse the array
           let dataArray = [];
-          $.each( $(this).find("ul").children(), function(){
+          $.each( $(this).find("li"), function(){
             dataArray.push( $(this).text() );                                                       //Additon of list item tectContent into array
           } );
+          console.log(dataArray);
           temp[ dict[i] ] = dataArray;                                                              //Here we reference the global dictionary storing field names in arrays sorted by "json-doc model" and their appearence in the GUI......Whew...
         }else{
           temp[ dict[i] ] = $(this).children("textarea:lt(1)").val();                               //And again, but for the text areas. Note: We are storing them in our new "JSON-frienly format" vanilla js 'Dictionary' data structure.
@@ -107,7 +133,7 @@ function createJsonBody(dict,tr){
         i++;
       }
     } );
-    console.log(temp);
+    console.log(JSON.stringify(temp));
     return JSON.stringify(temp);
   }
 }
