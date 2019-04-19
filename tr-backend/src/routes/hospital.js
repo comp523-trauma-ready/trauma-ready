@@ -180,8 +180,8 @@ router.get('/', (req, res) => {
 });
 
 function queryHospitalByName(req, res) {
-    Hospital.findOne({
-        name: req.query.name
+    Hospital.find({
+        name: new RegExp(req.query.name)
     })
         .then(doc => {
             res.json(doc);
@@ -193,7 +193,7 @@ function queryHospitalByName(req, res) {
 
 function queryHospitalByRAC(req, res) {
     Hospital.find({
-        rac: req.query.rac
+        rac: new RegExp(req.query.rac)
     })
         .then(doc => {
             res.json(doc);
