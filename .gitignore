@@ -6,6 +6,15 @@ tr-backend/src/models/credentials.txt
 tr-backend/src/routes/api_key.txt
 tr-backend/node_modules/
 
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/trauma-ready.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/workspace.xml__jb_tmp___
+
+
 tr-frontend/node_modules/**/*
 tr-frontend/.expo/*
 tr-frontend/npm-debug.*
