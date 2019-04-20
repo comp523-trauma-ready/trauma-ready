@@ -22,6 +22,11 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
+        const testUrl = "http://statt-portal.herokuapp.com/mobile/rac/";
+        fetch(testUrl)
+            .then(res => res.text())
+            .then(json => console.log(json))
+            .catch(err => console.error(err));
         // navigator.geolocation.getCurrentPosition(
         //     (successObj) => { 
         //         let { latitude, longitude } = successObj;

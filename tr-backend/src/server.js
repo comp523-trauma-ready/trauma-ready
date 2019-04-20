@@ -22,7 +22,6 @@ const racRouter = require('./routes/rac');
 const traumaRouter = require('./routes/trauma');
 const activationsRouter = require('./routes/activations');
 
-
 const mobileRouter = require('./routes/mobile');
 
 // Allow express to recieve json from request bodies 

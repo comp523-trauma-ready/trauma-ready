@@ -24,7 +24,7 @@ const TabNavigator = createBottomTabNavigator(
         Settings: SettingsStack,
     },
     {
-        initialRouteName: "Search",
+        initialRouteName: "Directory",
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state; 

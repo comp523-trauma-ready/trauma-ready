@@ -36,30 +36,40 @@ export default class Directory extends React.Component {
     }
 
     render() {
-        // let sections = {
-        //     A: [], B: [], C: [], D: [], E: [], F: [], G: [],
-        //     H: [], I: [], J: [], K: [], L: [], M: [], N: [],
-        //     O: [], P: [], Q: [], R: [], S: [], T: [], U: [],
-        //     V: [], W: [], X: [], Y: [], Z: [],
-        // };
-        // for (let i = 0; i < this.state.hospitals.length; i++) {
-        //     let hospital = this.state.hospitals[i];
-        //     let key = hospital.name.charAt(0).toUpperCase();
-        //     sections[key].push(hospital);
-        // }
-        let sections = this.state.hospitals.map((hospital, index) => {
-            return { key : index, title : hospital.name.charAt(0).toUpperCase(), data : [hospital] }
+        let sections = [
+            { title: "A", data: [] }, { title: "B", data: [] }, { title: "C", data: [] },
+            { title: "D", data: [] }, { title: "E", data: [] }, { title: "F", data: [] },
+            { title: "G", data: [] }, { title: "H", data: [] }, { title: "I", data: [] },
+            { title: "J", data: [] }, { title: "K", data: [] }, { title: "L", data: [] },
+            { title: "M", data: [] }, { title: "N", data: [] }, { title: "O", data: [] },
+            { title: "P", data: [] }, { title: "Q", data: [] }, { title: "R", data: [] },
+            { title: "S", data: [] }, { title: "T", data: [] }, { title: "U", data: [] },
+            { title: "V", data: [] }, { title: "W", data: [] }, { title: "X", data: [] },
+            { title: "Y", data: [] }, { title: "Z", data: [] },
+        ];
+
+        // I want to refactor this to be clearer, but it works and I can't think of a simpler way
+        this.state.hospitals.forEach((hospital) => {
+            let key = hospital.name.charAt(0).toUpperCase();
+            for (let i = 0; i < sections.length; i++) {
+                if (sections[i].title == key) {
+                    sections[i].data.push(hospital);
+                    break;
+                }
+            }
         });
+        let reducedSections = sections.filter(section => section.data.length > 0);
+
         return (
             <View style={styles.container}>
                 <SectionList
                     renderSectionHeader={({section}) => 
-                        <Text style={styles.sectionHeader}>{section.data !== [] && section.title}</Text>
+                        <Text style={styles.sectionHeader}>{section.title}</Text>
                     }
                     renderItem={(i) => 
                         <DirectoryItem navigation={this.props.navigation} item={i.item} />
                     }
-                    sections={sections}
+                    sections={reducedSections}
                     keyExtractor={(item, index) => index}
                 />
             </View>
@@ -101,10 +111,10 @@ const styles = StyleSheet.create({
 
     diContainer: {
         flex: 1, 
-        marginTop: 10,
-        marginBottom: 10,
+        margin: 10,
         padding: 10,
-        borderWidth: 2,
+        borderWidth: 1,
+        borderRadius: 4,
     },
 
     diTitle: {
@@ -115,6 +125,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         backgroundColor: "lightgray",
-        padding: 10,
+        padding: 2,
     },
 });
