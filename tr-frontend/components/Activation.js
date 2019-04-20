@@ -21,10 +21,16 @@ export default class Activation extends React.Component {
     }
 
     componentDidMount() {
-        const activationEndpoint = "https://comp523-statt-web-portal.herokuapp.com/activations/" + this.state.id;
+
+        console.log(this.state.id);
+        const activationEndpoint = "https://statt-portal.herokuapp.com/activations/" + this.state.id;
         fetch(activationEndpoint)
             .then(res => res.json())
-            .then(json => this.setState({ data : json }))
+            .then(json => {
+                console.log(json);
+                this.setState({ data : json })
+            }
+            )
             .catch(err => console.error(err));
     }
 
