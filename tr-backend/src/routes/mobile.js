@@ -26,20 +26,19 @@ router.get("/rac/:name", (req, res) => {
 // Identifies your RAC by latitude and longitude then returns all associated trauma centers
 router.get("/hospitals/:latitude/:longitude", (req, res) => {
     const radius = 100;
-    let { latitude, longitude } = req.params;
+    const { latitude, longitude } = req.params;
     if (latitude && longitude) {
-        latitude = Math.abs(latitude);      // Handle negative values 
-        longitude = Math.abs(longitude);
-        Hospital
-            .find({})
-            .where("latitude").lt(latitude + radius).gt(latitude - radius)
-            .where("longitude").lt(longitude + radius).gt(longitude - radius)
-            .exec((err, docs) => {
-                if (err) res.send(err);
-                res.json(docs);
-            });
+        Hospital.find({}, (err, docs) => {
+            if (err) res.status(404).send(err);
+            let nearby = docs.filter(hospital => (
+                Math.abs(hospital.latitude - latitude) < radius
+                    && 
+                Math.abs(hospital.longitude - longitude) < radius
+            ));
+            res.json(nearby);
+        });
     } else {
-        res.status(404).send("Error: latitude and longitude not provided in url");
+        res.status(404).send("Error: latitude and longitude must be provided in url");
     }
 });
 
