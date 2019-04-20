@@ -42,4 +42,31 @@ router.get("/hospitals/:latitude/:longitude", (req, res) => {
     }
 });
 
+// The same as the last route, but more sophisticated calculations
+// Reference: http://janmatuschek.de/LatitudeLongitudeBoundingCoordinates
+router.get("/hospitals/full/:latitude/:longitude", (req, res) => {
+    let { latitude, longitude } = req.params;
+    const R = 6371; // https://en.wikipedia.org/wiki/Great-circle_distance
+    const range = 100; // 75 kilometer circular radius 
+    Hospital
+        .find({})
+        .sort("name hid latitude longitude")
+        .exec((err, docs) => {
+            if (err) {
+                res.status(404).send(err);
+            }
+            const ulat = latitude * Math.PI / 180;
+            const ulong = longitude * Math.PI / 180;
+            // All in kilometers
+            const distances = docs.map((hospital) => {
+                const hlat = hospital.latitude * Math.PI / 180;
+                const hlong = hospital.longitude * Math.PI / 180;
+                const dist = R * (Math.acos(Math.sin(ulat)*Math.sin(hlat) + Math.cos(ulat)*Math.cos(hlat)*Math.cos(ulong - hlong))); 
+                return { name: hospital.name, hid: hospital.hid, distance: dist };
+                // return ({...{a}}, ...{distance: dist}});
+            });
+            res.send(distances.filter(h => h.distance < range));
+        });
+});
+
 module.exports = router;
