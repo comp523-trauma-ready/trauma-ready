@@ -28,6 +28,8 @@ router.get("/hospitals/:latitude/:longitude", (req, res) => {
     const radius = 100;
     const { latitude, longitude } = req.params;
     if (latitude && longitude) {
+        latitude = Math.abs(latitude);      // Handle negative values 
+        longitude = Math.abs(longitude);
         Hospital
             .find({})
             .where("latitude").lt(latitude + radius).gt(latitude - radius)

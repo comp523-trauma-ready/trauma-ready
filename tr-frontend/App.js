@@ -24,7 +24,7 @@ const TabNavigator = createBottomTabNavigator(
         Settings: SettingsStack,
     },
     {
-        initialRouteName: "Directory",
+        initialRouteName: "Home",
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state; 
