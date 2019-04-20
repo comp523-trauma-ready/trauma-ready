@@ -26,7 +26,7 @@ router.get("/rac/:name", (req, res) => {
 // Identifies your RAC by latitude and longitude then returns all associated trauma centers
 router.get("/hospitals/:latitude/:longitude", (req, res) => {
     const radius = 100;
-    const { latitude, longitude } = req.params;
+    let { latitude, longitude } = req.params;
     if (latitude && longitude) {
         latitude = Math.abs(latitude);      // Handle negative values 
         longitude = Math.abs(longitude);
