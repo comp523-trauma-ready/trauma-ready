@@ -50,8 +50,10 @@ hospitalSchema.plugin(autoIncrement.plugin, {model:'Hospital', field: 'hid'});
 
 // Custom validation for email
 hospitalSchema.path('email').validate((val) => {
+  if (val != "" || val != "N/A") {
     emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return emailRegex.test(val);
+  }
 }, 'Invalid e-mail.');
 
 mongoose.model('Hospital', hospitalSchema);
