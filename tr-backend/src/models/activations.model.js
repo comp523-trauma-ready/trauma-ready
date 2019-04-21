@@ -25,6 +25,9 @@ let activationsSchema = new mongoose.Schema({
     notes: {
         type: String
     }
-});
+}, autoIncrement = require('mongoose-auto-increment'));
+
+activationsSchema.plugin(autoIncrement.plugin, {model:'Activations', field: 'aid'});
+
 
 mongoose.model('Activations', activationsSchema);

@@ -44,7 +44,9 @@ let hospitalSchema = new mongoose.Schema({
   notes: {
     type: String
   }
-});
+}, autoIncrement = require('mongoose-auto-increment'));
+
+hospitalSchema.plugin(autoIncrement.plugin, {model:'Hospital', field: 'hid'});
 
 // Custom validation for email
 hospitalSchema.path('email').validate((val) => {

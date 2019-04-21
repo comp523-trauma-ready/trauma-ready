@@ -22,6 +22,8 @@ const traumaSchema = new mongoose.Schema({
     notes: {
         type: String
     }
-});
+}, autoIncrement = require('mongoose-auto-increment'));
+
+traumaSchema.plugin(autoIncrement.plugin, {model:'Trauma', field: 'tid'});
 
 mongoose.model('Trauma', traumaSchema);

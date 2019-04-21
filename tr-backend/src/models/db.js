@@ -1,5 +1,6 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 
 
@@ -38,6 +39,8 @@ if (uri) {
         }
     );
 }
+
+autoIncrement.initialize(mongoose.connection);
 
 require('./user.model');
 require('./hospital.model');

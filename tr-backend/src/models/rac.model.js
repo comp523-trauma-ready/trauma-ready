@@ -27,6 +27,9 @@ let racSchema = new mongoose.Schema({
   notes: {
     type: String
   }
-});
+}, autoIncrement = require('mongoose-auto-increment'));
+
+racSchema.plugin(autoIncrement.plugin, {model:'RAC', field: 'rid'});
+
 
 mongoose.model('RAC', racSchema);
