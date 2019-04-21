@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ActivationItem from "./ActivationItem";
+import DirectoryItem from "./DirectoryItem";
 
 export default class Home extends React.Component {
     static navigationOptions = {
@@ -27,7 +28,7 @@ export default class Home extends React.Component {
                 let { latitude, longitude } = success.coords;
                 this.setState({ latitude : latitude, longitude : longitude });
                 console.log(latitude, longitude);
-                const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/" 
+                const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/" 
                     + latitude + "/" + longitude;
                 fetch(nearbyUrl)
                     .then(res => res.json())
@@ -53,6 +54,13 @@ export default class Home extends React.Component {
                 </View>
                 <View style={styles.nearby}>
                     <Text style={styles.h2}>Nearby</Text>
+                    {
+                        this.state.nearby.map((item, index) => {
+                            return (
+                                <DirectoryItem key={index} navigation={this.props.navigation} item={item} />
+                            );
+                        })
+                    }
                 </View>
             </View>
         );

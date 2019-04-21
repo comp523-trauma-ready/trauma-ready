@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import DirectoryItem from './DirectoryItem';
 
 export default class Directory extends React.Component {
     static navigationOptions = {
@@ -73,32 +74,6 @@ export default class Directory extends React.Component {
                     keyExtractor={(item, index) => index}
                 />
             </View>
-        );
-    }
-}
-
-class DirectoryItem extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleTouch = this.handleTouch.bind(this);
-    }
-
-    handleTouch(touchEvent) {
-        this.props.navigation.navigate({
-            routeName: "Hospital",
-            params: {
-                item: this.props.item,
-            }
-        });
-    }
-
-    render() {
-        return (
-            <TouchableHighlight onPress={this.handleTouch}>
-                <View style={styles.diContainer}>
-                    <Text style={styles.diTitle}>{this.props.item.name}</Text>
-                </View>
-            </TouchableHighlight>
         );
     }
 }

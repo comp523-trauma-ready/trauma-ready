@@ -34,7 +34,7 @@ router.get("/hospitals/:latitude/:longitude", (req, res) => {
                 Math.abs(hospital.latitude - latitude) < radius
                     && 
                 Math.abs(hospital.longitude - longitude) < radius
-            ));
+            ))
             res.json(nearby);
         });
     } else {
@@ -62,8 +62,8 @@ router.get("/hospitals/full/:latitude/:longitude", (req, res) => {
                 const hlat = hospital.latitude * Math.PI / 180;
                 const hlong = hospital.longitude * Math.PI / 180;
                 const dist = R * (Math.acos(Math.sin(ulat)*Math.sin(hlat) + Math.cos(ulat)*Math.cos(hlat)*Math.cos(ulong - hlong))); 
-                return { name: hospital.name, hid: hospital.hid, distance: dist };
-                // return ({...{a}}, ...{distance: dist}});
+                console.log(dist);
+                return ({...hospital, ...{distance: dist})
             });
             res.send(distances.filter(h => h.distance < range));
         });
