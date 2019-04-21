@@ -63,7 +63,7 @@ router.get("/hospitals/full/:latitude/:longitude", (req, res) => {
                 const hlong = hospital.longitude * Math.PI / 180;
                 const dist = R * (Math.acos(Math.sin(ulat)*Math.sin(hlat) + Math.cos(ulat)*Math.cos(hlat)*Math.cos(ulong - hlong))); 
                 console.log(dist);
-                return ({...hospital, ...{distance: dist})
+                return ({...hospital, ...{distance: dist}})
             });
             res.send(distances.filter(h => h.distance < range));
         });
