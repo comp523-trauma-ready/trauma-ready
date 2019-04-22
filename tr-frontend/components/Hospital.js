@@ -21,6 +21,9 @@ export default class Hospital extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.navigation.getParam("item");
+        if (this.state._doc) {
+            this.state = this.state._doc;
+        }
         this.state.activationCodes = [];
     }
 
@@ -32,8 +35,6 @@ export default class Hospital extends React.Component {
             .then(res => res.json())
             .then(json => {
                 this.setState({ activationCodes : json });
-                console.log(json);
-                console.log(this.state.activationCodes);
             })
             .catch(err => console.error(err));
     }
@@ -87,6 +88,11 @@ export default class Hospital extends React.Component {
                
                 <View style={styles.servicesWrapper}>
                     <Text style={styles.h2}>Services</Text>
+                    {this.state.services.map((service, index) =>
+                        <Text key={index} style={styles.services}>
+                            - {service}
+                        </Text>
+                    )}
                 </View>
             </ScrollView>
         );
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
     },
 
     hospitalName: {
@@ -111,9 +117,6 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 8,
     }, 
-
-    info: {
-    },
 
     mapWrapper: {
         flex: 2,
@@ -153,7 +156,7 @@ const styles = StyleSheet.create({
     },
 
     services: {
-        fontSize: 18,
-        marginTop: 8,
+        fontSize: 16,
+        paddingLeft: 16,
     },
 });

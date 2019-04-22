@@ -20,8 +20,8 @@ const TabNavigator = createBottomTabNavigator(
     {
         Home: HomeStack,
         Directory: DirectoryStack,
-        Search: SearchStack,    
-        Settings: SettingsStack,
+        // Search: SearchStack,    
+        // Settings: SettingsStack,
     },
     {
         initialRouteName: "Home",
@@ -32,10 +32,10 @@ const TabNavigator = createBottomTabNavigator(
                 let iconName; 
                 if (routeName === "Home") {
                     iconName = `ios-home`;
-                } else if (routeName === "Search") {
-                    iconName = `ios-search`;
-                } else if (routeName === "Settings") {
-                    iconName = `ios-settings`          
+                // } else if (routeName === "Search") {
+                    // iconName = `ios-search`;
+                // } else if (routeName === "Settings") {
+                    // iconName = `ios-settings`          
                 } else if (routeName === "Directory") {
                     iconName = `ios-list`;
                 }
