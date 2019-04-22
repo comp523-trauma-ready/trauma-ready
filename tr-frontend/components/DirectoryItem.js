@@ -17,6 +17,7 @@ export default class DirectoryItem extends React.Component {
     }
 
     render() {
+
         return (
             <TouchableHighlight onPress={this.handleTouch}>
                 <View style={styles.diContainer}>
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
     },
 
     diContainer: {
-        flex: 1, 
+        flex: 1,
         margin: 10,
         padding: 10,
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 10,
     },
 
     diTitle: {

@@ -25,7 +25,7 @@ export default class Directory extends React.Component {
             .then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
-                    return res.json();                    
+                    return res.json();
                 } else {
                     throw "HTML unexpectedly recieved... Heroku must be down!";
                 }
@@ -64,10 +64,10 @@ export default class Directory extends React.Component {
         return (
             <View style={styles.container}>
                 <SectionList
-                    renderSectionHeader={({section}) => 
+                    renderSectionHeader={({section}) =>
                         <Text style={styles.sectionHeader}>{section.title}</Text>
                     }
-                    renderItem={(i) => 
+                    renderItem={(i) =>
                         <DirectoryItem navigation={this.props.navigation} item={i.item} />
                     }
                     sections={reducedSections}
@@ -81,15 +81,15 @@ export default class Directory extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10
+        padding: 0
     },
 
     diContainer: {
-        flex: 1, 
-        margin: 10,
-        padding: 10,
+        flex: .5,
+        margin: 0,
+        padding: 0,
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 10,
     },
 
     diTitle: {
@@ -99,7 +99,8 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        backgroundColor: "lightgray",
-        padding: 2,
+        color: "#edece6",
+        backgroundColor: "#619acf",
+        padding: 5,
     },
 });
