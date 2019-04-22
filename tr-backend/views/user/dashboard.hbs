@@ -1,11 +1,11 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome {{name}}</p>
+<h1 style="display: inline-block;">Dashboard</h1><a href="/user/logout" class="btn btn-secondary" style=" float: right; border-radius: 20px;">Logout</a>
+<div class="nav-bar">
+  <a class="nav-btn" href="/hospital" role="button">Hospitals</a>
+  <a class="nav-btn" href="/rac" role="button">RACs</a>
+  <a class="nav-btn" href="/activations" role="button">Activation Codes</a>
+  <a class="nav-btn" href="/trauma" role="button">Traumas</a>
+</div>
 
-<a class="btn btn-primary" href="/hospital" role="button">Access Hospitals</a>
-<a class="btn btn-primary" href="/rac" role="button">Access RACs</a>
-<a class="btn btn-primary" href="activations" role="button">Access Activation Codes</a>
-<a class="btn btn-primary" href="/trauma" role="button">Access Trauma</a>
+<p class="">Welcome {{name}}</p>
 
-<a href="/user/register" class="btn btn-primary btn-block mb-2"
->Register Another Administrator</a>
-<a href="/user/logout" class="btn btn-secondary">Logout</a>
+<a href="/user/register" class="">Register Another Administrator</a>

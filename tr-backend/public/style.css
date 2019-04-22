@@ -2,6 +2,10 @@
   outline: none;
 }
 
+body{
+  background-image: url("prism.png");
+}
+
 textarea{
   border-radius: 5px;
 }
@@ -160,4 +164,33 @@ textarea{
   resize: none;
   /*margin-left: 10%;*/
   width: 90%;
+}
+
+.nav-bar{
+  border: 2px solid #6c757d;
+  border-radius: 20px;
+  background: #eee;
+  overflow: hidden;
+  height: 40px;
+  text-align: center;
+}
+
+.nav-btn{
+  text-align: -webkit-center;
+  margin-left: -3px;
+  margin-right: -2px;
+  height: 38px;
+  width: 25%;
+  background-color: #93bbe0;
+  color: #fff;
+  font-size: 15pt;
+  display: -webkit-inline-box;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,font-weight .15s ease-in-out;
+}
+
+.nav-btn:hover{
+  background-color: #fff;
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
 }
