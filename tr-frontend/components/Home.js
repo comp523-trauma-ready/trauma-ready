@@ -16,7 +16,7 @@ export default class Home extends React.Component {
         super(props);
         this.state = {
             latitude: 0,
-            longitude: 0, 
+            longitude: 0,
             locString: "",
             nearby: [], // [{id:id, code:code}]
         };
@@ -28,7 +28,7 @@ export default class Home extends React.Component {
                 let { latitude, longitude } = success.coords;
                 this.setState({ latitude : latitude, longitude : longitude });
                 console.log(latitude, longitude);
-                const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/" 
+                const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/"
                     + latitude + "/" + longitude;
                 fetch(nearbyUrl)
                     .then(res => res.json())
@@ -48,9 +48,11 @@ export default class Home extends React.Component {
                     <Text style={styles.h1}>Trauma Ready</Text>
                 </View>
                 <View style={styles.topBar}>
-                    <Text style={styles.headline}>
-                        <Text style={{fontWeight: "bold"}}>Location:</Text> Chapel Hill, NC
-                    </Text>
+                  <View style={styles.topInnerBar}>
+                      <Text style={styles.headline}>
+                          <Text style={{fontWeight: "bold"}}>Location:</Text> Chapel Hill, NC
+                      </Text>
+                  </View>
                 </View>
                 <View style={styles.nearby}>
                     <Text style={styles.h2}>Nearby</Text>
@@ -73,24 +75,33 @@ const styles = StyleSheet.create({
     },
 
     masthead: {
-        flex: 1,
+
         flexDirection: "row",
         alignItems: "center",
         margin: 8,
     },
 
     topBar: {
-        flex: 0.5,
-        flexDirection: "row",
+        flex: .75,
         alignItems: "center",
-        borderWidth: 1,
-        padding: 4,
-        backgroundColor: "khaki",
+        padding: 0,
+    },
+    topInnerBar: {
+        flex: 1,
+        width: 300,
+        borderRadius: 15,
+        alignItems: "center",
+        backgroundColor: "#4B9CD3",
+        height: "100%",
+
     },
 
     headline: {
-        width: "100%",        
+        top: 6,
+        width: "100%",
+        fontSize: 14,
         textAlign: "center",
+        fontStyle: "italic",
     },
 
     nearby: {
@@ -98,17 +109,18 @@ const styles = StyleSheet.create({
         margin: 12,
         padding: 12,
         borderWidth: 1,
+
     },
 
     h1: {
         fontSize: 28,
         fontWeight: "bold",
-        width: "100%",        
+        width: "100%",
         textAlign: "center",
     },
 
     h2: {
-        fontSize: 22,    
+        fontSize: 22,
         fontWeight: "bold",
         marginTop: 4,
         marginBottom: 4,
