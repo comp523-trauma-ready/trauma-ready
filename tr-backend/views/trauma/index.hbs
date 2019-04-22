@@ -1,36 +1,45 @@
+<div id="trauma" class="type" style="display: none;"></div>
 <h1>{{viewTitle}}</h1>
 <a class="btn btn-primary" href="/dashboard" role="button">Return to Dashboard</a>
 
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Trauma Id</th>
-        <th>Trauma Type</th>
-        <th>Criteria</th>
-        <th>Notes</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each list}}
-        <tr>
-            <td>{{this.tid}}</td>
-            <td>{{this.name}}</td>
-            <td>{{#each this.criteria}}
-                <ul>
-                    <li>{{this.rac}}</li>
-                    {{#each this.activationCodes}}
-                        <ul>
-                            <li>{{this}}</li>
-                        </ul>
-                    {{/each}}
-                </ul>
-            {{/each}}
-            </td>
-            <td>{{this.notes}}</td>
+<table class="table table-striped mainTable">
+  <thead>
+  <tr>
+      <th></th>
+      <th>Id</th>
+      <th style="min-width: 149px;">Name</th>
+      <th style="min-width: 300px;">Criteria</th>
+      <th style="min-width: 224px">Notes</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each list}}
+      <tr class="dataRow">
+          <td>
+            <button class="far fa-save button-table" style="display: none;" onclick="saveRow($(this).parent().parent());"></button>
+            <button class="fa fa-edit button-table" style="display: inherit;"onclick="editRow($(this).parent().parent());"></button>
+            <button class="fas fa-ban button-table" style="display: none;" onclick="cancelEdit($(this).parent().parent());"></button>
+            <button class="fas fa-trash-alt button-table" style="display: inherit;" onclick="deleteRow($(this).parent().parent());"></button>
+          </td>
+          <td>{{this.tid}}</td>
+          <td class="mutable large">{{this.name}}</td>
+          <td>
+            <div class="ul-container">
+              <ul>
+                {{#each this.criteria}}
+                  <li>{{this.rac}}<ul>{{#each this.activationCodes}}
+                        <li>{{this}}</li>
+                      {{/each}}
+                    </ul>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </td>
 
-        </tr>
-    {{/each}}
-    </tbody>
+          <td class="mutable large">{{this.notes}}</td>
+      </tr>
+  {{/each}}
+  </tbody>
 </table>
