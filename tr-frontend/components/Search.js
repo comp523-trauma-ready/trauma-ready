@@ -18,7 +18,7 @@ export default class Search extends React.Component {
             hasSubmitted: false,
             queryMatches: []
         }
-    }  
+    }
 
     componentDidMount() {
         this._sub1 = this.props.navigation.addListener("willFocus", this._handleNavigateTo.bind(this));
@@ -62,7 +62,7 @@ export default class Search extends React.Component {
     render() {
         return (
             <View style={styles.wrapper}>
-                <TextInput 
+                <TextInput
                     ref={(input) => { this.textInput = input; }}
                     style={styles.input}
                     placeholder={"Search by hospital or injury"}
@@ -77,7 +77,7 @@ export default class Search extends React.Component {
                         this.state.hasSubmitted &&
                         this.state.queryMatches.map((activation, index) => {
                             return (
-                                <ActivationItem 
+                                <ActivationItem
                                     navigation={this.props.navigation}
                                     key={index}
                                     id={activation.aid}
@@ -95,7 +95,7 @@ export default class Search extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        justifyContent: "flex-start", 
+        justifyContent: "flex-start",
         alignItems: "center",
         padding: 10,
     },
@@ -104,34 +104,37 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 4,
         padding: 8,
-        marginTop: 12, 
+        marginTop: 12,
         marginBottom: 12,
         width: "100%",
         textAlign: "center",
         fontSize: 18,
-        borderColor: "gray",
+        borderColor: "#4B9CD3",
     },
 
     results: {
         flex: 4,
-        borderColor: "gray",
+        borderColor: "#4B9CD3",
         borderWidth: 1,
         margin: 10,
         padding: 10,
+        borderRadius: 5,
         width: "100%",
     },
 
     h2: {
-        fontSize: 22,    
+        fontSize: 22,
         fontWeight: "bold",
-        marginTop: 4,
+        fontStyle: "italic",
+        color: "#4B9CD3",
+        marginTop: 0,
         marginBottom: 4,
     },
 
     hline: {
         width: "100%",
         margin: 10,
-        borderColor: "black",
+        borderColor: "#3a7aa5",
         borderWidth: 1,
     },
 });

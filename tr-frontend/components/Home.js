@@ -72,7 +72,7 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: "#bcd8ff",
+        backgroundColor: "white",
     },
 
     masthead: {

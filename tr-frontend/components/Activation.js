@@ -38,10 +38,10 @@ export default class Activation extends React.Component {
         let { name, rac, trauma, notes } = this.state.data;
         const isRed = name.toLowerCase().includes("red");
         return (
-            <ScrollView style={[styles.wrapper, isRed && styles.red]}>
-                <Text style={styles.h1}>{name}</Text>
-                <Text style={styles.h2}>{rac}</Text>
-                {trauma.map((t, index) => <Text style={styles.listItem} key={index}>{t}</Text>)}
+            <ScrollView style={styles.wrapper}>
+                <Text style={[styles.h1, isRed && styles.red]}>{name}</Text>
+                <Text style={[styles.h2, isRed && styles.red]}>{rac}</Text>
+                {trauma.map((t, index) => <Text style={[styles.listItem, isRed && styles.listRed]} key={index}>{t}</Text>)}
             </ScrollView>
         );
     }
@@ -50,34 +50,45 @@ export default class Activation extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        backgroundColor: "yellow",
+        backgroundColor: "white",
         padding: 6,
     },
 
     red: {
-        backgroundColor: "red",
+        color: "#d10000",
     },
 
     h1: {
         fontSize: 32,
         fontWeight: "bold",
+        fontStyle: "italic",
         marginTop: 2,
-        marginBottom: 2,
-    }, 
+        marginBottom: 1,
+        color: "#edd004"
+    },
 
     h2: {
         fontSize: 18,
         fontWeight: "bold",
-        marginTop: 2,
-        marginBottom: 2,
-    }, 
+        marginBottom: 4,
+        fontStyle: "italic",
+        color: "#edd004"
+    },
 
     listItem: {
         fontSize: 14,
-        backgroundColor: "white",
+        fontWeight: "bold",
+        color: "black",
+        backgroundColor: "#ffe10a",
         padding: 12,
+        borderRadius: 15,
         marginTop: 2,
         marginBottom: 2,
-        borderWidth: 2,
+    },
+
+
+    listRed: {
+      color: "white",
+      backgroundColor: "#d10000",
     },
 });

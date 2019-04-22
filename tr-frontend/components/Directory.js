@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 0,
-        backgroundColor: "#bcd8ff"
+        backgroundColor: "white"
     },
 
     diContainer: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#edece6",
+        color: "#bcd8ff",
         backgroundColor: "#619acf",
         padding: 5,
     },

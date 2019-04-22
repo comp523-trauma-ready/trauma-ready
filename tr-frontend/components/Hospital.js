@@ -3,9 +3,9 @@ import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } f
 import MapView from 'react-native-maps';
 import ActivationItem from './ActivationItem';
 
-// The profile page for an entire hospital. Displays information for contacts, services, and 
-// activations in a hierarchical list. Majority of data is static and passed in via props; the 
-// only true state that is involved is for tracking the user's location for integration with maps. 
+// The profile page for an entire hospital. Displays information for contacts, services, and
+// activations in a hierarchical list. Majority of data is static and passed in via props; the
+// only true state that is involved is for tracking the user's location for integration with maps.
 
 export default class Hospital extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -38,7 +38,7 @@ export default class Hospital extends React.Component {
             .catch(err => console.error(err));
     }
 
-    render() {  
+    render() {
         return (
             <ScrollView contentContainerStyle={styles.areaWrapper}>
                 <Text style={styles.hospitalName}>{this.state.name}</Text>
@@ -47,7 +47,7 @@ export default class Hospital extends React.Component {
                     <Text style={styles.info}>{this.state.address}</Text>
                     <Text style={styles.info}>{this.state.email}</Text>
                 </View>
-                
+
                 <View style={styles.mapWrapper}>
                     <MapView
                         loadingEnabled = {true}
@@ -57,14 +57,14 @@ export default class Hospital extends React.Component {
                         initialRegion={{
                             latitude: this.state.latitude,
                             longitude: this.state.longitude,
-                            latitudeDelta: 0.922, 
+                            latitudeDelta: 0.922,
                             longitudeDelta: 0.0421,
                         }}>
                         <MapView.Marker
                             title={this.state.name}
-                            coordinate={{ 
-                                latitude : this.state.latitude, 
-                                longitude : this.state.longitude 
+                            coordinate={{
+                                latitude : this.state.latitude,
+                                longitude : this.state.longitude
                             }}
                             onPress={(nativeEvent) => {
                                 console.log(nativeEvent);
@@ -73,18 +73,18 @@ export default class Hospital extends React.Component {
                         />
                     </MapView>
                 </View>
-               
+
                 <View style={styles.activationWrapper}>
                     <Text style={styles.h2}>Activations</Text>
-                    {this.state.activationCodes.map((code, index) => 
-                        <ActivationItem 
-                            navigation={this.props.navigation} 
+                    {this.state.activationCodes.map((code, index) =>
+                        <ActivationItem
+                            navigation={this.props.navigation}
                             key={index}
-                            id={code.aid} 
-                            code={code.code} 
+                            id={code.aid}
+                            code={code.code}
                         />)}
                 </View>
-               
+
                 <View style={styles.servicesWrapper}>
                     <Text style={styles.h2}>Services</Text>
                 </View>
@@ -98,49 +98,67 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "center",
+
     },
 
     hospitalName: {
         fontSize: 24,
         fontWeight: "bold",
+        fontStyle: "italic",
+        textAlign: "center",
+        color: "#4B9CD3",
+
     },
 
     infoWrapper: {
         flex: 0.5,
-        marginTop: 8,
-        marginBottom: 8,
-    }, 
+        marginTop: 0,
+        paddingTop: 2,
+        paddingBottom: 6,
+        marginBottom: 6,
+        borderColor: "white",
+        borderWidth: 2,
+        borderRadius: 25,
+        backgroundColor: "white",
+    },
 
     info: {
+      textAlign: "center",
+      color: "#4B9CD3",
     },
 
     mapWrapper: {
         flex: 2,
+
     },
 
     map: {
-        ...StyleSheet.absoluteFillObject
+        ...StyleSheet.absoluteFillObject,
+        borderRadius: 10
     },
 
     activationWrapper: {
         flex: 4,
+        borderRadius: 10,
+        justifyContent: "space-between",
     },
 
     h2: {
         fontSize: 22,
         marginTop: 8,
         marginBottom: 8,
+        color: "#4B9CD3",
         fontWeight: "bold",
     },
 
     activationItem: {
         fontSize: 18,
-        borderWidth: 2,
         marginTop: 4,
         marginBottom: 4,
+
         padding: 8,
-        backgroundColor: "yellow",
+        backgroundColor: "#ffe10a",
         fontWeight: "bold",
     },
 
@@ -149,11 +167,10 @@ const styles = StyleSheet.create({
     },
 
     red: {
-        backgroundColor: "red"
+        backgroundColor: "#d10000"
     },
 
     services: {
         fontSize: 18,
-        marginTop: 8,
     },
 });
