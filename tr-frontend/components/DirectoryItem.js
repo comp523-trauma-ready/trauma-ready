@@ -40,7 +40,10 @@ const styles = StyleSheet.create({
         padding: 10,
         borderWidth: 1,
         borderRadius: 10,
+        borderColor: "#619acf",
+        backgroundColor: "white",
     },
+
 
     diTitle: {
         fontSize: 18,

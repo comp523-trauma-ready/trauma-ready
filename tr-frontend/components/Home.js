@@ -72,10 +72,10 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        backgroundColor: "#bcd8ff",
     },
 
     masthead: {
-
         flexDirection: "row",
         alignItems: "center",
         margin: 8,
@@ -95,34 +95,41 @@ const styles = StyleSheet.create({
         height: "100%",
 
     },
-
     headline: {
         top: 6,
         width: "100%",
         fontSize: 14,
         textAlign: "center",
         fontStyle: "italic",
+        color: "white"
     },
 
     nearby: {
         flex: 11,
         margin: 12,
         padding: 12,
-        borderWidth: 1,
-
+        borderWidth: 3,
+        borderRadius: 25,
+        borderColor: "#4B9CD3",
+        backgroundColor: "white"
     },
 
     h1: {
         fontSize: 28,
         fontWeight: "bold",
         width: "100%",
+        color: "#4B9CD3",
         textAlign: "center",
+        fontStyle: "italic",
     },
 
     h2: {
         fontSize: 22,
         fontWeight: "bold",
+
+        color: "#4B9CD3",
         marginTop: 4,
         marginBottom: 4,
+        marginLeft: 10,
     },
 });

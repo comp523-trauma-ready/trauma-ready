@@ -81,7 +81,8 @@ export default class Directory extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 0
+        padding: 0,
+        backgroundColor: "#bcd8ff"
     },
 
     diContainer: {
