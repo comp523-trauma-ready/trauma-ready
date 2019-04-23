@@ -58,14 +58,27 @@ router.put('/:hid', (req, res) => {
     if(!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)');
     }
-    Hospital.findOneAndUpdate({
-        hid: req.params.hid}, req.body, {new: true})
-        .then(doc => {
-            res.json(doc)
-        })
-        .catch(err => {
-            res.status(500).json(err);
-        })
+
+    // In case address is altered, geocoding is done again
+        googleMapsClient.geocode({
+            address: req.body.address
+        }, function (err, response) {
+            if (!err) {
+                var myjson = response.json.results;
+                req.body.latitude = myjson[0].geometry.location.lat;
+                req.body.longitude = myjson[0].geometry.location.lng;
+
+                Hospital.findOneAndUpdate({
+                    hid: req.params.hid
+                }, req.body, {new: true})
+                    .then(doc => {
+                        res.json(doc)
+                    })
+                    .catch(err => {
+                        res.status(500).json(err);
+                    });
+            }
+        });
 });
 
 router.delete('/:hid', (req, res) => {
@@ -90,49 +103,50 @@ router.delete('/:hid', (req, res) => {
 //     }
 // });
 
+//
+// function insertRecord(req, res) {
+//     let hospital = new Hospital();
+//     hospital.hospitalName = req.body.hospitalName;
+//     hospital.email = req.body.email;
+//     hospital.phoneDirectory = req.body.phone;
+//     hospital.rac = req.body.traumaRegion;
+//     hospital.address = req.body.address;
+//     hospital.traumaLevel = req.body.traumaLevel;
+//     hospital.save((err, doc) => {
+//         if (!err) {
+//             res.redirect('hospital/list');
+//         } else {
+//             if (err.name == 'ValidationError') {
+//                 handleValidationError(err, req.body);
+//                 res.render('hospital/addOrEdit', {
+//                     viewTitle : "Add Hospital",
+//                     hospital : req.body
+//                 });
+//             } else {
+//                 console.log(`Error during record insertion : ${err}`);
+//             }
+//         }
+//     });
+// }
 
-function insertRecord(req, res) {
-    let hospital = new Hospital();
-    hospital.hospitalName = req.body.hospitalName;
-    hospital.email = req.body.email;
-    hospital.phoneDirectory = req.body.phone;
-    hospital.rac = req.body.traumaRegion;
-    hospital.address = req.body.address;
-    hospital.traumaLevel = req.body.traumaLevel;
-    hospital.save((err, doc) => {
-        if (!err) {
-            res.redirect('hospital/list');
-        } else {
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render('hospital/addOrEdit', {
-                    viewTitle : "Add Hospital",
-                    hospital : req.body
-                });
-            } else {
-                console.log(`Error during record insertion : ${err}`);
-            }
-        }
-    });
-}
 
-function updateRecord(req, res) {
-    Hospital.findOneAndUpdate({ _id: req.body._id}, req.body, {new: true}, (err, doc) => {
-        if (!err) {
-            res.redirect('hospital/list');
-        } else {
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render("hospital/addOrEdit", {
-                    viewTitle: 'Update Hospital',
-                    hospital: req.body
-                });
-            } else {
-                console.log(`Error during record update : ${err}`);
-            }
-        }
-    });
-}
+// function updateRecord(req, res) {
+//     Hospital.findOneAndUpdate({ _id: req.body._id}, req.body, {new: true}, (err, doc) => {
+//         if (!err) {
+//             res.redirect('hospital/list');
+//         } else {
+//             if (err.name == 'ValidationError') {
+//                 handleValidationError(err, req.body);
+//                 res.render("hospital/addOrEdit", {
+//                     viewTitle: 'Update Hospital',
+//                     hospital: req.body
+//                 });
+//             } else {
+//                 console.log(`Error during record update : ${err}`);
+//             }
+//         }
+//     }
+//     });
 
 function handleValidationError(err, body) {
     for (field in err.errors) {
@@ -147,7 +161,7 @@ function handleValidationError(err, body) {
             break;
         }
     }
-};
+}
 
 router.get('/list', (req, res) => {
     Hospital.find((err, docs) => {
