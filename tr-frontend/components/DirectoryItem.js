@@ -17,7 +17,16 @@ export default class DirectoryItem extends React.Component {
     }
 
     render() {
-
+        if (this.props.item.distance) {
+            console.log(this.props.item._doc.name, this.props.item.distance);
+                return (
+                    <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
+                        <View style={styles.diContainerHome}>
+                            <Text style={styles.diTitleHome}>{this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km</Text>
+                        </View>
+                    </TouchableHighlight>
+                );            
+        }
         return (
             <TouchableHighlight onPress={this.handleTouch}>
                 <View style={styles.diContainer}>
@@ -29,11 +38,6 @@ export default class DirectoryItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10
-    },
-
     diContainer: {
         flex: 1,
         margin: 10,
@@ -47,12 +51,22 @@ const styles = StyleSheet.create({
 
     diTitle: {
         fontSize: 18,
+        height: "100%",
     },
 
-    sectionHeader: {
-        fontSize: 24,
-        fontWeight: "bold",
-        backgroundColor: "lightgray",
-        padding: 2,
+    diContainerHome: {
+        flex: 1,
+        margin: 4, 
+        padding: 12,
+        alignItems: "center",
+        borderWidth: 1,
+        borderRadius: 10,
     },
+
+    diTitleHome: {
+        flex: 1,
+        fontSize: 14,
+        height: 84,
+        justifyContent: "space-evenly",        
+    }
 });

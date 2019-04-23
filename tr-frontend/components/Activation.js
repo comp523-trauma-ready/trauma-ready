@@ -21,7 +21,6 @@ export default class Activation extends React.Component {
     }
 
     componentDidMount() {
-
         console.log(this.state.id);
         const activationEndpoint = "https://statt-portal.herokuapp.com/activations/" + this.state.id;
         fetch(activationEndpoint)
@@ -36,7 +35,8 @@ export default class Activation extends React.Component {
 
     render() {
         let { name, rac, trauma, notes } = this.state.data;
-        const isRed = name.toLowerCase().includes("red");
+        const codename = name.toLowerCase();
+        const isRed = codename.includes("red") || codename.includes("alpha");
         return (
             <ScrollView style={styles.wrapper}>
                 <Text style={[styles.h1, isRed && styles.red]}>{name}</Text>

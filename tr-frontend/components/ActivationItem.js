@@ -24,7 +24,8 @@ export default class ActivationItem extends React.Component {
     }
 
     render() {
-        const isRed = this.props.code.toLowerCase().includes("red");
+        const codename = this.props.code.toLowerCase();
+        const isRed = codename.includes("red") || codename.includes("alpha");
         return (
             <TouchableHighlight onPress={this.handleTouch}>
                 <Text style={[styles.activationItem, isRed && styles.red]} key={this.props.aid}>

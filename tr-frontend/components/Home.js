@@ -27,7 +27,6 @@ export default class Home extends React.Component {
             (success) => {
                 let { latitude, longitude } = success.coords;
                 this.setState({ latitude : latitude, longitude : longitude });
-                console.log(latitude, longitude);
                 const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/"
                     + latitude + "/" + longitude;
                 fetch(nearbyUrl)
@@ -41,7 +40,6 @@ export default class Home extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <View style={styles.wrapper}>
                 <View style={styles.masthead}>
@@ -59,7 +57,7 @@ export default class Home extends React.Component {
                     {
                         this.state.nearby.map((item, index) => {
                             return (
-                                <DirectoryItem key={index} navigation={this.props.navigation} item={item} />
+                                <DirectoryItem style={styles.di} key={index} navigation={this.props.navigation} item={item} />
                             );
                         })
                     }
@@ -86,6 +84,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 0,
     },
+
     topInnerBar: {
         flex: 1,
         width: 300,
@@ -93,7 +92,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#4B9CD3",
         height: "100%",
-
     },
     headline: {
         top: 6,
@@ -108,10 +106,14 @@ const styles = StyleSheet.create({
         flex: 11,
         margin: 12,
         padding: 12,
+<<<<<<< HEAD
         borderWidth: 3,
         borderRadius: 25,
         borderColor: "#4B9CD3",
         backgroundColor: "white"
+=======
+        borderWidth: 1,
+>>>>>>> 0ed3f3ec712c4625686952b6adac33c49aba9594
     },
 
     h1: {

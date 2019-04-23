@@ -1,3 +1,4 @@
+<div id="activations" class="type" style="display: none;"></div>
 <h1>{{viewTitle}}</h1>
 <a class="btn btn-primary" href="/dashboard" role="button">Return to Dashboard</a>
 
@@ -17,7 +18,7 @@
     {{#each list}}
         <tr class="dataRow">
             <td>
-              <button class="far fa-save button-table" style="display: none;" onclick="saveRow($(this).parent().parent(),dicts.activations);"></button>
+              <button class="far fa-save button-table" style="display: none;" onclick="saveRow($(this).parent().parent());"></button>
               <button class="fa fa-edit button-table" style="display: inherit;"onclick="editRow($(this).parent().parent());"></button>
               <button class="fas fa-ban button-table" style="display: none;" onclick="cancelEdit($(this).parent().parent());"></button>
               <button class="fas fa-trash-alt button-table" style="display: inherit;" onclick="deleteRow($(this).parent().parent());"></button>
@@ -41,3 +42,4 @@
     {{/each}}
     </tbody>
 </table>
+<div class="newEntry" onclick="createRow();">Create New Object</div>

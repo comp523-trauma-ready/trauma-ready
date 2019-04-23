@@ -1,30 +1,42 @@
+<div id="rac" class="type" style="display: none;"></div>
 <h1>{{viewTitle}}</h1>
 <a class="btn btn-primary" href="/dashboard" role="button">Return to Dashboard</a>
 
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>RAC Id</th>
-        <th>RAC Name</th>
-        <th>Activation IDs and Codes</th>
-        <th>Notes</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#each list}}
-        <tr>
-            <td>{{this.rid}}</td>
-            <td>{{this.name}}</td>
-            <td>
+<table class="table table-striped mainTable">
+  <thead>
+  <tr>
+      <th></th>
+      <th>Id</th>
+      <th style="min-width: 149px;">Name</th>
+      <th style="min-width: 300px;">Activations</th>
+      <th style="min-width: 224px">Notes</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each list}}
+      <tr class="dataRow">
+          <td>
+            <button class="far fa-save button-table" style="display: none;" onclick="saveRow($(this).parent().parent());"></button>
+            <button class="fa fa-edit button-table" style="display: inherit;"onclick="editRow($(this).parent().parent());"></button>
+            <button class="fas fa-ban button-table" style="display: none;" onclick="cancelEdit($(this).parent().parent());"></button>
+            <button class="fas fa-trash-alt button-table" style="display: inherit;" onclick="deleteRow($(this).parent().parent());"></button>
+          </td>
+          <td>{{this.rid}}</td>
+          <td class="mutable">{{this.name}}</td>
+          <td>
+            <div class="ul-container">
+              <ul>
                 {{#each this.activationCodes}}
-                    <ul>
-                        <li>{{this.aid}} : {{this.code}}</li>
-                    </ul>
+                  <li>{{this.aid}} : {{this.code}}</li>
                 {{/each}}
-            </td>
-            <td>{{this.notes}}</td>
-        </tr>
-    {{/each}}
-    </tbody>
+              </ul>
+            </div>
+          </td>
+
+          <td class="mutable large">{{this.notes}}</td>
+      </tr>
+  {{/each}}
+  </tbody>
 </table>
+<div class="newEntry" onclick="createRow();">Create New Object</div>
