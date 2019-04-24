@@ -42,12 +42,17 @@ const styles = StyleSheet.create({
         marginTop: 4,
         marginBottom: 4,
         padding: 8,
-        borderRadius: 15,
+        borderWidth: 3,
+        borderColor: "#bca607",
+        borderRadius: 10,
+        overflow: "hidden",
         backgroundColor: "#ffe10a",
         fontWeight: "bold",
     },
 
     red: {
-        backgroundColor: "#d10000"
+        backgroundColor: "#d10000",
+        borderColor: "#680000",
+        color: "white"
     },
 });

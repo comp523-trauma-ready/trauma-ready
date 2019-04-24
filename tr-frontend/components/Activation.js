@@ -81,7 +81,10 @@ const styles = StyleSheet.create({
         color: "black",
         backgroundColor: "#ffe10a",
         padding: 12,
-        borderRadius: 15,
+        borderRadius: 20,
+        borderWidth: 3,
+        borderColor: "#bca607",
+        overflow: "hidden",
         marginTop: 2,
         marginBottom: 2,
     },
@@ -90,5 +93,6 @@ const styles = StyleSheet.create({
     listRed: {
       color: "white",
       backgroundColor: "#d10000",
-    },
+      borderColor: "#680000"
+      },
 });
