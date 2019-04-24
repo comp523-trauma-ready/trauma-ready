@@ -104,12 +104,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         flexDirection: "column",
-<<<<<<< HEAD
-        justifyContent: "center",
-
-=======
         justifyContent: "space-between",
->>>>>>> 0ed3f3ec712c4625686952b6adac33c49aba9594
     },
 
     hospitalName: {
@@ -133,17 +128,13 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
 
-<<<<<<< HEAD
     info: {
       textAlign: "center",
       color: "#4B9CD3",
     },
 
-=======
->>>>>>> 0ed3f3ec712c4625686952b6adac33c49aba9594
     mapWrapper: {
         flex: 2,
-
     },
 
     map: {
@@ -184,11 +175,7 @@ const styles = StyleSheet.create({
     },
 
     services: {
-<<<<<<< HEAD
-        fontSize: 18,
-=======
         fontSize: 16,
         paddingLeft: 16,
->>>>>>> 0ed3f3ec712c4625686952b6adac33c49aba9594
     },
 });

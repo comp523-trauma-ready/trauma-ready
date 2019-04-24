@@ -106,14 +106,10 @@ const styles = StyleSheet.create({
         flex: 11,
         margin: 12,
         padding: 12,
-<<<<<<< HEAD
         borderWidth: 3,
         borderRadius: 25,
         borderColor: "#4B9CD3",
         backgroundColor: "white"
-=======
-        borderWidth: 1,
->>>>>>> 0ed3f3ec712c4625686952b6adac33c49aba9594
     },
 
     h1: {
