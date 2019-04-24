@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
         marginBottom: 2,
     },
 
-
     listRed: {
         color: "white",
         backgroundColor: "#d10000",
