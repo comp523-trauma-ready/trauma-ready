@@ -1,47 +1,67 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+// Renders an individual activation card... essentially a digital recreation of the paper version.
+// Navigated to by clicking an ActivationItem on a hospital screens. 
+// Props: 
+//  @navigation: RN navigation object
+
 export default class Activation extends React.Component {
-        static navigationOptions = ({ navigation }) => {
-        return {
+        static navigationOptions = {
             title: "Activation",
             headerStyle: {
                 backgroundColor: "#4B9CD3",
             },
             headerTintColor: "white",
         }
-    }
 
     constructor(props) {
         super(props);
         this.state = {
             id: this.props.navigation.getParam("id"),
-            data: {name: "", rac: "", trauma: [], notes: ""},
-        }
+            name: "",
+            rac: "",
+            criteria: [],
+            notes: "",
+        };
     }
 
     componentDidMount() {
-        console.log(this.state.id);
+        // Recieves an object representing an individual activation card with the form:
+        //  { trauma: [String], aid: Number, name: String, age: String, rac: String, notes: String }
         const activationEndpoint = "https://statt-portal.herokuapp.com/activations/" + this.state.id;
         fetch(activationEndpoint)
             .then(res => res.json())
             .then(json => {
-                console.log(json);
-                this.setState({ data : json })
-            }
-            )
+                let { aid, name, age, rac, trauma, notes } = json;
+                this.setState({ id : aid, name : name, rac : rac, criteria : trauma, notes : notes});
+            })
             .catch(err => console.error(err));
     }
 
     render() {
-        let { name, rac, trauma, notes } = this.state.data;
-        const codename = name.toLowerCase();
+        const codename = this.state.name.toLowerCase();
         const isRed = codename.includes("red") || codename.includes("alpha");
         return (
             <ScrollView style={styles.wrapper}>
-                <Text style={[styles.h1, isRed && styles.red]}>{name}</Text>
-                <Text style={[styles.h2, isRed && styles.red]}>{rac}</Text>
-                {trauma.map((t, index) => <Text style={[styles.listItem, isRed && styles.listRed]} key={index}>{t}</Text>)}
+                <Text style={[styles.h1, isRed && styles.red]}>{this.state.name}</Text>
+                <Text style={[styles.h2, isRed && styles.red]}>{this.state.rac}</Text>
+                {
+                    this.state.criteria.map((criterion, key) => 
+                        <Text style={[styles.listItem, isRed && styles.listRed]} key={key}>
+                            {criterion}
+                        </Text>
+                    ) // Note: putting a semicolon here will break it 
+                }
+                {
+                    this.state.notes.length > 0 && (
+                        <View>
+                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 20 }}/>
+                            <Text style={[styles.h2, isRed && styles.red]}>Notes</Text>
+                            <Text style={{}}>{this.state.notes}</Text>                        
+                        </View>
+                    )
+                }
             </ScrollView>
         );
     }
@@ -51,7 +71,8 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         backgroundColor: "white",
-        padding: 6,
+        margin: 8,
+        ...StyleSheet.absoluteFill,
     },
 
     red: {
@@ -61,18 +82,19 @@ const styles = StyleSheet.create({
     h1: {
         fontSize: 32,
         fontWeight: "bold",
-        fontStyle: "italic",
         marginTop: 2,
         marginBottom: 1,
-        color: "#edd004"
+        color: "#edd004",
+        textAlign: "center",
     },
 
     h2: {
         fontSize: 18,
         fontWeight: "bold",
         marginBottom: 4,
-        fontStyle: "italic",
-        color: "#edd004"
+        fontWeight: "bold",
+        color: "#edd004",
+        textAlign: "center",
     },
 
     listItem: {
@@ -81,7 +103,7 @@ const styles = StyleSheet.create({
         color: "black",
         backgroundColor: "#ffe10a",
         padding: 12,
-        borderRadius: 20,
+        borderRadius: 8,
         borderWidth: 3,
         borderColor: "#bca607",
         overflow: "hidden",
@@ -91,8 +113,8 @@ const styles = StyleSheet.create({
 
 
     listRed: {
-      color: "white",
-      backgroundColor: "#d10000",
-      borderColor: "#680000"
-      },
+        color: "white",
+        backgroundColor: "#d10000",
+        borderColor: "#680000"
+    },
 });

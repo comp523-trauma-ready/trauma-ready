@@ -8,20 +8,21 @@ import Activation from './components/Activation';
 import Directory from './components/Directory';
 import Home from './components/Home';
 import Hospital from './components/Hospital';
-import Search from './components/Search';
-import Settings from './components/Settings';
+
+// Entry component for the app. Sets up tab bar navigation and the stack routes for each screen. 
+// For more information on navigators: https://reactnavigation.org/docs/en/tab-based-navigation.html
 
 const HomeStack = createStackNavigator({Home: Home});
-const DirectoryStack = createStackNavigator({Directory: Directory, Hospital: Hospital, Activation: Activation});
-const SearchStack = createStackNavigator({Search: Search});
-const SettingsStack = createStackNavigator({Settings: Settings})
+const DirectoryStack = createStackNavigator({
+    Directory: Directory, 
+    Hospital: Hospital, 
+    Activation: Activation,    
+});
 
 const TabNavigator = createBottomTabNavigator(
     {
         Home: HomeStack,
         Directory: DirectoryStack,
-        // Search: SearchStack,    
-        // Settings: SettingsStack,
     },
     {
         initialRouteName: "Home",
@@ -32,22 +33,13 @@ const TabNavigator = createBottomTabNavigator(
                 let iconName; 
                 if (routeName === "Home") {
                     iconName = `ios-home`;
-                // } else if (routeName === "Search") {
-                    // iconName = `ios-search`;
-                // } else if (routeName === "Settings") {
-                    // iconName = `ios-settings`          
                 } else if (routeName === "Directory") {
                     iconName = `ios-list`;
                 }
                 return (<IconComponent name={iconName} size={25} color={tintColor} />);
             }
         }),
-        tabBarOptions: {
-            // Keep the default white/gray now, but these can be changed for contrast settings later
-            // activeTintColor: 'blue',
-            // inactiveTintColor: 'gray',
-        }
-    },
+    }
 );
 
 export default createAppContainer(TabNavigator);
