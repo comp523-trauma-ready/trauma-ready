@@ -3,6 +3,8 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { Constants, Location, Permissions } from "expo";
 
+import DirectoryItem from "./DirectoryItem";
+
 export default class Home extends React.Component {
     static navigationOptions = {
         title: "Trauma Ready",
@@ -15,8 +17,10 @@ export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            latitude: "",
-            longitude: "",
+            latitude: 0,
+            longitude: 0,
+            traumaCenters: [],
+            otherHospitals: [],
             errorMessage: "",
         }
     }
@@ -40,6 +44,30 @@ export default class Home extends React.Component {
         //  https://docs.expo.io/versions/latest/sdk/location/#locationaccuracy
         let location = await Location.getCurrentPositionAsync({ accuracy : Location.Accuracy.Low });
         this.setState({ latitude : location.coords.latitude, longitude : location.coords.longitude });
+
+        // const traumaCenterNames = ["unc", "womack", "cape fear"];
+        const baseUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
+        const nearbyEndpoint = baseUrl + this.state.latitude + "/" + this.state.longitude;
+        fetch(nearbyEndpoint)
+            .then(res => res.json())
+            .then(json => {
+                // Now that we have all the nearby locations, we distinguish them between the three 
+                // full trauma centers and the other hospitals
+                let traumaCenters = [];
+                let otherHospitals = [];
+                json.forEach((hospital, index) => {
+                    const name = hospital._doc.name.toLowerCase().split(" ")[0];
+                    const isTraumaCenter = name.includes("unc") 
+                        || name.includes("cape") 
+                        || name.includes("womack");
+                    isTraumaCenter ? traumaCenters.push(hospital) : otherHospitals.push(hospital);
+                });
+                const sortFunction = (a, b) => a.distance < b.distance ? -1 : 1;
+                traumaCenters.sort(sortFunction);
+                otherHospitals.sort(sortFunction);
+                this.setState({ traumaCenters : traumaCenters, otherHospitals : otherHospitals });
+            })
+            .catch(error => console.error(error));
     }
 
     // _getReverseGeocodedLocation = async () => {
@@ -62,7 +90,17 @@ export default class Home extends React.Component {
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.h2}>Trauma Centers</Text>
+                    {
+                        this.state.traumaCenters.map((traumaCenter, key) => {
+                            return <DirectoryItem key={key} item={traumaCenter} navigation={this.props.navigation} />
+                        })
+                    }
                     <Text style={styles.h2}>Other Hospitals</Text>
+                    {
+                        this.state.otherHospitals.map((hospital, key) => {
+                            return <DirectoryItem key={key} item={hospital} navigation={this.props.navigation} />
+                        })
+                    }
                 </View>
             </View>
         );
@@ -101,6 +139,7 @@ const styles = StyleSheet.create({
         marginRight: 12,
         marginBottom: 12,
         borderColor: "gray",
+        backgroundColor: "lightgray",
     },
     
     topBar: {
@@ -139,6 +178,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: 4,
         marginBottom: 4,
-        marginLeft: 10,
     },
 });

@@ -1,6 +1,10 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
+// props:
+//  item: Hospital object
+//  navigation: RN navigation object
+
 export default class DirectoryItem extends React.Component {
     constructor(props) {
         super(props);
@@ -22,7 +26,9 @@ export default class DirectoryItem extends React.Component {
                 return (
                     <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
                         <View style={styles.diContainerHome}>
-                            <Text style={styles.diTitleHome}>{this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km</Text>
+                            <Text style={styles.diHomeName}>
+                                {this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km
+                            </Text>
                         </View>
                     </TouchableHighlight>
                 );            
@@ -48,7 +54,6 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
 
-
     diTitle: {
         fontSize: 18,
         height: "100%",
@@ -56,17 +61,18 @@ const styles = StyleSheet.create({
 
     diContainerHome: {
         flex: 1,
-        margin: 4, 
-        padding: 12,
-        alignItems: "center",
         borderWidth: 1,
-        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        margin: 4,
+        backgroundColor: "white",
     },
 
-    diTitleHome: {
-        flex: 1,
-        fontSize: 14,
-        height: 84,
-        justifyContent: "space-evenly",        
-    }
+    diHomeName: {
+    },
+
+    diHomeDistance: {
+
+    },
 });

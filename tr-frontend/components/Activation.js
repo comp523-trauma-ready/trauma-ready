@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 // Renders an individual activation card... essentially a digital recreation of the paper version.
-// Navigated to by clicking an ActivationItem on a hospital screens. 
+// Navigated to by clicking an ActivationItem from a hospital screen. 
 // Props: 
 //  @navigation: RN navigation object
 
