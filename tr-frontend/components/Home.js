@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-
 import { Constants, Location, Permissions } from "expo";
 
 import DirectoryItem from "./DirectoryItem";
@@ -45,23 +44,23 @@ export default class Home extends React.Component {
         let location = await Location.getCurrentPositionAsync({ accuracy : Location.Accuracy.Low });
         this.setState({ latitude : location.coords.latitude, longitude : location.coords.longitude });
 
-        // const traumaCenterNames = ["unc", "womack", "cape fear"];
         const baseUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
         const nearbyEndpoint = baseUrl + this.state.latitude + "/" + this.state.longitude;
         fetch(nearbyEndpoint)
             .then(res => res.json())
             .then(json => {
-                // Now that we have all the nearby locations, we distinguish them between the three 
-                // full trauma centers and the other hospitals
+                // Now that we have all the nearby locations, we distinguish between the three 
+                // full trauma centers and the other generic hospitals
                 let traumaCenters = [];
                 let otherHospitals = [];
                 json.forEach((hospital, index) => {
                     const name = hospital._doc.name.toLowerCase().split(" ")[0];
                     const isTraumaCenter = name.includes("unc") 
-                        || name.includes("cape") 
-                        || name.includes("womack");
+                                            || name.includes("cape") 
+                                            || name.includes("womack");
                     isTraumaCenter ? traumaCenters.push(hospital) : otherHospitals.push(hospital);
                 });
+                // Sort hospitals by distance before storing in state
                 const sortFunction = (a, b) => a.distance < b.distance ? -1 : 1;
                 traumaCenters.sort(sortFunction);
                 otherHospitals.sort(sortFunction);
@@ -87,19 +86,32 @@ export default class Home extends React.Component {
                     <Text>Chapel Hill, NC</Text>
                 </View>
                 <View style={styles.masthead}>
+                    {/* Mid Carolina RAC logo*/}
                     <Image style={styles.image} source={require("../assets/logo.jpg")} />
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.h2}>Trauma Centers</Text>
                     {
                         this.state.traumaCenters.map((traumaCenter, key) => {
-                            return <DirectoryItem key={key} item={traumaCenter} navigation={this.props.navigation} />
+                            return (
+                                <DirectoryItem 
+                                    key={key} 
+                                    item={traumaCenter} 
+                                    navigation={this.props.navigation} 
+                                />
+                            )
                         })
                     }
                     <Text style={styles.h2}>Other Hospitals</Text>
                     {
                         this.state.otherHospitals.map((hospital, key) => {
-                            return <DirectoryItem key={key} item={hospital} navigation={this.props.navigation} />
+                            return (
+                                <DirectoryItem 
+                                    key={key} 
+                                    item={hospital} 
+                                    navigation={this.props.navigation} 
+                                />
+                            )
                         })
                     }
                 </View>

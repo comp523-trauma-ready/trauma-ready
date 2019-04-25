@@ -4,8 +4,15 @@ import {
     Text, TouchableHighlight, View 
 } from "react-native";
 
-import MapView from "react-native-maps";
+import MapView from "react-native-maps"; // MapViews are actually bundled with Expo now, so this 
+                                         // dependency can be removed in the future 
+
 import ActivationItem from "./ActivationItem";
+
+// The profile screen for an entire hospital; it renders information like addresses, emails,
+// phones, activations, services, and a map component. Almost all of this data is passed in on the
+// "item" parameter from navigation and then stored in state. The exception is the activation 
+// items, which query the backend based on rac name upon mounting. 
 
 export default class Hospital extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -33,7 +40,6 @@ export default class Hospital extends React.Component {
             .then(res => res.json())
             .then(json => {
                 this.setState({ activationCodes : json });
-                console.log(this.state);
             })
             .catch(err => console.error(err));
     }

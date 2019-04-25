@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import ActivationItem from "./ActivationItem";
 
+// Component screen for running search queries - it has a search bar that is automatically active
+// (i.e. the keyboard is pulled up) as soon as a user navigates to it. 
+// Searching was a nonessential feature, so this code ultimately didn't make it into final production.
+
 export default class Search extends React.Component {
     static navigationOptions = {
         title: "Search",
@@ -35,12 +39,7 @@ export default class Search extends React.Component {
 
     handleSubmit(event) {
         let searchQuery = event.nativeEvent.text;
-        if (searchQuery !== "") {
-            let asdfasdf = JSON.parse('[{"aid":0,"code":"Adult Red"},{"aid":1,"code":"Adult Yellow"},{"aid":2,"code":"Pediatric Red"},{"aid":3,"code":"Pediatric Yellow"}]');
-            // I have no idea why this line doesn't do anything. Literally setState just does not work.
-            this.setState({ queryMatches : asdfasdf });
-            console.log(this.state);
-        }
+        if (searchQuery !== "") {}
         // Hardcoded because server keeps going down :(
         // if (searchQuery.toLowerCase().includes("unc")) {
         //     data = [

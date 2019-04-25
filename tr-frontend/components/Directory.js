@@ -14,7 +14,6 @@ export default class Directory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            organizeByRAC: false, // default: alphabetical
             hospitals: [],
         };
     }
@@ -59,7 +58,8 @@ export default class Directory extends React.Component {
                 }
             }
         });
-        let reducedSections = sections.filter(section => section.data.length > 0);
+
+        const reducedSections = sections.filter(section => section.data.length > 0);
 
         return (
             <View style={styles.container}>
