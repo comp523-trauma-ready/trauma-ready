@@ -22,16 +22,15 @@ export default class DirectoryItem extends React.Component {
 
     render() {
         if (this.props.item.distance) {
-            console.log(this.props.item._doc.name, this.props.item.distance);
-                return (
-                    <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
-                        <View style={styles.diContainerHome}>
-                            <Text style={styles.diHomeName}>
-                                {this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km
-                            </Text>
-                        </View>
-                    </TouchableHighlight>
-                );            
+            return (
+                <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
+                    <View style={styles.diContainerHome}>
+                        <Text style={styles.diHomeName}>
+                            {this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km
+                        </Text>
+                    </View>
+                </TouchableHighlight>
+            );            
         }
         return (
             <TouchableHighlight onPress={this.handleTouch}>
