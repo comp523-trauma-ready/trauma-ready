@@ -84,6 +84,7 @@ export default class Home extends React.Component {
             <View style={styles.wrapper}>
                 <View style={styles.locationBanner}>
                     <Text style={{ fontWeight: "bold" }}>Your location: </Text>
+                    <Text>Chapel Hill, NC</Text>
                 </View>
                 <View style={styles.masthead}>
                     <Image style={styles.image} source={require("../assets/logo.jpg")} />
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
 
     locationBanner: {
         flex: 1,
+        flexDirection: "row",
         borderTopWidth: 1,
         borderBottomWidth: 1,
         backgroundColor: "yellow",
