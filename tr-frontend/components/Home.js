@@ -1,11 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import ActivationItem from "./ActivationItem";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { Constants, Location, Permissions } from "expo";
+
 import DirectoryItem from "./DirectoryItem";
 
 export default class Home extends React.Component {
     static navigationOptions = {
-        title: "Home",
+        title: "Trauma Ready",
         headerStyle: {
             backgroundColor: "#4B9CD3",
         },
@@ -17,48 +18,100 @@ export default class Home extends React.Component {
         this.state = {
             latitude: 0,
             longitude: 0,
-            locString: "",
-            nearby: [], // [{id:id, code:code}]
-        };
+            traumaCenters: [],
+            otherHospitals: [],
+            errorMessage: "",
+        }
+    }
+
+    componentWillMount() {
+        this._getLocationAsync();
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            (success) => {
-                let { latitude, longitude } = success.coords;
-                this.setState({ latitude : latitude, longitude : longitude });
-                const nearbyUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/"
-                    + latitude + "/" + longitude;
-                fetch(nearbyUrl)
-                    .then(res => res.json())
-                    .then(json => this.setState({ nearby : json }))
-                    .catch(err => console.error(err));
-            },
-            (failure) => console.error(failure),
-            { timeout: 10, maximumAge: 10, enableHighAccuracy: false }
-        );
+        // const apiKey = "";
+        // Location.setApiKey(apiKey);
+        // this._getReverseGeocodedLocation();
     }
+
+    _getLocationAsync = async () => {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== "granted") {
+            this.setState({ errorMessage: "Permission to access location was denied"});
+        }
+        // Requests location with accuracy to the nearest kilometer. Other settings are here:
+        //  https://docs.expo.io/versions/latest/sdk/location/#locationaccuracy
+        let location = await Location.getCurrentPositionAsync({ accuracy : Location.Accuracy.Low });
+        this.setState({ latitude : location.coords.latitude, longitude : location.coords.longitude });
+
+        const baseUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
+        const nearbyEndpoint = baseUrl + this.state.latitude + "/" + this.state.longitude;
+        fetch(nearbyEndpoint)
+            .then(res => res.json())
+            .then(json => {
+                // Now that we have all the nearby locations, we distinguish between the three 
+                // full trauma centers and the other generic hospitals
+                let traumaCenters = [];
+                let otherHospitals = [];
+                json.forEach((hospital, index) => {
+                    const name = hospital._doc.name.toLowerCase().split(" ")[0];
+                    const isTraumaCenter = name.includes("unc") 
+                                            || name.includes("cape") 
+                                            || name.includes("womack");
+                    isTraumaCenter ? traumaCenters.push(hospital) : otherHospitals.push(hospital);
+                });
+                // Sort hospitals by distance before storing in state
+                const sortFunction = (a, b) => a.distance < b.distance ? -1 : 1;
+                traumaCenters.sort(sortFunction);
+                otherHospitals.sort(sortFunction);
+                this.setState({ traumaCenters : traumaCenters, otherHospitals : otherHospitals });
+            })
+            .catch(error => console.error(error));
+    }
+
+    // _getReverseGeocodedLocation = async () => {
+    //     if (this.state.latitude && this.state.longitude) {
+    //         let { city, street, region, postalCode } = await Location.reverseGeocodeAsync({
+    //             latitude : this.state.latitude, longitude : this.state.longitude,
+    //         });
+    //         this.setState({ city : city, region : region, postalCode : postalCode });
+    //     }
+    // }
 
     render() {
         return (
             <View style={styles.wrapper}>
+                <View style={styles.locationBanner}>
+                    <Text style={{ fontWeight: "bold" }}>Your location: </Text>
+                    <Text>Chapel Hill, NC</Text>
+                </View>
                 <View style={styles.masthead}>
-                    <Text style={styles.h1}>Trauma Ready</Text>
+                    {/* Mid Carolina RAC logo*/}
+                    <Image style={styles.image} source={require("../assets/logo.jpg")} />
                 </View>
-                <View style={styles.topBar}>
-                  <View style={styles.topInnerBar}>
-                      <Text style={styles.headline}>
-                          <Text style={{fontWeight: "bold"}}>Location:</Text> Chapel Hill, NC
-                      </Text>
-                  </View>
-                </View>
-                <View style={styles.nearby}>
-                    <Text style={styles.h2}>Nearby</Text>
+                <View style={styles.info}>
+                    <Text style={styles.h2}>Trauma Centers</Text>
                     {
-                        this.state.nearby.map((item, index) => {
+                        this.state.traumaCenters.map((traumaCenter, key) => {
                             return (
-                                <DirectoryItem style={styles.di} key={index} navigation={this.props.navigation} item={item} />
-                            );
+                                <DirectoryItem 
+                                    key={key} 
+                                    item={traumaCenter} 
+                                    navigation={this.props.navigation} 
+                                />
+                            )
+                        })
+                    }
+                    <Text style={styles.h2}>Other Hospitals</Text>
+                    {
+                        this.state.otherHospitals.map((hospital, key) => {
+                            return (
+                                <DirectoryItem 
+                                    key={key} 
+                                    item={hospital} 
+                                    navigation={this.props.navigation} 
+                                />
+                            )
                         })
                     }
                 </View>
@@ -70,14 +123,39 @@ export default class Home extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
+        ...StyleSheet.absoluteFillObject,
+    },
+
+    locationBanner: {
+        flex: 1,
+        flexDirection: "row",
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        backgroundColor: "yellow",
+        alignItems: "center",
+        justifyContent: "center",
     },
 
     masthead: {
-        flexDirection: "row",
+        flex: 3,
         alignItems: "center",
-        margin: 8,
+        justifyContent: "center",
+        padding: 24,
+        margin: 24,
     },
 
+    info: {
+        flex: 12,
+        padding: 12,
+        borderWidth: 2,
+        borderRadius: 4,
+        marginLeft: 12,
+        marginRight: 12,
+        marginBottom: 12,
+        borderColor: "gray",
+        backgroundColor: "lightgray",
+    },
+    
     topBar: {
         flex: .75,
         alignItems: "center",
@@ -99,13 +177,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: "center",
         fontStyle: "italic",
-    },
-
-    nearby: {
-        flex: 11,
-        margin: 12,
-        padding: 12,
-        borderWidth: 1,
+        color: "white"
     },
 
     h1: {

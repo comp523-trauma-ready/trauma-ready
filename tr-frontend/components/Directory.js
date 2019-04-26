@@ -14,7 +14,6 @@ export default class Directory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            organizeByRAC: false, // default: alphabetical
             hospitals: [],
         };
     }
@@ -59,7 +58,8 @@ export default class Directory extends React.Component {
                 }
             }
         });
-        let reducedSections = sections.filter(section => section.data.length > 0);
+
+        const reducedSections = sections.filter(section => section.data.length > 0);
 
         return (
             <View style={styles.container}>
@@ -81,7 +81,8 @@ export default class Directory extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 0
+        padding: 0,
+        backgroundColor: "white"
     },
 
     diContainer: {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#edece6",
+        color: "#bcd8ff",
         backgroundColor: "#619acf",
         padding: 5,
     },

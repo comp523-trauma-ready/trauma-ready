@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
-// A stylized list component for displaying available activation codes 
-// props: 
+// A stylized list component for displaying available activation codes
+// props:
 //  @navigation :: React Navigation Item
 //  @key        :: Number
 //  @id         :: Number, number that corresponds to the backend id
@@ -39,15 +39,20 @@ export default class ActivationItem extends React.Component {
 const styles = StyleSheet.create({
     activationItem: {
         fontSize: 18,
-        borderWidth: 2,
         marginTop: 4,
         marginBottom: 4,
         padding: 8,
-        backgroundColor: "yellow",
+        borderWidth: 3,
+        borderColor: "#bca607",
+        borderRadius: 10,
+        overflow: "hidden",
+        backgroundColor: "#ffe10a",
         fontWeight: "bold",
     },
 
     red: {
-        backgroundColor: "red"
+        backgroundColor: "#d10000",
+        borderColor: "#680000",
+        color: "white"
     },
 });
