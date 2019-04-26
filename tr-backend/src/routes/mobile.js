@@ -7,6 +7,12 @@ const Activations = mongoose.model("Activations");
 const Hospital = mongoose.model("Hospital");
 const RAC = mongoose.model("RAC");
 
+router.get("/traumaCenters", (req, res) => {
+    Hospital.find({ }, (err, docs) => {
+        res.send(docs);
+    });
+});
+
 // Returns all hospitals as JSON for loading into the directory screen 
 router.get("/hospitals", (req, res) => {
     Hospital

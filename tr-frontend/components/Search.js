@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import ActivationItem from "./ActivationItem";
 
+// Component screen for running search queries - it has a search bar that is automatically active
+// (i.e. the keyboard is pulled up) as soon as a user navigates to it. 
+// Searching was a nonessential feature, so this code ultimately didn't make it into final production.
+
 export default class Search extends React.Component {
     static navigationOptions = {
         title: "Search",
@@ -18,7 +22,7 @@ export default class Search extends React.Component {
             hasSubmitted: false,
             queryMatches: []
         }
-    }  
+    }
 
     componentDidMount() {
         this._sub1 = this.props.navigation.addListener("willFocus", this._handleNavigateTo.bind(this));
@@ -35,12 +39,7 @@ export default class Search extends React.Component {
 
     handleSubmit(event) {
         let searchQuery = event.nativeEvent.text;
-        if (searchQuery !== "") {
-            let asdfasdf = JSON.parse('[{"aid":0,"code":"Adult Red"},{"aid":1,"code":"Adult Yellow"},{"aid":2,"code":"Pediatric Red"},{"aid":3,"code":"Pediatric Yellow"}]');
-            // I have no idea why this line doesn't do anything. Literally setState just does not work.
-            this.setState({ queryMatches : asdfasdf });
-            console.log(this.state);
-        }
+        if (searchQuery !== "") {}
         // Hardcoded because server keeps going down :(
         // if (searchQuery.toLowerCase().includes("unc")) {
         //     data = [
@@ -62,7 +61,7 @@ export default class Search extends React.Component {
     render() {
         return (
             <View style={styles.wrapper}>
-                <TextInput 
+                <TextInput
                     ref={(input) => { this.textInput = input; }}
                     style={styles.input}
                     placeholder={"Search by hospital or injury"}
@@ -77,7 +76,7 @@ export default class Search extends React.Component {
                         this.state.hasSubmitted &&
                         this.state.queryMatches.map((activation, index) => {
                             return (
-                                <ActivationItem 
+                                <ActivationItem
                                     navigation={this.props.navigation}
                                     key={index}
                                     id={activation.aid}
@@ -95,7 +94,7 @@ export default class Search extends React.Component {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        justifyContent: "flex-start", 
+        justifyContent: "flex-start",
         alignItems: "center",
         padding: 10,
     },
@@ -104,34 +103,37 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: 4,
         padding: 8,
-        marginTop: 12, 
+        marginTop: 12,
         marginBottom: 12,
         width: "100%",
         textAlign: "center",
         fontSize: 18,
-        borderColor: "gray",
+        borderColor: "#4B9CD3",
     },
 
     results: {
         flex: 4,
-        borderColor: "gray",
+        borderColor: "#4B9CD3",
         borderWidth: 1,
         margin: 10,
         padding: 10,
+        borderRadius: 5,
         width: "100%",
     },
 
     h2: {
-        fontSize: 22,    
+        fontSize: 22,
         fontWeight: "bold",
-        marginTop: 4,
+        fontStyle: "italic",
+        color: "#4B9CD3",
+        marginTop: 0,
         marginBottom: 4,
     },
 
     hline: {
         width: "100%",
         margin: 10,
-        borderColor: "black",
+        borderColor: "#3a7aa5",
         borderWidth: 1,
     },
 });
