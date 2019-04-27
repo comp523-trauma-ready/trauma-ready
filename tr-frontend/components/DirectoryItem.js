@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, SectionList, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 
+// A hospital listing item in both the directory tab and the home page preview. 
 // props:
 //  item: Hospital object
 //  navigation: RN navigation object
@@ -22,11 +23,13 @@ export default class DirectoryItem extends React.Component {
 
     render() {
         if (this.props.item.distance) {
+            const milesAway = Math.floor(0.6213 * this.props.item.distance); // 0.6213 converts from km
+            const formattedDistance = (milesAway == 0) ? "<1 mile" : String(milesAway) + " miles";
             return (
                 <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
                     <View style={styles.diContainerHome}>
                         <Text style={styles.diHomeName}>
-                            {this.props.item._doc.name} | {Math.floor(this.props.item.distance)} km
+                            {this.props.item._doc.name} | {formattedDistance} 
                         </Text>
                     </View>
                 </TouchableHighlight>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { Constants, Location, Permissions } from "expo";
+import { Constants, IntentLauncherAndroid, Location, Permissions } from "expo";
 
 import DirectoryItem from "./DirectoryItem";
 
@@ -25,13 +25,18 @@ export default class Home extends React.Component {
     }
 
     componentWillMount() {
-        this._getLocationAsync();
-    }
-
-    componentDidMount() {
-        // const apiKey = "";
-        // Location.setApiKey(apiKey);
-        // this._getReverseGeocodedLocation();
+        // Double check that location services will work nicely with Android 
+        // https://github.com/expo/expo/issues/436
+        let locationStatus = Location.getProviderStatusAsync();
+        locationStatus.then(res => {
+            let { locationServicesEnabled, gpsAvailable } = res;
+            if (!(locationServicesEnabled && gpsAvailable)) {
+                IntentLauncherAndroid.startActivityAsync(
+                    IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
+                );
+            }
+            this._getLocationAsync();
+        });
     }
 
     _getLocationAsync = async () => {
@@ -41,9 +46,8 @@ export default class Home extends React.Component {
         }
         // Requests location with accuracy to the nearest kilometer. Other settings are here:
         //  https://docs.expo.io/versions/latest/sdk/location/#locationaccuracy
-        let location = await Location.getCurrentPositionAsync({ accuracy : Location.Accuracy.Low });
+        let location = await Location.getCurrentPositionAsync({ enableHighAccuracy : true });
         this.setState({ latitude : location.coords.latitude, longitude : location.coords.longitude });
-
         const baseUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
         const nearbyEndpoint = baseUrl + this.state.latitude + "/" + this.state.longitude;
         fetch(nearbyEndpoint)
@@ -69,22 +73,9 @@ export default class Home extends React.Component {
             .catch(error => console.error(error));
     }
 
-    // _getReverseGeocodedLocation = async () => {
-    //     if (this.state.latitude && this.state.longitude) {
-    //         let { city, street, region, postalCode } = await Location.reverseGeocodeAsync({
-    //             latitude : this.state.latitude, longitude : this.state.longitude,
-    //         });
-    //         this.setState({ city : city, region : region, postalCode : postalCode });
-    //     }
-    // }
-
     render() {
         return (
             <View style={styles.wrapper}>
-                <View style={styles.locationBanner}>
-                    <Text style={{ fontWeight: "bold" }}>Your location: </Text>
-                    <Text>Chapel Hill, NC</Text>
-                </View>
                 <View style={styles.masthead}>
                     {/* Mid Carolina RAC logo*/}
                     <Image style={styles.image} source={require("../assets/logo.jpg")} />
@@ -192,5 +183,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: 4,
         marginBottom: 4,
+        textAlign: "center",
     },
 });
