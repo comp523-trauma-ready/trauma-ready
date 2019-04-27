@@ -11,18 +11,16 @@ Built in collaboration with UNC Health Care for COMP 523, Spring 2019.
 The job of an EMT is not an easy one. For each incident, it roughly consists of a three step process: getting to the people who need help, stabilizing them, and figuring out how to get them the right level of care at the right trauma center. *Trauma Ready* is a cross-platform mobile app that assists paramedics in the last step of this process by providing a unified source of the information they need to make these routing decisions. Upon opening, the app provides a status feed of nearby hospitals that is customized to 
 the user's location: 
 
-![home](tr-frontend/screens/home.png?raw=true "Home")
+![home](tr-frontend/screenshots/pixel-2/home.png?raw=true "Home")
 
 *Trauma Ready* contains a directory of all trauma centers and activation criterias for participating hospitals in North Carolina. Each hospital profile contains address, contact, services, and activation criteria data for that particular location. 
 
-![directory](tr-frontend/screens/directory.png?raw=true "Directory")
-![hospital](tr-frontend/screens/hospital-top.png?raw=true "Hospital")
+![directory](tr-frontend/screenshots/pixel-2/directory.png?raw=true "Directory")
+![hospital](tr-frontend/screenshots/pixel-2/hospital-top.png?raw=true "Hospital")
 
 Lastly, maintaining accurate and recent information is essential for this app to be used by real paramedics in the field. We support this with an online administrator portal where credentialed users may update activation criterias as they change over time and 
 automatically push these changes to the app. 
 
-<!-- [I'm an inline-style link](https://www.google.com) -->
-<!-- https://statt-portal.herokuapp.com -->
 ## Administrator Portal (Users)
 The administrator portal is found at (https://statt-portal.herokuapp.com). It allows for administrators to access the information stored in the database that the application uses and make alterations as necessary. Administrators will need proper authentication to gain access to this information.
 
