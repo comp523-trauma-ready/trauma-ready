@@ -100,8 +100,9 @@ const styles = StyleSheet.create({
     sectionHeader: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#bcd8ff",
         backgroundColor: "#619acf",
-        padding: 5,
+        padding: 2,
+        paddingLeft: 4,
+        color: "white",        
     },
 });

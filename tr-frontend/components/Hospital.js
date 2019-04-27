@@ -61,12 +61,13 @@ export default class Hospital extends React.Component {
                             let number = info[1];
                             return (
                                 <Text key={key} style={{
-                                    marginTop: 8, 
-                                    marginBottom: 8, 
+                                    fontSize: 14,
+                                    marginTop: 4, 
+                                    marginBottom: 4, 
                                     backgroundColor: "white",
                                     borderWidth: 1,
-                                    borderRadius: 2,
-                                    padding: 2,
+                                    borderRadius: 4,
+                                    padding: 8,
                                 }}>
                                     {type}:
                                     <Text 
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     activations: {
         borderWidth: 1,
         padding: 8,
-        marginBottom: 8
+        marginBottom: 8,
     },
 
     maps: {

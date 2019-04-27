@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         backgroundColor: "#ffe10a",
         fontWeight: "bold",
+        textAlign: "center",
     },
 
     red: {
