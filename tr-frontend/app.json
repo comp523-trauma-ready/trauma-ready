@@ -23,7 +23,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.comp523.traumaready"
+    },
+    "android": {
+        "package": "com.comp523.traumaready"
     },
     "description": ""
   }
