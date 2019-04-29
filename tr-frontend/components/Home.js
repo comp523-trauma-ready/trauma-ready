@@ -27,16 +27,20 @@ export default class Home extends React.Component {
     componentWillMount() {
         // Double check that location services will work nicely with Android 
         // https://github.com/expo/expo/issues/436
-        let locationStatus = Location.getProviderStatusAsync();
-        locationStatus.then(res => {
-            let { locationServicesEnabled, gpsAvailable } = res;
-            if (!(locationServicesEnabled && gpsAvailable)) {
-                IntentLauncherAndroid.startActivityAsync(
-                    IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
-                );
-            }
+        if (Platform.OS === 'ios') {
             this._getLocationAsync();
-        });
+        } else {
+            let locationStatus = Location.getProviderStatusAsync();
+            locationStatus.then(res => {
+                let { locationServicesEnabled, gpsAvailable } = res;
+                if (!(locationServicesEnabled && gpsAvailable)) {
+                    IntentLauncherAndroid.startActivityAsync(
+                        IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
+                    );
+                }
+                this._getLocationAsync();
+            });
+        }
     }
 
     _getLocationAsync = async () => {
@@ -60,8 +64,8 @@ export default class Home extends React.Component {
                 json.forEach((hospital, index) => {
                     const name = hospital._doc.name.toLowerCase().split(" ")[0];
                     const isTraumaCenter = name.includes("unc") 
-                                            || name.includes("cape") 
-                                            || name.includes("womack");
+                        || name.includes("cape") 
+                        || name.includes("womack");
                     isTraumaCenter ? traumaCenters.push(hospital) : otherHospitals.push(hospital);
                 });
                 // Sort hospitals by distance before storing in state
@@ -76,36 +80,36 @@ export default class Home extends React.Component {
     render() {
         return (
             <View style={styles.wrapper}>
-                <View style={styles.masthead}>
-                    {/* Mid Carolina RAC logo*/}
-                    <Image style={styles.image} source={require("../assets/logo.jpg")} />
-                </View>
-                <View style={styles.info}>
-                    <Text style={styles.h2}>Trauma Centers</Text>
-                    {
-                        this.state.traumaCenters.map((traumaCenter, key) => {
-                            return (
-                                <DirectoryItem 
-                                    key={key} 
-                                    item={traumaCenter} 
-                                    navigation={this.props.navigation} 
-                                />
-                            )
-                        })
-                    }
-                    <Text style={styles.h2}>Other Hospitals</Text>
-                    {
-                        this.state.otherHospitals.map((hospital, key) => {
-                            return (
-                                <DirectoryItem 
-                                    key={key} 
-                                    item={hospital} 
-                                    navigation={this.props.navigation} 
-                                />
-                            )
-                        })
-                    }
-                </View>
+            <View style={styles.masthead}>
+            {/* Mid Carolina RAC logo*/}
+            <Image style={styles.image} source={require("../assets/logo.jpg")} />
+            </View>
+            <View style={styles.info}>
+            <Text style={styles.h2}>Trauma Centers</Text>
+            {
+                this.state.traumaCenters.map((traumaCenter, key) => {
+                    return (
+                        <DirectoryItem 
+                        key={key} 
+                        item={traumaCenter} 
+                        navigation={this.props.navigation} 
+                        />
+                    )
+                })
+            }
+            <Text style={styles.h2}>Other Hospitals</Text>
+            {
+                this.state.otherHospitals.map((hospital, key) => {
+                    return (
+                        <DirectoryItem 
+                        key={key} 
+                        item={hospital} 
+                        navigation={this.props.navigation} 
+                        />
+                    )
+                })
+            }
+            </View>
             </View>
         );
     }
@@ -146,7 +150,7 @@ const styles = StyleSheet.create({
         borderColor: "gray",
         backgroundColor: "lightgray",
     },
-    
+
     topBar: {
         flex: .75,
         alignItems: "center",

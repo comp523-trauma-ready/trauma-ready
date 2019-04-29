@@ -17,7 +17,8 @@
     "react-navigation-material-bottom-tabs": "^1.0.0"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "jest": "^24.7.1"
   },
   "private": true
 }
