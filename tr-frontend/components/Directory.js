@@ -19,8 +19,8 @@ export default class Directory extends React.Component {
     }
 
     componentDidMount() {
-        const hospitalEndpoint = "https://statt-portal.herokuapp.com/mobile/hospitals";
-        fetch(hospitalEndpoint)
+        const baseURL = "https://statt-portal.herokuapp.com/mobile/hospitals";
+        fetch(baseURL)
             .then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -29,9 +29,7 @@ export default class Directory extends React.Component {
                     throw "HTML unexpectedly recieved... Heroku must be down!";
                 }
             })
-            .then(json => {
-                this.setState({ hospitals : json });
-            })
+            .then(json => this.setState({ hospitals : json }))
             .catch(err => console.error(err));
     }
 
@@ -48,7 +46,7 @@ export default class Directory extends React.Component {
             { title: "Y", data: [] }, { title: "Z", data: [] },
         ];
 
-        // I want to refactor this to be clearer, but it works and I can't think of a simpler way
+        // Iterate through each hospital, finding the section it belongs under
         this.state.hospitals.forEach((hospital) => {
             let key = hospital.name.charAt(0).toUpperCase();
             for (let i = 0; i < sections.length; i++) {
@@ -59,6 +57,7 @@ export default class Directory extends React.Component {
             }
         });
 
+        // Finally, remove all section headers with no hospitals 
         const reducedSections = sections.filter(section => section.data.length > 0);
 
         return (

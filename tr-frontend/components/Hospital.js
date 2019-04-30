@@ -35,8 +35,8 @@ export default class Hospital extends React.Component {
     }
 
     componentDidMount() {
-        const baseActivationEndpoint = "http://statt-portal.herokuapp.com/mobile/rac/";
-        fetch(baseActivationEndpoint + this.state.rac)
+        const baseURL = "http://statt-portal.herokuapp.com/mobile/rac/";
+        fetch(baseURL + this.state.rac)
             .then(res => res.json())
             .then(json => {
                 this.setState({ activationCodes : json });

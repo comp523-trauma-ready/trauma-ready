@@ -29,12 +29,18 @@ export default class Activation extends React.Component {
     componentDidMount() {
         // Recieves an object representing an individual activation card with the form:
         //  { trauma: [String], aid: Number, name: String, age: String, rac: String, notes: String }
-        const activationEndpoint = "https://statt-portal.herokuapp.com/activations/" + this.state.id;
-        fetch(activationEndpoint)
+        const baseURL = "https://statt-portal.herokuapp.com/activations";
+        fetch(baseURL + "/" + this.state.id)
             .then(res => res.json())
             .then(json => {
-                let { aid, name, age, rac, trauma, notes } = json;
-                this.setState({ id : aid, name : name, rac : rac, criteria : trauma, notes : notes});
+                const { aid, name, age, rac, trauma, notes } = json;
+                this.setState({ 
+                    id: aid, 
+                    name: name, 
+                    rac: rac, 
+                    criteria: trauma, 
+                    notes: notes
+                });
             })
             .catch(err => console.error(err));
     }
@@ -56,9 +62,9 @@ export default class Activation extends React.Component {
                 {
                     this.state.notes.length > 0 && (
                         <View>
-                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, margin: 20 }}/>
+                            <View style={styles.blackLine} />
                             <Text style={[styles.h2, isRed && styles.red]}>Notes</Text>
-                            <Text style={{}}>{this.state.notes}</Text>                        
+                            <Text>{this.state.notes}</Text>                        
                         </View>
                     )
                 }
@@ -73,6 +79,12 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         margin: 8,
         ...StyleSheet.absoluteFill,
+    },
+
+    blackLine: {
+        borderBottomColor: "black",
+        borderBottomWidth: 1,
+        margin: 20
     },
 
     red: {

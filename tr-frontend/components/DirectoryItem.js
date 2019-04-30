@@ -22,26 +22,30 @@ export default class DirectoryItem extends React.Component {
     }
 
     render() {
-        if (this.props.item.distance) {
-            const milesAway = Math.floor(0.6213 * this.props.item.distance); // 0.6213 converts from km
-            const formattedDistance = (milesAway == 0) ? "<1 mile" : String(milesAway) + " miles";
+        let item = this.props.item;
+        let distance = item.distance;
+        // If it contains a distance field, then this component is being rendered on the home screen
+        if (distance) {
+            distance = Math.floor(0.6213 * distance); // 0.6212 convert from km to miles
+            const formattedDistance = (distance == 0) ? "<1 mile" : String(distance) + " miles";
             return (
                 <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
                     <View style={styles.diContainerHome}>
                         <Text style={styles.diHomeName}>
-                            {this.props.item.name} | {formattedDistance} 
+                            {item.name} | {formattedDistance} 
                         </Text>
                     </View>
                 </TouchableHighlight>
             );            
+        } else {
+            return (
+                <TouchableHighlight onPress={this.handleTouch}>
+                    <View style={styles.diContainer}>
+                        <Text style={styles.diTitle}>{item.name}</Text>
+                    </View>
+                </TouchableHighlight>
+            );            
         }
-        return (
-            <TouchableHighlight onPress={this.handleTouch}>
-                <View style={styles.diContainer}>
-                    <Text style={styles.diTitle}>{this.props.item.name}</Text>
-                </View>
-            </TouchableHighlight>
-        );
     }
 }
 
@@ -71,10 +75,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
 
-    diHomeName: {
-    },
+    diHomeName: {},
 
-    diHomeDistance: {
-
-    },
+    diHomeDistance: {},
 });

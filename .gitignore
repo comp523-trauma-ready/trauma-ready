@@ -23,3 +23,7 @@ tr-frontend/*.p12
 tr-frontend/*.key
 tr-frontend/*.mobileprovision
 tr-frontend/.DS_Store
+
+tr-frontend/*.jks
+tr-frontend/*.bak
+tr-frontend/*.apk
