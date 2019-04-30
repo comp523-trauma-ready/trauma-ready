@@ -1,6 +1,6 @@
 <div id="trauma" class="type" style="display: none;"></div>
-<h1>{{viewTitle}}</h1>
-<a class="btn btn-primary" href="/dashboard" role="button">Return to Dashboard</a>
+<h2 style="display: inline-block;">{{viewTitle}}</h2>
+<a class="btn btn-primary" href="/dashboard" role="button" style="float:right;">Return to Dashboard</a>
 
 
 <table class="table table-striped mainTable">
@@ -43,3 +43,4 @@
   {{/each}}
   </tbody>
 </table>
+<div class="newEntry" onclick="createRow();">Create New Object</div>

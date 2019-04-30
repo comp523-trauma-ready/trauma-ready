@@ -34,7 +34,7 @@ function closeEditPanel(){
   $(".openInArray").removeClass("openInArray");
 }
 
-function submitEditPanel(){
+function submitEditPanel(){   //this could use some prechecking to reduce superfluous code
   $(".bg-filter").hide();
   $(".edit-panel").hide();
   let temp = "<ul>";
@@ -50,6 +50,26 @@ function submitEditPanel(){
           temp += "</ul></li>";
         }
       });
+      break;
+    case "rac":
+      $.each( $(".arrayTableBody").find("tr"), function(){
+        if(!$(this).hasClass("addRow")){
+          temp += "<li>"+ $(this).find(".first").val() + " : " + $(this).find(".second").val() + "</li>";
+        }
+      });
+      break;
+    case "hospital":
+      if( $(".openInArray").parent().parent().children().index( $(".openInArray").parent() ) == 7 ){
+        $.each( $(".arrayTableBody").find("tr"), function(){
+          if(!$(this).hasClass("addRow")){
+            temp += "<li>"+ $(this).find(".first").val() + " : " + $(this).find(".second").val() + "</li>";
+          }
+        });
+      }else{
+        $.each( $(".arrayTableBody").find("textarea"), function(){
+          temp += "<li>"+ $(this).val() +"</li>";
+        });
+      }
       break;
     default:
       $.each( $(".arrayTableBody").find("textarea"), function(){
@@ -84,7 +104,7 @@ function generateArrayTable(td){
         $.each( td.find("ul:lt(1)").children("li"), function(){
           let tag = $(this).clone().children().remove().end().text();
           let content = "<tr><td><textarea class='arrayTableField'>"+tag+"</textarea>";
-          console.log($(this));
+          //console.log($(this));
           $.each($(this).find("li"), function(){
             content += "<span><button class='fas fa-minus-circle button-table' style='vertical-align: super;' onclick='$(this).parent().remove();'></button><textarea class='fieldInput'>"+ $(this).text() +"</textarea><br></span>";
           });
@@ -92,6 +112,29 @@ function generateArrayTable(td){
           content += "</td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>";
           $(".arrayTableBody").append( content );
         });
+        break;
+      case "rac":
+        $.each( td.find("ul:lt(1)").children("li"), function(){
+          let pair = $(this).text().split(" : ");
+          let content = "<tr><td>ID: <textarea class='arrayTableField short first'>"+pair[0]+"</textarea> &nbsp; Code: <textarea class='arrayTableField long second'>"+ pair[1] +"</textarea>";
+          content += "</td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>";
+          $(".arrayTableBody").append( content );
+        });
+        break;
+      case "hospital":
+        let j = $(td).parent().parent().children().index($(td).parent());
+        if(j == 7){
+          $.each( td.find("ul:lt(1)").children("li"), function(){
+            let pair = $(this).text().split(" : ");
+            let content = "<tr><td>Dept: <textarea class='arrayTableField long first'>"+pair[0]+"</textarea> &nbsp; Ext: <textarea class='arrayTableField short second'>"+ pair[1] +"</textarea>";
+            content += "</td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>";
+            $(".arrayTableBody").append( content );
+          });
+        }else{
+          $.each( td.find("li"), function(){
+            $(".arrayTableBody").append("<tr><td><textarea class='arrayTableField'>"+$(this).text()+"</textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>");
+          });
+        }
         break;
       default:
         $.each( td.find("li"), function(){
@@ -107,10 +150,20 @@ function removeArrayRow(tr){
   tr.remove();
 }
 
-function createArrayRow(tr){
+function createArrayRow(tr){//this gives a handle to the "addRow" tr element under the arrayEditor. This way we can insertBefore();
   switch(type){
     case "trauma":
       $("<tr><td><textarea class='arrayTableField'></textarea><button class='fas fa-plus-circle button-table' onclick='addActivation( $(this) )'> Add Activation</button></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
+      break;
+    case "rac":
+      $( "<tr><td>ID: <textarea class='arrayTableField short first'></textarea> &nbsp; Code: <textarea class='arrayTableField long second'></textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
+      break;
+    case "hospital":
+      if(  $(".openInArray").parent().parent().children().index( $(".openInArray").parent() ) == 7){
+        $( "<tr><td>Dept: <textarea class='arrayTableField long first'></textarea> &nbsp; Ext: <textarea class='arrayTableField short second'></textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
+      }else{
+        $("<tr><td><textarea class='arrayTableField'></textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
+      }
       break;
     default:
       $("<tr><td><textarea class='arrayTableField'></textarea></td><td><button class='fas fa-minus-circle button-table' onclick='removeArrayRow( $(this).parent().parent() );'></button></td></tr>").insertBefore(tr);
@@ -194,6 +247,7 @@ function createRow(){
         content +='<td class="mutable">name</td><td><div class="ul-container" onclick="generateArrayTable($(this));"><ul><li>aid : code</li></ul></div></td><td class="mutable large">notes</td></tr>';
         break;
       case "trauma":
+        content +='<td class="mutable large">Name</td><td><div class="ul-container" onclick="generateArrayTable($(this));"><ul><li>Rac<ul><li>Activation Code</li></ul></li></ul></div></td><td class="mutable large">Notes</td>';
         break;
       case "hospital":
         content += '<td class="mutable">N/A</td><td class="mutable">N/A</td><td class="mutable">N/A</td><td><div class="ul-container" onclick="generateArrayTable($(this));"><ul><li>Services</li></ul></div></td><td class="mutable">N/A</td><td><div class="ul-container" onclick="generateArrayTable($(this));"><ul><li>Connection : #</li></ul></div></td><td class="mutable">N/A</td><td class="mutable large">N/A</td>';

@@ -131,6 +131,24 @@ textarea{
   resize: none;
 }
 
+.short{
+  width: 25%;
+  display: inline-block;
+  height: 30px;
+}
+
+.med{
+  width: 40%;
+  display: inline-block;
+  height: 30px;
+}
+
+.long{
+  width: 55%;
+  display: inline-block;
+  height: 30px;
+}
+
 .arrayTableBtn{
   width: 50%;
   height: 100%;
