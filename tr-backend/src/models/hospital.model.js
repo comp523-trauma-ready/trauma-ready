@@ -44,10 +44,6 @@ let hospitalSchema = new mongoose.Schema({
   notes: {
     type: String
   },
-  isTraumaCenter: {
-    type: Boolean,
-    default: false,
-  },
 }, autoIncrement = require('mongoose-auto-increment'));
 
 hospitalSchema.plugin(autoIncrement.plugin, {model:'Hospital', field: 'hid'});
