@@ -56,9 +56,11 @@ export default class Hospital extends React.Component {
                 <View style={styles.phones}>
                     {
                         this.state.phoneDirectory.map((entry, key) => {
-                            let info = entry.connection.split(":");
-                            let type = info[0];
-                            let number = info[1];
+                            // let info = entry.connection.split(":");
+                            // let type = info[0];
+                            // let number = info[1];
+                            let type = entry.connection;
+                            let number = entry.number;
                             return (
                                 <Text key={key} style={{
                                     fontSize: 14,
