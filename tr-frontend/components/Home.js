@@ -25,14 +25,17 @@ export default class Home extends React.Component {
     }
 
     componentWillMount() {
-        // Double check that location services will work nicely with Android 
-        // https://github.com/expo/expo/issues/436
+        // Request location permissions from user and then store the results in state. 
+        // On some Androids there is an issue with this Promise never resolving, so we apply some 
+        // platform specific logic to get around that. 
+        // 
+        // ** Full discussion: https://github.com/expo/expo/issues/436.
         if (Platform.OS === 'ios') {
             this._getLocationAsync();
         } else {
             let locationStatus = Location.getProviderStatusAsync();
-            locationStatus.then(res => {
-                let { locationServicesEnabled, gpsAvailable } = res;
+            locationStatus.then(response => {
+                let { locationServicesEnabled, gpsAvailable } = response;
                 if (!(locationServicesEnabled && gpsAvailable)) {
                     IntentLauncherAndroid.startActivityAsync(
                         IntentLauncherAndroid.ACTION_LOCATION_SOURCE_SETTINGS
@@ -46,33 +49,52 @@ export default class Home extends React.Component {
     _getLocationAsync = async () => {
         let { status } = await Permissions.askAsync(Permissions.LOCATION);
         if (status !== "granted") {
-            this.setState({ errorMessage: "Permission to access location was denied"});
+            this.setState({ errorMessage: "Unable to access user location"});
         }
-        // Requests location with accuracy to the nearest kilometer. Other settings are here:
-        //  https://docs.expo.io/versions/latest/sdk/location/#locationaccuracy
+
         let location = await Location.getCurrentPositionAsync({ enableHighAccuracy : true });
-        this.setState({ latitude : location.coords.latitude, longitude : location.coords.longitude });
-        const baseUrl = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
-        const nearbyEndpoint = baseUrl + this.state.latitude + "/" + this.state.longitude;
-        fetch(nearbyEndpoint)
+        this.setState({ 
+            latitude:  location.coords.latitude, 
+            longitude: location.coords.longitude 
+        });
+        
+        // Now that we've stored lat/long coordinates, we can ask the backend for nearby hospitals
+        const { latitude, longitude } = this.state;
+
+        const baseURL = "https://statt-portal.herokuapp.com/mobile/hospitals/full/";
+        fetch(baseURL + latitude + "/" + longitude)
             .then(res => res.json())
-            .then(json => {
-                // Now that we have all the nearby locations, we distinguish between the three 
-                // full trauma centers and the other generic hospitals
+            .then(hospitals => {
+
+                // Converts this array into just the Hospital schema documents with distance appended
+                hospitals = hospitals.map((entry) => {
+                    let newEntry = entry._doc;
+                    newEntry['distance'] = entry['distance'];
+                    return newEntry;
+                });
+
+                // Next, distinguish between trauma centers and generic acute care hospitals
                 let traumaCenters = [];
                 let otherHospitals = [];
-                json.forEach((hospital, index) => {
-                    const name = hospital._doc.name.toLowerCase().split(" ")[0];
-                    const isTraumaCenter = name.includes("unc") 
-                        || name.includes("cape") 
-                        || name.includes("womack");
-                    isTraumaCenter ? traumaCenters.push(hospital) : otherHospitals.push(hospital);
+
+                hospitals.forEach((hospital, key) => {
+                    const traumaLevel = parseInt(hospital.traumaLevel);
+                    if (isNaN(traumaLevel)) {
+                        otherHospitals.push(hospital);
+                    } else {
+                        traumaCenters.push(hospital);
+                    }
                 });
-                // Sort hospitals by distance before storing in state
+
+                // Lastly, sort each array by distance before storing in state
                 const sortFunction = (a, b) => a.distance < b.distance ? -1 : 1;
                 traumaCenters.sort(sortFunction);
                 otherHospitals.sort(sortFunction);
-                this.setState({ traumaCenters : traumaCenters, otherHospitals : otherHospitals });
+
+                this.setState({
+                    traumaCenters:  traumaCenters,
+                    otherHospitals: otherHospitals,
+                });
             })
             .catch(error => console.error(error));
     }
@@ -90,9 +112,9 @@ export default class Home extends React.Component {
                 this.state.traumaCenters.map((traumaCenter, key) => {
                     return (
                         <DirectoryItem 
-                        key={key} 
-                        item={traumaCenter} 
-                        navigation={this.props.navigation} 
+                            key={key} 
+                            item={traumaCenter} 
+                            navigation={this.props.navigation} 
                         />
                     )
                 })
@@ -102,9 +124,9 @@ export default class Home extends React.Component {
                 this.state.otherHospitals.map((hospital, key) => {
                     return (
                         <DirectoryItem 
-                        key={key} 
-                        item={hospital} 
-                        navigation={this.props.navigation} 
+                            key={key} 
+                            item={hospital} 
+                            navigation={this.props.navigation} 
                         />
                     )
                 })

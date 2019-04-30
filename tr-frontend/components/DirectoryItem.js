@@ -29,7 +29,7 @@ export default class DirectoryItem extends React.Component {
                 <TouchableHighlight style={{ flex: 1 }} onPress={this.handleTouch}>
                     <View style={styles.diContainerHome}>
                         <Text style={styles.diHomeName}>
-                            {this.props.item._doc.name} | {formattedDistance} 
+                            {this.props.item.name} | {formattedDistance} 
                         </Text>
                     </View>
                 </TouchableHighlight>
