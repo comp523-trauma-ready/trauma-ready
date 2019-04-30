@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const Trauma = mongoose.model('Trauma');
+const { ensureAuthenticated } = require('../config/auth');
 
 router.get('/', (req, res) => {
     Trauma.find((err, docs) => {
@@ -33,7 +34,7 @@ router.get('/:tid', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
     }
@@ -51,7 +52,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.put('/:tid', (req, res) => {
+router.put('/:tid', ensureAuthenticated, (req, res) => {
     if(!req.params.tid) {
         return res.status(400).send('Missing URL parameter: trauma id (tid)');
     }
@@ -65,7 +66,7 @@ router.put('/:tid', (req, res) => {
         })
 });
 
-router.delete('/:tid', (req, res) => {
+router.delete('/:tid', ensureAuthenticated, (req, res) => {
     if(!req.params.tid) {
         return res.status(400).send('Missing URL parameter: trauma id (tid)');
     }
