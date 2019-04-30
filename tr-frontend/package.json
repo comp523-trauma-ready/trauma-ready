@@ -4,7 +4,12 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "node_modules/.bin/jest",
+    "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand"
+  },
+  "jest": {
+    "preset": "jest-expo"
   },
   "dependencies": {
     "expo": "^32.0.0",
@@ -17,8 +22,13 @@
     "react-navigation-material-bottom-tabs": "^1.0.0"
   },
   "devDependencies": {
+    "babel-jest": "^24.7.1",
     "babel-preset-expo": "^5.0.0",
-    "jest": "^24.7.1"
+    "babel-preset-react-native": "^4.0.1",
+    "jest": "^24.7.1",
+    "jest-expo": "^32.0.0",
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "^16.8.6"
   },
   "private": true
 }
