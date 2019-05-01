@@ -28,7 +28,7 @@ The administrator portal is found at (https://statt-portal.herokuapp.com). It al
 In order to access the deeper portions of the portal, Administrators must provided an approved login and password. They must also provide an approved login and password to be able to make new objects, update existing objects, or delete existing objects.
 
 ### Dashboard
-After logging into the web portal, administrators are presented with a dashboard. This dashboard provides links to the different collections in the database. These collections are: [Hospitals](https://statt-portal.herokuapp.com/hospital), [RACs](https://statt-portal.herokuapp.com/rac), [Activations](https://statt-portal.herokuapp.com/activations), and [Traumas](https://statt-portal.herokuapp.com/trauma). 
+After logging into the web portal, administrators are presented with a dashboard. This dashboard provides links to the different collections in the database. These collections are: [Hospitals](https://statt-portal.herokuapp.com/hospital), [RACs](https://statt-portal.herokuapp.com/rac), [Activations](https://statt-portal.herokuapp.com/activations), and [Traumas](https://statt-portal.herokuapp.com/trauma). Administrators also may register new administrators through the dashboard.
 
 ## Getting Started (Developers)
 
@@ -85,6 +85,8 @@ Then
   `npm start`
   
 should open dev-tools and provide a barcode in your terminal that you may scan. You'll need to either develop the Expo mobile app to your physical device or acquire iOS and Android emulators from XCode and Android Studio respectively. Alternatively, Expo provides a browser based interface called [Snack](https://snack.expo.io). 
+
+In order to view the application in its published state, follow the directions found [here](https://comp523-trauma-ready.github.io/getting-the-app.html) to view the application either on Expo or, if permission has been granted, on Google Play. 
 
 ## Testing 
 
