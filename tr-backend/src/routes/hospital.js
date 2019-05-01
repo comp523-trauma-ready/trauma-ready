@@ -4,6 +4,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
+// Connect to the Google Maps Geocoding API
 let google_key = process.env.GOOGLEMAPS_API_KEY;
 if (google_key) {
 } else {
@@ -17,12 +18,7 @@ const googleMapsClient = require('@google/maps').createClient({
 
 const Hospital = mongoose.model('Hospital');
 
-router.get('/edit', (req, res) => {
-    res.render('hospital/addOrEdit', {
-        viewTitle : "Add Hospital"
-    });
-});
-
+// Creates a new Hospital in the database
 router.post('/', (req, res) => {
     if (!req.body) {
         return res.status(400).send('Request body is missing');
@@ -54,6 +50,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// Updates an existing hospital
 router.put('/:hid', (req, res) => {
     if(!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)');
@@ -81,6 +78,7 @@ router.put('/:hid', (req, res) => {
         });
 });
 
+// Deletes an existing hospital
 router.delete('/:hid', (req, res) => {
     if(!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)');
@@ -94,59 +92,6 @@ router.delete('/:hid', (req, res) => {
             res.status(500).json(err);
         });
 });
-
-// router.post('/', (req, res) => {
-//     if (req.body._id == '') {
-//         insertRecord(req, res);
-//     } else {
-//         updateRecord(req, res);
-//     }
-// });
-
-//
-// function insertRecord(req, res) {
-//     let hospital = new Hospital();
-//     hospital.hospitalName = req.body.hospitalName;
-//     hospital.email = req.body.email;
-//     hospital.phoneDirectory = req.body.phone;
-//     hospital.rac = req.body.traumaRegion;
-//     hospital.address = req.body.address;
-//     hospital.traumaLevel = req.body.traumaLevel;
-//     hospital.save((err, doc) => {
-//         if (!err) {
-//             res.redirect('hospital/list');
-//         } else {
-//             if (err.name == 'ValidationError') {
-//                 handleValidationError(err, req.body);
-//                 res.render('hospital/addOrEdit', {
-//                     viewTitle : "Add Hospital",
-//                     hospital : req.body
-//                 });
-//             } else {
-//                 console.log(`Error during record insertion : ${err}`);
-//             }
-//         }
-//     });
-// }
-
-
-// function updateRecord(req, res) {
-//     Hospital.findOneAndUpdate({ _id: req.body._id}, req.body, {new: true}, (err, doc) => {
-//         if (!err) {
-//             res.redirect('hospital/list');
-//         } else {
-//             if (err.name == 'ValidationError') {
-//                 handleValidationError(err, req.body);
-//                 res.render("hospital/addOrEdit", {
-//                     viewTitle: 'Update Hospital',
-//                     hospital: req.body
-//                 });
-//             } else {
-//                 console.log(`Error during record update : ${err}`);
-//             }
-//         }
-//     }
-//     });
 
 function handleValidationError(err, body) {
     for (field in err.errors) {
@@ -163,18 +108,8 @@ function handleValidationError(err, body) {
     }
 }
 
-router.get('/list', (req, res) => {
-    Hospital.find((err, docs) => {
-        if (!err) {
-            res.render('hospital/list', {
-                list: docs
-            });
-        } else {
-            console.log(`Error in retrieving hospital list : ${err}`);
-        }
-    });
-});
-
+// http://statt-portal.herokuapp.com/hospital
+// Generates the table of hospitals, unless querystring is included
 router.get('/', (req, res) => {
     if(req.query.name) {
         queryHospitalByName(req, res);
@@ -193,6 +128,7 @@ router.get('/', (req, res) => {
     }
 });
 
+// query hospital by name, return in json format
 function queryHospitalByName(req, res) {
     Hospital.find({
         name: new RegExp(req.query.name)
@@ -205,6 +141,7 @@ function queryHospitalByName(req, res) {
         });
 }
 
+// query hospital by RAC, return in json format
 function queryHospitalByRAC(req, res) {
     Hospital.find({
         rac: new RegExp(req.query.rac)
@@ -217,7 +154,8 @@ function queryHospitalByRAC(req, res) {
         });
 }
 
-
+// http://statt-portal.herokuapp.com/hospital/:hid
+// Generates the Hospital in json format matching the id
 router.get('/:hid', (req, res) => {
     if (!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)')
@@ -230,33 +168,6 @@ router.get('/:hid', (req, res) => {
             res.status(404).json(err);
         });
 });
-//
-// router.get('/', (req, res) => {
-//     if(!req.query.name) {
-//         return res.status(400).send('Missing URL parameter: hospital name');
-//     }
-//     res.send(`You have requested a hospital ${req.query.name}`);
-// });
 
-// router.get('/:id', (req, res) => {
-//     Hospital.findById(req.params.id, (err, doc) => {
-//  if (!err) {
-//      res.render('hospital/addOrEdit', {
-//    viewTitle: 'Update Hospital',
-//    hospital: doc
-//      });
-//  }
-//     });
-// });
-
-// router.get('/delete/:hid', (req, res) => {
-//     Hospital.findByIdAndRemove(req.params.hid, (err, doc) => {
-//         if (!err) {
-//             res.redirect('/hospital/list');
-//         } else {
-//             console.log(`Error in hospital delete ${err}`);
-//         }
-//     });
-// });
 
 module.exports = router;

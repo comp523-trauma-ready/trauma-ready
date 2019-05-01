@@ -10,9 +10,6 @@ let racSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // activationCodes: {
-  //   type: [String]
-  // },
   activationCodes: [
     {
       aid: {

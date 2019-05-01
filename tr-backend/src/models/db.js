@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
 const path = require('path');
 
-
+// Connecting to the database
 let uri = process.env.MONGODB_URI;
 if (uri) {
 	mongoose.connect(uri, {useNewUrlParser: true},

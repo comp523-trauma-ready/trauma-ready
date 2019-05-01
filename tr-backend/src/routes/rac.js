@@ -4,6 +4,8 @@ const router = express.Router();
 
 const RAC = mongoose.model('RAC');
 
+// http://statt-portal.herokuapp.com/rac
+// Generates the table of RACs, unless querystring is included
 router.get('/', (req, res) => {
     if(req.query.name) {
         queryRACByName(req, res);
@@ -23,6 +25,7 @@ router.get('/', (req, res) => {
     }
 });
 
+// query RAC by name, return in json format
 function queryRACByName(req, res) {
     RAC.findOne({
         name: req.query.name
@@ -35,6 +38,7 @@ function queryRACByName(req, res) {
         });
 }
 
+// query RAC by activation code, return in json format
 function queryRACByActivationCode(req, res) {
     RAC.find(
         {
@@ -48,7 +52,8 @@ function queryRACByActivationCode(req, res) {
         })
 }
 
-// GET request based on parameter rid
+// http://statt-portal.herokuapp.com/rac/:rid
+// Generates the RAC in json format matching the id
 router.get('/:rid', (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC ID (rid)')
@@ -64,6 +69,7 @@ router.get('/:rid', (req, res) => {
         });
 });
 
+// Creates a new RAC in the database
 router.post('/', (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
@@ -82,6 +88,7 @@ router.post('/', (req, res) => {
         });
 });
 
+// Update an existing RAC
 router.put('/:rid', (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC id (rid)');
@@ -96,6 +103,7 @@ router.put('/:rid', (req, res) => {
         })
 });
 
+// Delete an existing RAC
 router.delete('/:rid', (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC id (rid)');

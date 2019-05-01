@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -27,7 +27,7 @@
       "bundleIdentifier": "com.comp523.traumaready"
     },
     "android": {
-        "package": "com.comp523.traumaready"
+      "package": "com.comp523.traumaready"
     },
     "description": ""
   }

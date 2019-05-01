@@ -5,6 +5,8 @@ const router = express.Router();
 const Trauma = mongoose.model('Trauma');
 const { ensureAuthenticated } = require('../config/auth');
 
+// http://statt-portal.herokuapp.com/trauma
+// Generates the table of traumas
 router.get('/', (req, res) => {
     Trauma.find((err, docs) => {
         if (!err) {
@@ -19,6 +21,8 @@ router.get('/', (req, res) => {
     });
 });
 
+// http://statt-portal.herokuapp.com/trauma/:tid
+// Generates the trauma in json format matching the id
 router.get('/:tid', (req, res) => {
     if(!req.params.tid) {
         return res.status(400).send('Missing URL parameter: trauma id (tid)')
@@ -34,6 +38,7 @@ router.get('/:tid', (req, res) => {
         });
 });
 
+// Creates a new trauma document
 router.post('/', ensureAuthenticated, (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
@@ -52,6 +57,7 @@ router.post('/', ensureAuthenticated, (req, res) => {
         });
 });
 
+// Updates an existing Trauma document
 router.put('/:tid', ensureAuthenticated, (req, res) => {
     if(!req.params.tid) {
         return res.status(400).send('Missing URL parameter: trauma id (tid)');
@@ -66,6 +72,7 @@ router.put('/:tid', ensureAuthenticated, (req, res) => {
         })
 });
 
+// Deletes an existing Trauma document
 router.delete('/:tid', ensureAuthenticated, (req, res) => {
     if(!req.params.tid) {
         return res.status(400).send('Missing URL parameter: trauma id (tid)');

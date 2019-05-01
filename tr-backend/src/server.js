@@ -14,7 +14,7 @@ require('./models/db');
 // Passport config
 require('./config/passport')(passport);
 
-
+// list of routes
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 const hospitalRouter = require('./routes/hospital');
@@ -60,6 +60,7 @@ app.engine('hbs', exphbs({
 }));
 app.set('view engine', 'hbs');
 
+// connect to routes
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 app.use('/hospital', hospitalRouter);
@@ -69,9 +70,9 @@ app.use('/activations', activationsRouter);
 
 app.use('/mobile', mobileRouter);
 
-//app.use('/demo', demoRouter);
-
+// connect to public folder
 app.use(express.static('public'));
 
+// connect to PORT
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.info(`Application running on ${PORT}`));

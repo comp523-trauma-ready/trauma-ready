@@ -5,6 +5,8 @@ const router = express.Router();
 
 const Activations = mongoose.model('Activations');
 
+// http://statt-portal.herokuapp.com/activations
+// Generates the table of activations
 router.get('/', (req, res) => {
     Activations.find((err, docs) => {
         if (!err) {
@@ -12,13 +14,14 @@ router.get('/', (req, res) => {
                 viewTitle: 'Activations',
                 list: docs
             });
-            //console.log(docs);
         } else {
             console.log(`Error in retrieving activations list : ${err}`);
         }
     });
 });
 
+// http://statt-portal.herokuapp.com/activations/:aid
+// Generates the Activation in json format matching the id
 router.get('/:aid', (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)')
@@ -34,6 +37,7 @@ router.get('/:aid', (req, res) => {
         });
 });
 
+// Creates a new Activation in the database
 router.post('/', (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
@@ -52,6 +56,7 @@ router.post('/', (req, res) => {
         });
 });
 
+// Updates an existing Activation
 router.put('/:aid', (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)');
@@ -66,6 +71,7 @@ router.put('/:aid', (req, res) => {
         })
 });
 
+// Deletes an existing Activation
 router.delete('/:aid', (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)');
