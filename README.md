@@ -25,7 +25,7 @@ automatically push these changes to the app.
 The administrator portal is found at (https://statt-portal.herokuapp.com). It allows for administrators to access the information stored in the database that the application uses and make alterations as necessary. Administrators will need proper authentication to gain access to this information.
 
 ### Authentication
-In order to access the deeper portions of the portal, Administrators must provided an approved login and password.
+In order to access the deeper portions of the portal, Administrators must provided an approved login and password. They must also provide an approved login and password to be able to make new objects, update existing objects, or delete existing objects.
 
 ### Dashboard
 After logging into the web portal, administrators are presented with a dashboard. This dashboard provides links to the different collections in the database. These collections are: [Hospitals](https://statt-portal.herokuapp.com/hospital), [RACs](https://statt-portal.herokuapp.com/rac), [Activations](https://statt-portal.herokuapp.com/activations), and [Traumas](https://statt-portal.herokuapp.com/trauma). 
@@ -47,7 +47,7 @@ Change into the backend directory and install its dependencies
 
   `cd tr-backend && npm install` 
 
-Finally, to run the backend locally you'll need credentials to access it's associated database on Heroku. Go to the team's Google Drive and download 'credentials.txt'. Place it under `trauma-ready/tr-backend/src/models` so that `db.js` may parse it in. Finally, `cd` back into the `tr-backend` directory and run 
+Finally, to run the backend locally you'll need credentials to access it's associated database on Heroku. Go to the team's Google Drive and download 'credentials.txt'. Place it under `trauma-ready/tr-backend/src/models` so that `db.js` may parse it in. You must also download from the team's Google Drive 'api_key.txt' and place it under `trauma-ready/tr-backend/src/routes` so that you connect to the Google Maps Geocoding API in `hospital.js`. Finally, `cd` back into the `tr-backend` directory and run 
 
   `npm start`
 
@@ -56,7 +56,7 @@ which should display a success message for both the server running locally and y
    
 for development programming.
 
-Backend dependencies include: [Express](https://expressjs.com), [Express Handlebars](https://www.npmjs.com/package/express-handlebars), [Mongoose](https://mongoosejs.com/), and [Body-Parser](https://www.npmjs.com/package/body-parser). [Nodemon](https://nodemon.io/) was also imported for development purposes.
+Backend dependencies include: [Express](https://expressjs.com), [Express Handlebars](https://www.npmjs.com/package/express-handlebars), [Mongoose](https://mongoosejs.com/), [mongoose-auto-increment](https://www.npmjs.com/package/mongoose-auto-increment), [Google Maps](https://developers.google.com/maps/documentation/geocoding/intro), [bcryptjs](https://www.npmjs.com/package/bcryptjs), [connect-flash](https://www.npmjs.com/package/connect-flash), [express-session](https://github.com/expressjs/session), [Passport](http://www.passportjs.org/), [passport-local](https://www.npmjs.com/package/passport-local) and [Body-Parser](https://www.npmjs.com/package/body-parser). [Nodemon](https://nodemon.io/) was also imported for development purposes.
 
 ### Heroku
 Heroku is a cloud-based Platform as a Service (PaaS) on which the backend server and database of the application runs. It is through Heroku that the server connects with the MongoDB database using mLab MongoDB. To view the mLab interface for the given application, one need only login to Heroku, click on the link to the given application (named comp523-statt-web-portal), click on the resources header, and finally click on the link "mLab MongoDB."
@@ -69,6 +69,8 @@ The login information to the Github account (named comp523-trauma-ready) which c
 Note: Above is described a method of running the backend locally using the file credentials.txt. Due to the possibility of certain parties gaining undesirable access to the database, neither this file, nor any information stating the username or password of the database, should ever be stored in the GitHub repository. 
 
 In order to connect the server with the database in a more secure fashion, under trauma-ready/tr-backend/src/models/db.js, mongoose should connect with the config var MONGODB_URI using process.env . Information on this config var can be accessed and managed using the information found at the following link: https://devcenter.heroku.com/articles/config-vars .
+
+There is also a config var GOOGLE_MAPS_API_KEY on heroku, which is used in trauma-ready/tr-backend/src/routes/hospital.js to connect to the Google Maps Geocoding API for the actual Web Portal.
 
 ### Frontend
 
