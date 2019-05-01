@@ -4,6 +4,10 @@ const router = express.Router();
 
 const RAC = mongoose.model('RAC');
 
+// Must be logged-in/authenticated to POST, PUT or DELETE
+const { ensureAuthenticated } = require('../config/auth');
+
+
 // http://statt-portal.herokuapp.com/rac
 // Generates the table of RACs, unless querystring is included
 router.get('/', (req, res) => {
@@ -70,7 +74,7 @@ router.get('/:rid', (req, res) => {
 });
 
 // Creates a new RAC in the database
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
     }
@@ -89,7 +93,7 @@ router.post('/', (req, res) => {
 });
 
 // Update an existing RAC
-router.put('/:rid', (req, res) => {
+router.put('/:rid', ensureAuthenticated, (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC id (rid)');
     }
@@ -104,7 +108,7 @@ router.put('/:rid', (req, res) => {
 });
 
 // Delete an existing RAC
-router.delete('/:rid', (req, res) => {
+router.delete('/:rid', ensureAuthenticated, (req, res) => {
     if(!req.params.rid) {
         return res.status(400).send('Missing URL parameter: RAC id (rid)');
     }

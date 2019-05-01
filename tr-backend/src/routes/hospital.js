@@ -18,8 +18,11 @@ const googleMapsClient = require('@google/maps').createClient({
 
 const Hospital = mongoose.model('Hospital');
 
+// Must be logged-in/authenticated to POST, PUT or DELETE
+const { ensureAuthenticated } = require('../config/auth');
+
 // Creates a new Hospital in the database
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
     if (!req.body) {
         return res.status(400).send('Request body is missing');
     }
@@ -51,7 +54,7 @@ router.post('/', (req, res) => {
 });
 
 // Updates an existing hospital
-router.put('/:hid', (req, res) => {
+router.put('/:hid', ensureAuthenticated, (req, res) => {
     if(!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)');
     }
@@ -79,7 +82,7 @@ router.put('/:hid', (req, res) => {
 });
 
 // Deletes an existing hospital
-router.delete('/:hid', (req, res) => {
+router.delete('/:hid', ensureAuthenticated, (req, res) => {
     if(!req.params.hid) {
         return res.status(400).send('Missing URL parameter: hospital id (hid)');
     }

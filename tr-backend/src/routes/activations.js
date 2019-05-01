@@ -1,9 +1,12 @@
 const express = require('express');
-
 const mongoose = require('mongoose');
 const router = express.Router();
 
 const Activations = mongoose.model('Activations');
+
+// Must be logged-in/authenticated to POST, PUT or DELETE
+const { ensureAuthenticated } = require('../config/auth');
+
 
 // http://statt-portal.herokuapp.com/activations
 // Generates the table of activations
@@ -38,7 +41,7 @@ router.get('/:aid', (req, res) => {
 });
 
 // Creates a new Activation in the database
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
     if(!req.body) {
         return res.status(400).send('Request body is missing');
     }
@@ -57,7 +60,7 @@ router.post('/', (req, res) => {
 });
 
 // Updates an existing Activation
-router.put('/:aid', (req, res) => {
+router.put('/:aid', ensureAuthenticated, (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)');
     }
@@ -72,7 +75,7 @@ router.put('/:aid', (req, res) => {
 });
 
 // Deletes an existing Activation
-router.delete('/:aid', (req, res) => {
+router.delete('/:aid', ensureAuthenticated, (req, res) => {
     if(!req.params.aid) {
         return res.status(400).send('Missing URL parameter: activation id (aid)');
     }

@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const Trauma = mongoose.model('Trauma');
+
+// Must be logged-in/authenticated to POST, PUT or DELETE
 const { ensureAuthenticated } = require('../config/auth');
 
 // http://statt-portal.herokuapp.com/trauma
