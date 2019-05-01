@@ -90,7 +90,7 @@ In order to view the application in its published state, follow the directions f
 
 ## Testing 
 
-*In progress*
+Some testing of the Backend API was done using Postman. The Client has the login information to the Postman account, so that a future team may view and build on the tests made there. 
 
 ## References 
 
