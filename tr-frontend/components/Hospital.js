@@ -45,6 +45,8 @@ export default class Hospital extends React.Component {
     }
 
     render() {
+        const traumaLevel = parseInt(this.state.traumaLevel);
+        const isTraumaCenter = !isNaN(traumaLevel);
         return (
             <ScrollView contentContainerStyle={styles.wrapper}>
                 <View style={styles.header}>
@@ -86,19 +88,26 @@ export default class Hospital extends React.Component {
                         })
                     }
                 </View>
-                <Text style={styles.h2}>Activations</Text>
-                <View style={styles.activations}>
-                    {
-                        this.state.activationCodes.map((code, key) => 
-                            <ActivationItem
-                                navigation={this.props.navigation}
-                                key={key}
-                                id={code.aid}
-                                code={code.code}
-                            />  
-                        )
-                    }
-                </View>
+                {isTraumaCenter ? (
+                        <View>
+                            <Text style={styles.h2}>Activations</Text>
+                            <View style={styles.activations}>
+                                {
+                                    this.state.activationCodes.map((code, key) => 
+                                        <ActivationItem
+                                            navigation={this.props.navigation}
+                                            key={key}
+                                            id={code.aid}
+                                            code={code.code}
+                                        />  
+                                    )
+                                }
+                            </View>
+                        </View>
+                    ) : (
+                        <View></View>
+                    )
+                }
                 <Text style={styles.h2}>Maps</Text>                
                 <View style={styles.maps}>
                     <MapView
