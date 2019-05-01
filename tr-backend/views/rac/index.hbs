@@ -2,14 +2,14 @@
 <h2 style="display: inline-block;">{{viewTitle}}</h2>
 <a class="btn btn-primary" href="/dashboard" role="button" style="float:right;">Return to Dashboard</a>
 
-
+<div class="table-container">
 <table class="table table-striped mainTable">
   <thead>
   <tr>
       <th></th>
       <th>Id</th>
       <th style="min-width: 149px;">Name</th>
-      <th style="min-width: 300px;">Activations</th>
+      <th style="min-width: 300px;" data-toggle="tooltip" title="These are linked pairs of Activation IDs and their Names">Activations</th>
       <th style="min-width: 224px">Notes</th>
   </tr>
   </thead>
@@ -39,4 +39,5 @@
   {{/each}}
   </tbody>
 </table>
+</div>
 <div class="newEntry" onclick="createRow();">Create New Object</div>

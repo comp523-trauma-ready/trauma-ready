@@ -2,6 +2,7 @@
 <h2 style="display: inline-block;">Hospital List</h2>
 <a class="btn btn-primary" href="/dashboard" role="button" style="float:right;">Return to Dashboard</a>
 
+<div class="table-container">
 <table class="table table-striped mainTable">
     <thead>
     <tr>
@@ -9,10 +10,10 @@
         <th>Id</th>
         <th>Name</th>
         <th>RAC</th>
-        <th>Trauma Level</th>
-        <th>Services</th>
+        <th data-toggle="tooltip" title="If the hospital is a Trauma Center, provide the numerical classification with digits">Trauma Level</th>
+        <th data-toggle="tooltip" title="In order to modify this list you must first begin editing this row.">Services</th>
         <th>Address</th>
-        <th>Phone</th>
+        <th data-toggle="tooltip" title="In order to modify this list you must first begin editing this row.">Phone</th>
         <th>Email</th>
         <th>Notes</th>
     </tr>
@@ -55,4 +56,5 @@
     {{/each}}
     </tbody>
 </table>
+</div>
 <div class="newEntry" onclick="createRow();">Create New Object</div>

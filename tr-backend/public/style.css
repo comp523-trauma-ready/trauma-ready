@@ -30,6 +30,11 @@ textarea{
 
 }
 
+.table-container{
+  overflow-x: scroll;
+  margin-bottom: 5px;
+}
+
 .edit-panel {
   position: fixed;
   margin-left: 25vw;
@@ -159,10 +164,6 @@ textarea{
   float: left;
 }
 
-.submitArrayTable{
-
-}
-
 .newEntry{
   text-align: center;
   font-size: 16pt;
@@ -187,7 +188,7 @@ textarea{
 .nav-bar{
   border: 2px solid #6c757d;
   border-radius: 20px;
-  background: #eee;
+  background: #93bbe0;
   overflow: hidden;
   height: 40px;
   text-align: center;
@@ -211,4 +212,16 @@ textarea{
   color: #000;
   text-decoration: none;
   font-weight: bold;
+}
+
+
+.tooltip > .tooltip-inner {
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+}
+.test-container{
+
 }

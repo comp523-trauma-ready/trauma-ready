@@ -8,4 +8,51 @@
 
 <p class="">Welcome {{name}}</p>
 
-<a href="/user/register" class="">Register Another Administrator</a>
+<a href="/user/register">Register Another Administrator</a>
+
+<div class="test-container">
+  <br><br>
+  <p>Below is a mock table row. Hover over different elements to learn more about how to navigate the editor</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>RAC</th>
+        <th>Trauma Level</th>
+        <th>Services</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="dataRow">
+        <td>
+          <button data-toggle="tooltip" title="Save" data-placement="right" class="far fa-save button-table" style="display: none;" onclick="cancelRow($(this).parent().parent());"></button>
+          <button data-toggle="tooltip" title="Edit" data-placement="right" class="fa fa-edit button-table" style="display: inherit;" onclick="editRow($(this).parent().parent());"></button>
+          <button data-toggle="tooltip" title="Cancel" data-placement="right" class="fas fa-ban button-table" style="display: none;" onclick="cancelEdit($(this).parent().parent());"></button>
+          <button data-toggle="tooltip" title="Delete" data-placement="right" class="fas fa-trash-alt button-table" style="display: inherit;" onclick=""></button>
+        </td>
+        <td data-toggle="tooltip" title="The ID field is the primary key for all entries and is thus, immutable.">2</td>
+        <td class="mutable" data-toggle="tooltip" title="Fields, such at this, can be typed into directly once in edit mode. Make sure to promote style consistency.">Duke University Hospital</td>
+        <td class="mutable">Duke</td>
+        <td class="mutable">1</td>
+        <td><div class="ul-container"><ul data-toggle="tooltip" title="In order to modify lists you must first begin editing their containing row. Then simply click the list to open the Array Editing panel.">
+                <li>Trauma/Emergency Department</li><li>Surgery</li><li>Neurology</li>
+                <li>Pediatrics</li><li>Neurosurgery</li><li>Obstetrics &amp; Gynecology</li>
+                <li>Ear, Nose and Throat</li><li>Endocrinology</li><li>Eye Care</li>
+                <li>Gastroenterology</li><li>Geriatrics</li><li>Nephrology</li>
+                <li>Pulmonology</li><li>Rheumatology</li><li>Urology</li>
+                <li>Cancer</li><li>Cardiology</li><li>Spine Care</li><li>Pediatrics</li>
+            </ul></div></td>
+        <td class="mutable">2301 Erwin Rd, Durham, NC 27710</td>
+        <td><div class="ul-container"><ul><li>Main : 919-684-8111</li></ul></div></td>
+        <td class="mutable">N/A</td>
+        <td class="mutable large"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

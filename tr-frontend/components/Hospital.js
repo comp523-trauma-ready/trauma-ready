@@ -1,18 +1,18 @@
 import React from "react";
-import { 
-    Linking, ScrollView, SectionList, StyleSheet, 
-    Text, TouchableHighlight, View 
+import {
+    Linking, ScrollView, SectionList, StyleSheet,
+    Text, TouchableHighlight, View
 } from "react-native";
 
-import MapView from "react-native-maps"; // MapViews are actually bundled with Expo now, so this 
-                                         // dependency can be removed in the future 
+import MapView from "react-native-maps"; // MapViews are actually bundled with Expo now, so this
+                                         // dependency can be removed in the future
 
 import ActivationItem from "./ActivationItem";
 
 // The profile screen for an entire hospital; it renders information like addresses, emails,
 // phones, activations, services, and a map component. Almost all of this data is passed in on the
-// "item" parameter from navigation and then stored in state. The exception is the activation 
-// items, which query the backend based on rac name upon mounting. 
+// "item" parameter from navigation and then stored in state. The exception is the activation
+// items, which query the backend based on rac name upon mounting.
 
 export default class Hospital extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -45,8 +45,6 @@ export default class Hospital extends React.Component {
     }
 
     render() {
-        const traumaLevel = parseInt(this.state.traumaLevel);
-        const isTraumaCenter = !isNaN(traumaLevel);
         return (
             <ScrollView contentContainerStyle={styles.wrapper}>
                 <View style={styles.header}>
@@ -58,27 +56,27 @@ export default class Hospital extends React.Component {
                 <View style={styles.phones}>
                     {
                         this.state.phoneDirectory.map((entry, key) => {
-                            // let info = entry.connection.split(":");
-                            // let type = info[0];
-                            // let number = info[1];
+                            /*let info = entry.connection.split(":");
+                            let type = info[0];
+                            let number = info[1];*/
                             let type = entry.connection;
                             let number = entry.number;
                             return (
                                 <Text key={key} style={{
                                     fontSize: 14,
-                                    marginTop: 4, 
-                                    marginBottom: 4, 
+                                    marginTop: 4,
+                                    marginBottom: 4,
                                     backgroundColor: "white",
                                     borderWidth: 1,
                                     borderRadius: 4,
                                     padding: 8,
                                 }}>
                                     {type}:
-                                    <Text 
-                                        style={{ 
-                                            color: "blue", 
-                                            textDecorationLine: "underline", 
-                                            paddingLeft: 4 
+                                    <Text
+                                        style={{
+                                            color: "blue",
+                                            textDecorationLine: "underline",
+                                            paddingLeft: 4
                                         }}
                                         onPress={(event) => Linking.openURL(`tel:${number}`)}>
                                         {number}
@@ -88,27 +86,20 @@ export default class Hospital extends React.Component {
                         })
                     }
                 </View>
-                {isTraumaCenter ? (
-                        <View>
-                            <Text style={styles.h2}>Activations</Text>
-                            <View style={styles.activations}>
-                                {
-                                    this.state.activationCodes.map((code, key) => 
-                                        <ActivationItem
-                                            navigation={this.props.navigation}
-                                            key={key}
-                                            id={code.aid}
-                                            code={code.code}
-                                        />  
-                                    )
-                                }
-                            </View>
-                        </View>
-                    ) : (
-                        <View></View>
-                    )
-                }
-                <Text style={styles.h2}>Maps</Text>                
+                <Text style={styles.h2}>Activations</Text>
+                <View style={styles.activations}>
+                    {
+                        this.state.activationCodes.map((code, key) =>
+                            <ActivationItem
+                                navigation={this.props.navigation}
+                                key={key}
+                                id={code.aid}
+                                code={code.code}
+                            />
+                        )
+                    }
+                </View>
+                <Text style={styles.h2}>Maps</Text>
                 <View style={styles.maps}>
                     <MapView
                         loadingEnabled={true}
@@ -133,7 +124,7 @@ export default class Hospital extends React.Component {
                 <View style={styles.services}>
                     <Text style={styles.h2}>Services</Text>
                     {
-                        this.state.services.map((service, key) => 
+                        this.state.services.map((service, key) =>
                             <Text key={key}>{service}</Text>
                         )
                     }
@@ -145,7 +136,7 @@ export default class Hospital extends React.Component {
 
 const styles = StyleSheet.create({
     wrapper: {
-        padding: 10,        
+        padding: 10,
     },
 
     header: {
@@ -158,7 +149,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 8,
         backgroundColor: "lightgray",
-    }, 
+    },
 
     activations: {
         borderWidth: 1,
@@ -171,7 +162,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 8,
         marginBottom: 8,
-    }, 
+    },
 
     services: {
     },
@@ -189,5 +180,5 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
         fontWeight: "bold"
     },
-    
+
 });
