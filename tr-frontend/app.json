@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "trauma-ready",
+    "name": "Trauma-STATT",
     "slug": "trauma-ready",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -8,9 +8,9 @@
       "ios",
       "android"
     ],
-    "version": "1.0.2",
+    "version": "1.0.4",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app_icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -28,7 +28,8 @@
     },
     "android": {
       "package": "com.comp523.traumaready.statt",
-      "versionCode": 2
+      "versionCode": 4,
+      "icon": "./assets/app_icon.png"
     },
     "description": ""
   }
